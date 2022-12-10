@@ -1,0 +1,79 @@
+\documentclass[]{article}
+\usepackage{amsmath}
+\usepackage[bitstream-charter]{mathdesign}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+  pdftitle={WIP Title},
+  pdfauthor={Kexing Ying},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Maroon,
+  urlcolor=Maroon,
+  pdfcreator={LaTeX via pandoc}}
+
+\usepackage[margin = 1.5in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+
+\setlength\parindent{0pt} % no indentation for paragraphs
+\setlength{\parskip}{3pt} % add a little space between paragraphs
+
+\usepackage{tikz}
+\usepackage{physics}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{todonotes} % remove for final version
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{example}{Example}[section]
+\newtheorem*{remark}{Remark}
+
+\title{WIP Title}
+\author{Kexing Ying}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\newpage
+\tableofcontents
+\thispagestyle{empty}
+
+\newpage
+\section{Introduction}
+\label{sec:introduction}
+\input{sections/introduction.tex}
+
+\newpage
+\section{The KLS and Thin-Shell Conjecture}
+\label{sec:KLS}
+\input{sections/KLS.tex}
+
+\newpage
+\section{The Stochastic Localisation Scheme}
+\label{sec:stoch_loc}
+\input{sections/stoch_loc.tex}
+
+\newpage
+\bibliographystyle{alpha}
+\bibliography{biblio}
+
+\end{document}

@@ -1,0 +1,214 @@
+While the KLS conjecture is often phrased as a isoperimetric problem, we will mainly consider the 
+conjecture here as a problem regarding measures while providing some discussions regarding its 
+equivalent formulations. \todo{Mention we only work with Borel measures}
+
+\subsection{Concentration}
+
+\begin{definition}[Concentration, \cite{Eldan_notes}]
+  Let \(\mu\) be a measure on \(\mathbb{R}^n\), then \(\mu\) is said to be \(C\)-(inversely)-concentrated if
+  for all \(1\)-Lipschitz function \(\phi : \mathbb{R}^n \to \mathbb{R}\), 
+  \begin{equation}
+    \text{Var}_\mu[\phi] = \text{Var}_{X \sim \mu}[\phi(X)] \le C^2.
+  \end{equation}
+  We denote the least possible such \(C\) by \(C^\mu_{\text{con}}\).
+\end{definition}
+
+Heuristically, the concentration measures the relation between \(\mu\) and the Euclidean metric by 
+providing a numerical control for the variance of its norm. This is perhaps best illustrated by the following proposition.
+
+\begin{proposition}
+  Let \(X\) be a \(\mathbb{R}^n\)-valued random variable. Then for all \(K\)-Lipschitz function 
+  \(\phi : \mathbb{R}^n \to \mathbb{R}\),
+  \[\text{Var}[\phi(X)] \le K^2 \text{Var}[\|X\|^2].\]
+\end{proposition}
+\begin{proof}
+  WLOG. by subtracting its expectation from \(X\), we may assume \(\mathbb{E}[X] = 0\).
+  Let \(X'\) be a i.i.d. copy of \(X\) on the same probability space. Then for all \(K\)-Lipschitz 
+  function \(\phi\), we have 
+  \begin{align*}
+    2 \text{Var}[\phi(X)] & = \text{Var}[\phi(X) - \phi(X')] & (\text{i.i.d.})\\
+      & = \mathbb{E}[(\phi(X) - \phi(X'))^2] - \mathbb{E}[\phi(X) - \phi(X')]^2 & \\
+      & = \mathbb{E}[(\phi(X) - \phi(X'))^2] & (\text{identically distributed}) \\
+      & \le K^2 \mathbb{E}[\|X - X'\|^2] & (\text{as \(\phi\) is \(K\)-Lipschitz}) \\
+      & = K^2 \mathbb{E}[X^T X + X'^T X' - X^T X' - X'^T X] & \\
+      & = 2K^2 \text{Var}[\|X\|^2] - 2K^2 \text{Cov}(X, X') = 2K^2 \text{Var}[\|X\|^2]. & (\text{independence})
+  \end{align*}
+  implying \(\text{Var}[\phi(X)] \le K^2 \text{Var}[\|X\|^2]\) as claimed.
+\end{proof}
+
+With this proposition in mind, it is clear that for \(\mathbb{R}\)-valued random variables \(X\), 
+its law \(\mu\) has concentration \(C^\mu_{\text{con}} = \text{Var}[X]\). Furthermore, by 
+considering the projection maps, it follows that the standard Gaussian measure on \(\mathbb{R}^n\) 
+is 1-concentrated.
+
+We note that the definition we are presenting here is slightly non-standard. However, utilising a 
+remarkable result due to Milman, we show that this definition is equivalent to the following 
+definitions in a specific sense.
+
+\begin{definition}[Exponential concentration, \cite{Milman_2018}]
+  Given a measure \(\mu\) on \(\mathbb{R}^n\), we say \(\mu\) has exponential concentration if 
+  there exists some \(c, D > 0\) such that for all 1-Lipschitz function 
+  \(\phi : \mathbb{R}^n \to \mathbb{R}, t > 0\), we have
+  \begin{equation}
+    \mu(|\phi - \mathbb{E}_\mu[\phi]| \ge t) \le c e^{-Dt}.
+  \end{equation}
+  Fixing \(c = 1\), we denote the largest possible \(D\) as \(D^\mu_{\text{exp}}\).
+\end{definition}
+
+\begin{definition}[First-moment concentration, \cite{Milman_2018}]
+  Again, given \(\mu\) a measure on \(\mathbb{R}^n\), we say \(\mu\) has first-moment concentration 
+  if there exists some \(D > 0\) such that for all 1-Lipschitz function 
+  \(\phi : \mathbb{R}^n \to \mathbb{R}\), we have
+  \begin{equation}
+    \mathbb{E}_\mu[|\phi - \mathbb{E}_\mu[\phi]|] \le \frac{1}{D}.
+  \end{equation}
+  We denote the largest possible \(D\) by \(D^\mu_{\text{FM}}\).
+\end{definition}
+
+It is clear that exponential concentration implies first-moment concentration. Indeed, if \(\mu\) 
+has exponential concentration with constant \(D\) (taking \(c = 1\)), then by the tail probability formula,
+\begin{align*}
+  \mathbb{E}_\mu[|\phi - \mathbb{E}_\mu[\phi]|] 
+  & = \int_0^\infty \mu(|\phi - \mathbb{E}_\mu[\phi]| \ge t) \dd t \le \int_0^\infty e^{-Dt} \dd t 
+   = \frac{1}{D}.
+\end{align*}
+
+On the other hand, Milman showed that for log-concave measures (namely, measures of the form 
+\(\dd \mu = \exp(-H)\dd\text{Leb}^n\) for some convex function 
+\(H : \mathbb{R}^n \to \mathbb{R} \cup \{\infty\}\)) on \(\mathbb{R}^n\), exponential concentration 
+and first-moment concentration are equivalent in the following sense. 
+
+\begin{theorem}[Milman, \cite{Milman_2008}]\label{thm:milman}
+  For all log-concave measure \(\mu\) on \(\mathbb{R}^n\), \(\mu\) has exponential concentration 
+  if and only if \(\mu\) has first-moment concentration. Furthermore, 
+  \(D^\mu_{\text{exp}} \simeq D^\mu_{\text{FM}}\) where we write \(A \simeq B\) if there exists 
+  universal constants \(C_1, C_2 > 0\) such that \(C_1 A \le B \le C_2 A\).
+\end{theorem}
+
+With this theorem in mind, we establish the following correspondence.
+
+\begin{proposition}\label{thm:equiv}
+  For all measures \(\mu\) on \(\mathbb{R}^n\), we have 
+  \[\text{Exponentially concentrated \(\implies\) Concentrated \(\implies\) First-moment concentrated}\]
+  and \(D^\mu_{\text{exp}} \le \sqrt{2} (C^\mu_{\text{con}})^{-1}\) and 
+  \((2C^\mu_{\text{con}})^{-1} \le D^\mu_{\text{FM}}\).
+  Hence, if \(\mu\) is log-concave, 
+  \(D^\mu_{\text{exp}} \simeq D^\mu_{\text{FM}} \simeq (C^\mu_{\text{con}})^{-1}\).
+\end{proposition}
+\begin{proof}
+  Assume first that \(\mu\) is \(C\)-concentrated. Then by the Chebyshev inequality, we have 
+  \[\mu(|\phi - \mathbb{E}_\mu[\phi]| \ge t) 
+      \le \frac{1}{t^2}\text{Var}_\mu[\phi] 
+      \le \frac{C^2}{t^2},\]
+  for all 1-Lipschitz \(\phi\). 
+  Thus, by tail probability,
+  \begin{align*}\mathbb{E}_\mu[|\phi - \mathbb{E}_\mu[\phi]|] 
+    & = \int_0^\infty \mu(|\phi - \mathbb{E}_\mu[\phi]| \ge t) \dd t\\ 
+    & \le \inf_{a > 0} \left\{\int_0^a \mu(|\phi - \mathbb{E}_\mu[\phi]| \ge t) \dd t + C^2 \int_a^\infty \frac{1}{t^2} \dd t\right\}\\ 
+    & \le \inf_{a > 0} \left\{a + \frac{C^2}{a}\right\} = 2C,
+  \end{align*}
+  implying \(\mu\) is first-moment concentrated with respect to the constant \((2C)^{-1}\).
+
+  On the other hand, if \(\mu\) is exponential concentration with some constant \(D\), then 
+  again by the tail probability, 
+  \[\text{Var}_\mu[\phi] = \int_0^\infty \mu((\phi - \mathbb{E}_\mu[\phi])^2 \ge t) \dd t
+      \le \int_0^\infty e^{-D \sqrt{t}} \dd t = \frac{2}{D^2}\]
+  implying \(\mu\) is \(\sqrt{2} D^{-1}\)-concentrated.
+\end{proof}
+
+\subsection{The KLS and thin-shell conjecture}
+
+Informally, the KLS conjecture suggests that any log-concave measure on \(\mathbb{R}^n\) admits 
+the same concentration as that of the Gaussian measure. However, unlike the Gaussian, as the 
+concentration of measures is not invariant under linear transformations, it is clear that the KLS 
+conjecture would not hold without a suitable normalization. This leads us to the following formulation 
+of the KLS conjecture.
+
+\begin{conjecture}[Kannan-Lovász-Simonovitz, \cite{Eldan_notes}]
+  Denoting \(\mathscr{M}_{\text{con}}\) the set of all log-concave probability measures \(\mu\) on 
+  \(\mathbb{R}^n\) satisfying \(\text{Var}_\mu[T] \le 1\) for all 1-Lipschitz linear maps 
+  \(T : \mathbb{R}^n \to \mathbb{R}\), there exists a \textit{universal} constant \(C\) such that for all 
+  \(\mu \in \mathscr{M}_{\text{con}}\), \(\mu\) is \(C\)-concentrated.
+\end{conjecture}
+
+We remark that \(C\) is universal in the sense that it does not depend on any parameter and in 
+particular is independent of the dimension \(n\).
+
+\begin{conjecture}[Thin-shell, \cite{Eldan_2013}]
+  Taking \(\mathscr{M}_{\text{con}}\) as above, there exists a universal constant \(C\) such that 
+  for all \(\mu \in \mathscr{M}_{\text{con}}\), we have
+  \[\sqrt{\text{Var}_\mu[\|\cdot\|]} \le C.\]
+\end{conjecture}
+
+As the norm function is 1-Lipschitz, it is \textit{a priori} that the thin-shell conjecture is 
+weaker than that of the KLS conjecture. On the other hand, as we shall describe in the next section, 
+as a consequence of the stochastic localisation scheme, Eldan \cite{Eldan_2013} provides a reduction 
+of the KLS conjecture to the thin-shell conjecture up to logarithmic factors. 
+
+\begin{theorem}[Eldan, \cite{Eldan_2013}]\label{thm:KLS_to_TS}
+  Denoting \(\mathscr{M}_{\text{con}}\) as above, we define 
+  \[C_{\text{con}} := \inf \left\{C \mid \text{\(\forall \mu \in \mathscr{M}_{\text{con}},\) 
+    \(\mu\) is \(C\)-concentrated}\right\},\]
+  and 
+  \[C_{\text{TS}} := \inf \left\{C \mid \text{\(\forall \mu \in \mathscr{M}_{\text{con}},\) 
+      \(\sqrt{\text{Var}_\mu[\|\cdot\|]} \le C\)}\right\}
+      = \sup_{\mu \in \mathscr{M}_{\text{con}}} \sqrt{\text{Var}_\mu[\|\cdot\|]},\]
+  we have,
+  \[C_{\text{TS}} \le C_{\text{con}} \le C_{\text{TS}} \log n.\]
+\end{theorem}
+
+\subsubsection{Equivalent formulation of the KLS conjecture}
+
+While the formulation of the KLS conjecture above is very useful, as mentioned previously, the KLS 
+conjecture has several equivalent formulations; we will quickly present them here. However, before 
+stating these formulations, let us quickly complete theorem \ref{thm:milman} with two 
+additional equivalences.
+
+\begin{definition}[Cheeger's inequality, \cite{Milman_2008}]
+  Given a measure \(\mu\) on \(\mathbb{R}^n\), we recall the Minkowski's boundary measure 
+  defined by 
+  \[\mu^+(A) := \liminf_{\epsilon \downarrow 0} \frac{\mu(A_\epsilon) - \mu(A)}{\epsilon}\]
+  where \(A_\epsilon := \{x \in \mathbb{R}^n \mid \text{dist}(x, A) \le \epsilon\}\) is the 
+  \(\epsilon\)-thickening of some Borel set \(A\). Then, we say \(\mu\) satisfy Cheeger's inequality 
+  if there exists some \(D\) such that for all \(A\) satisfying \(\mu(A) \le \frac{1}{2}\),
+  \todo{This definition is from Eldan not Milman, can we show equivalence?}
+  \[\mu(A) \le D\mu^+(A).\]
+  We denote the largest such \(D\) by \(D^\mu_{\text{C}}\).
+\end{definition}
+
+\begin{theorem}[Milman, \cite{Milman_2008}]\label{thm:milman2}
+  For all log-concave measure \(\mu\) on \(\mathbb{R}^n\), the following are equivalent
+  \begin{itemize}
+    \item \(\mu\) has exponential concentration with constant \(D^\mu_\text{exp}\).
+    \item \(\mu\) has first-moment concentration with constant \(D^\mu_\text{FM}\).
+    \item \(\mu\) satisfy the Cheeger's inequality with constant \(D^\mu_\text{C}\).
+    \item \(\mu\) satisfy the Poincaré inequality: there exists some \(D > 0\) such that for all 
+      differentiable \(\phi : \mathbb{R}^n \to \mathbb{R}\) satisfying \(\int \phi \dd\mu = 0\), we have
+      \[D \cdot \text{Var}_\mu[\phi] \le \int \|\nabla \phi\|^2 \dd\mu.\]
+      We denote the largest such \(D\) by \(D^\mu_{\text{P}}\).
+  \end{itemize}
+  Furthermore, \(D^\mu_{\text{exp}} \simeq D^\mu_{\text{FM}} \simeq D^\mu_{\text{P}} \simeq D^\mu_{\text{C}}\).
+\end{theorem}
+
+With this theorem and proposition \ref{thm:equiv} in mind, it is clear that the KLS conjecture can be 
+instead formulated with any of these inequalities instead. 
+
+\begin{conjecture}[KLS, \cite{Eldan_2013}]
+  Denoting \(\mathscr{M}_{\text{iso}}\) the set of all log-concave probability measures \(\mu\) on 
+  \(\mathbb{R}^n\) satisfying \(\int x \mu(\dd x) = 0\) (namely \(\mu\) is isotropic), there exists
+  a \textit{universal} constant \(D\) such that for all \(\mu \in \mathscr{M}_{\text{iso}}\), 
+  \(\mu\) satisfy the Cheeger's inequality with constant \(D\).\todo{Why are the normalisations equivalent?}
+\end{conjecture}
+
+Similarly, we may also reformulate the KLS conjecture using the constant provided by the Poincaré inequality. 
+
+\begin{conjecture}[KLS, \cite{Eldan_2013}]
+    Denoting \(\mathscr{M}_{\text{iso}}\) as above, there exist a \textit{universal} constant \(D\) 
+    such that for all \(\mu \in \mathscr{M}_{\text{iso}}\), \(\mu\) satisfy the Poincaré inequality 
+    with constant \(D\).
+  \end{conjecture}
+  
+  By observing that \(\text{Var}_\mu[\phi] = \int \phi^2 \dd \mu\) for all differentiable \(\phi\) 
+  satisfying \(\int \phi \dd \mu = 0\), we remark that the Poincaré inequality can be alternatively 
+  written as 
+  \[\frac{\int \phi^2 \dd \mu}{\int \|\nabla \phi\|^2 \dd \mu} \le D^{-1}.\]

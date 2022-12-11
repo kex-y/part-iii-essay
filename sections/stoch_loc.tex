@@ -87,41 +87,52 @@ where \(\otimes\) denotes the Kronecker product. In particular, we will show \((
 \end{lemma}
 
 \begin{proof}[Proof of lemma \ref{lem:brascamp-lieb}]
-  TODO.
+  TODO. Maybe go in appendix?
 \end{proof}
 
 With this lemma in mind, by taking \(\nu = \mu_t\) using equation \ref{eq:stoch_loc_alt} and defining
 \(\phi_{ij}(x) := x_i x_j\), we obtain
 \[(A_t)_{ij} = \text{Var}_{\mu_t}[\phi_{ij}] \le t^{-1} \int \|\nabla \phi_{ij}\|^2 \dd \mu_t.\]
-Then, again using equation~\ref{eq:stoch_loc_alt}, we note that any realizations of \((F_t)\) is decreasing 
-in \(t\). Hence, we have for all \(t \ge 1\), \(\int \|\nabla \phi_{ij}\|^2 \dd \mu_t = 
-\int (x_i^2 + x_j^2) \mu_t(\dd x) \le \int (x_i^2 + x_j^2) \mu_1 (\dd x) < \infty\). Thus, by 
+Then, again using equation~\ref{eq:stoch_loc_alt}, we note that any realizations of \((F_t(x))\) is eventually 
+decreasing in \(t\) if \(x \neq 0\). Hence, \(\sup_t \int \|\nabla \phi_{ij}\|^2 \dd \mu_t = 
+\sup_t \int (x_i^2 + x_j^2) \mu_t(\dd x) < \infty\). Thus, by 
 taking \(t \to \infty\) we have \((A_t)_{ij} \to 0\) for all \(i, j \in \{1, \cdots, n\}\) as claimed.
 
 \begin{corollary}
-  \((\mu_t)\) converges weakly to some Dirac measure almost everywhere.
+  \((\mu_t)\) converges weakly to some Dirac measure almost everywhere. We denote this 
+  limiting (random) Dirac measure by \(\delta_{a_\infty}\) where \(a_\infty\) is some 
+  \(\mathbb{R}^n\)-valued random variable.
 \end{corollary}
 
-To find the massive point of this limiting Dirac measure \(\delta_{a_\infty}\), we observe 
-\todo{This derivation requires uniform boundedness of \(a_t\); remark: weak convergence to Dirac measure 
-implies convergence in probability}
-\[a_t = \int x \mu_t(\dd x) \to \int x \delta_{a_\infty}(\dd x) = a_\infty \text{ as } t \to \infty\]
-implying that \(a_t\) converges a.e. to \(a_\infty\) as \(t \to \infty\). Furthermore, 
-taking \(\phi : \mathbb{R}^n \to \mathbb{R}\) to be any bounded continuous function, we have
-\[\int \phi(x) \mu(\dd x) = \lim_{t \to \infty} \int \phi(x) \mu_t(\dd x).\]
-Then, taking expectation on both sides, we obtain
-\begin{align*}
-  \int \phi(x) \mu(\dd x) & = \mathbb{E}\left[\lim_{t \to \infty} \int \phi(x) \mu_t(\dd x)\right] & \\
-  & = \lim_{t \to \infty} \mathbb{E}\left[\int \phi(x) \mu_t(\dd x)\right] & (\text{Dominated convergence})\\
-  & = \lim_{t \to \infty} \mathbb{E}[\phi(a_t)] & (\text{LOTUS. theorem})\\
-  & = \mathbb{E}[\phi(a_\infty)]. & (\text{Dominated convergence \& continuity of } \phi)
-\end{align*}
-Thus, \(\mathbb{E}_\mu[\phi] = \mathbb{E}[\phi(a_\infty)]\) for all bounded continuous \(\phi\) implying 
-\(a_\infty \sim \mu\).
+Since convergence implies relatively compact, applying the Dunford-Pettis theorem it follows that 
+any realizations of \((F_t)\) is uniformly integrable. Thus, we can make the following deductions 
+about \(a_\infty\).
+
+\begin{corollary}\label{cor:lim_dis}
+  The massive point \(a_\infty\) of the limiting Dirac measure is the limit of \(a_t\) as 
+  \(t \to \infty\) and has law \(\mu\).
+\end{corollary}
+\begin{proof}
+  Since \((F_t)\) is uniformly integrable we have convergence of means almost everywhere, namely
+  \[a_t = \int x \mu_t(\dd x) \xrightarrow{a.e.} \int x \delta_{a_\infty}(\dd x) =: a_\infty \text{ as } t \to \infty\]
+  implying that \(a_t\) converges a.e. to \(a_\infty\) as \(t \to \infty\) as required. 
+  
+  Furthermore, taking \(\phi : \mathbb{R}^n \to \mathbb{R}\) to be any bounded continuous function, we have
+  \[\int \phi(x) \mu(\dd x) = \lim_{t \to \infty} \int \phi(x) \mu_t(\dd x).\]
+  Then, taking expectation on both sides, we obtain
+  \begin{align*}
+    \int \phi(x) \mu(\dd x) & = \mathbb{E}\left[\lim_{t \to \infty} \int \phi(x) \mu_t(\dd x)\right] & \\
+    & = \lim_{t \to \infty} \mathbb{E}\left[\int \phi(x) \mu_t(\dd x)\right] & (\text{Dominated convergence})\\
+    & = \lim_{t \to \infty} \mathbb{E}[\phi(a_t)] & (\text{LOTUS. theorem})\\
+    & = \mathbb{E}[\phi(a_\infty)]. & (\text{Dominated convergence \& continuity of } \phi)
+  \end{align*}
+  Thus, \(\mathbb{E}_\mu[\phi] = \mathbb{E}[\phi(a_\infty)]\) for all bounded continuous \(\phi\) implying 
+  \(a_\infty \sim \mu\).
+\end{proof}
 
 \begin{proposition}
   For all \(x \in \mathbb{R}^n\), \((F_t(x))_{t \ge 0}\) is a martingale. Furthermore, for any 
-  integrable \(\phi : \mathbb{R}^n \to \mathbb{R}^n\), defining the process 
+  continuous bounded \(\phi : \mathbb{R}^n \to \mathbb{R}\), defining the process 
   \(M_t := \int \phi \dd \mu_t\), \((M_t)_{t \ge 0}\) is also a martingale.
 \end{proposition}
 \begin{proof}
@@ -139,4 +150,5 @@ Thus, \(\mathbb{E}_\mu[\phi] = \mathbb{E}[\phi(a_\infty)]\) for all bounded cont
   implying \((M_t)\) is also a martingale.
 \end{proof}
 
-
+Using the same proof as corollary~\ref{cor:lim_dis}, we observe \(M_t\) converges a.e. to some \(M_\infty\) 
+with law \(\phi_* \mu\).

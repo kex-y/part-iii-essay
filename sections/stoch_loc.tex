@@ -117,7 +117,7 @@ about \(a_\infty\).
 \end{corollary}
 \begin{proof}
   Since \((F_t)\) is uniformly integrable we have convergence of means almost everywhere, namely
-  \[a_t = \int x \mu_t(\dd x) \xrightarrow{a.e.} \int x \delta_{a_\infty}(\dd x) =: a_\infty \text{ as } t \to \infty\]
+  \[a_t = \int x \mu_t(\dd x) \xrightarrow{\text{a.e.}} \int x \delta_{a_\infty}(\dd x) =: a_\infty \text{ as } t \to \infty\]
   implying that \(a_t\) converges a.e. to \(a_\infty\) as \(t \to \infty\) as required. 
   
   Furthermore, taking \(\phi : \mathbb{R}^n \to \mathbb{R}\) to be any bounded continuous function, we have
@@ -153,11 +153,15 @@ about \(a_\infty\).
   implying \((M_t)\) is also a martingale.
 \end{proof}
 
-Using the same proof as corollary~\ref{cor:lim_dis}, we observe \(M_t\) converges a.e. to some \(M_\infty\) 
-with law \(\phi_* \mu\).
+Using the same proof as corollary~\ref{cor:lim_dis}, we observe 
+\begin{equation}\label{eq:lim_mart}
+  M_t \xrightarrow{\text{a.e.}} M_\infty \sim \phi_* \mu
+\end{equation}
+where \(\phi_*\mu\) denotes the push-forward measure of \(\mu\) along \(\phi\).
 
 \subsection{Reduction of KLS to thin-shell}
 
-We recall that the KLS conjecture states the existence of a universal (independent of dimension) bound 
-for the concentration of any log-concave measures, i.e. existence of some \(C\) such that, 
-\[\text{Var}\]
+In this section we will present Eldan's proof \cite{Eldan_notes} of theorem~\ref{thm:KLS_to_TS}.
+We recall the goal of theorem~\ref{thm:KLS_to_TS} is to control \(\text{Var}_\mu[\phi]\) by 
+a logarithmic factor of \(\text{Var}_\mu[\|\cdot\|]\). To achieve this, we will make use the 
+equation~\ref{eq:lim_mart} reducing the problem to that of a martingale.

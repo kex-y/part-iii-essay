@@ -125,18 +125,18 @@ conjecture would not hold without a suitable normalization. This leads us to the
 of the KLS conjecture.
 
 \begin{conjecture}[Kannan-Lovász-Simonovitz, \cite{Eldan_notes}]
-  Denoting \(\mathscr{M}_{\text{con}}\) the set of all log-concave probability measures \(\mu\) on 
+  Denoting \(\mathscr{M}^n_{\text{con}}\) the set of all log-concave probability measures \(\mu\) on 
   \(\mathbb{R}^n\) satisfying \(\text{Var}_\mu[T] \le 1\) for all 1-Lipschitz linear maps 
   \(T : \mathbb{R}^n \to \mathbb{R}\), there exists a \textit{universal} constant \(C\) such that for all 
-  \(\mu \in \mathscr{M}_{\text{con}}\), \(\mu\) is \(C\)-concentrated.
+  \(\mu \in \mathscr{M}^n_{\text{con}}\), \(\mu\) is \(C\)-concentrated.
 \end{conjecture}
 
 We remark that \(C\) is universal in the sense that it does not depend on any parameter and in 
 particular is independent of the dimension \(n\).
 
 \begin{conjecture}[Thin-shell, \cite{Eldan_2013}]
-  Taking \(\mathscr{M}_{\text{con}}\) as above, there exists a universal constant \(C\) such that 
-  for all \(\mu \in \mathscr{M}_{\text{con}}\), we have
+  Taking \(\mathscr{M}^n_{\text{con}}\) as above, there exists a universal constant \(C\) such that 
+  for all \(\mu \in \mathscr{M}^n_{\text{con}}\), we have
   \[\sqrt{\text{Var}_\mu[\|\cdot\|]} \le C.\]
 \end{conjecture}
 
@@ -146,16 +146,20 @@ as a consequence of the stochastic localisation scheme, Eldan \cite{Eldan_2013} 
 of the KLS conjecture to the thin-shell conjecture up to logarithmic factors. 
 
 \begin{theorem}[Eldan, \cite{Eldan_2013}]\label{thm:KLS_to_TS}
-  Denoting \(\mathscr{M}_{\text{con}}\) as above, we define 
-  \[C_{\text{con}} := \inf \left\{C \mid \text{\(\forall \mu \in \mathscr{M}_{\text{con}},\) 
+  Denoting \(\mathscr{M}^n_{\text{con}}\) as above, we define 
+  \[C^n_{\text{con}} := \inf \left\{C \mid \text{\(\forall \mu \in \mathscr{M}^n_{\text{con}},\) 
     \(\mu\) is \(C\)-concentrated}\right\},\]
   and 
-  \[C_{\text{TS}} := \inf \left\{C \mid \text{\(\forall \mu \in \mathscr{M}_{\text{con}},\) 
+  \[C^n_{\text{TS}} := \inf \left\{C \mid \text{\(\forall \mu \in \mathscr{M}^n_{\text{con}},\) 
       \(\sqrt{\text{Var}_\mu[\|\cdot\|]} \le C\)}\right\}
-      = \sup_{\mu \in \mathscr{M}_{\text{con}}} \sqrt{\text{Var}_\mu[\|\cdot\|]},\]
+      = \sup_{\mu \in \mathscr{M}^n_{\text{con}}} \sqrt{\text{Var}_\mu[\|\cdot\|]},\]
   we have,
-  \[C_{\text{TS}} \le C_{\text{con}} \le C_{\text{TS}} \log n.\]
+  \[C^n_{\text{TS}} \le C^n_{\text{con}} \le C^n_{\text{TS}} \log n.\]
 \end{theorem}
+
+We remark that while the constants in theorem~\ref{thm:KLS_to_TS} depends on the dimension \(n\), if 
+\(\sup_n C^n_{\text{TS}} \log n < \infty\), we can obtain the universal bound for the KLS conjecture 
+by taking the constant \(C = \sup_n C^n_{\text{con}} \le \sup_n C^n_{\text{TS}} \log n < \infty\).
 
 \subsubsection{Equivalent formulation of the KLS conjecture}
 

@@ -2,9 +2,9 @@ We will in this section provide a description of the stochastic localisation sch
 Eldan \cite{Eldan_2013} and describe its application in reducing (up to a logarithmic factor) the 
 KLS conjecture into the thin-shell conjecture, i.e. we will describe a proof of \ref{thm:KLS_to_TS}.
 
-% As a broad overview, we will construct a sequence of measure-valued random variables which converges 
-% weakly to the a Dirac measure. Then 
-
+% As a broad overview, given a measure, we will construct random sequences of measures for which each realization 
+% converges weakly to the some Dirac measure. Furthermore, the mass of these Dirac measures are 
+% distributed according to the original measure.
 
 \subsection{Construction and basic properties}
 
@@ -91,12 +91,15 @@ where \(\otimes\) denotes the Kronecker product. In particular, we will show \((
 \end{proof}
 
 With this lemma in mind, by taking \(\nu = \mu_t\) using equation \ref{eq:stoch_loc_alt} and defining
-\(\phi_{ij}(x) := x_i x_j\), we obtain
-\[(A_t)_{ij} = \text{Var}_{\mu_t}[\phi_{ij}] \le t^{-1} \int \|\nabla \phi_{ij}\|^2 \dd \mu_t.\]
-Then, again using equation~\ref{eq:stoch_loc_alt}, we note that any realizations of \((F_t(x))\) is eventually 
-decreasing in \(t\) if \(x \neq 0\). Hence, \(\sup_t \int \|\nabla \phi_{ij}\|^2 \dd \mu_t = 
-\sup_t \int (x_i^2 + x_j^2) \mu_t(\dd x) < \infty\). Thus, by 
-taking \(t \to \infty\) we have \((A_t)_{ij} \to 0\) for all \(i, j \in \{1, \cdots, n\}\) as claimed.
+\(\pi_i(x) := x_i\), we have by the Cauchy-Schwarz inequality
+\[(A_t)_{ij} \le \sqrt{\text{Var}_{\mu_t}[\pi_i]}\sqrt{\text{Var}_{\mu_t}[\pi_j]} 
+  \le \max_{k = 1, \cdots, n} \frac{1}{t}\int \|\nabla \pi_k\|^2 \dd \mu_t\]
+Again, using equation~\ref{eq:stoch_loc_alt}, we note that any realizations of \((F_t(x))\) is eventually 
+decreasing in \(t\) for all \(x \neq 0\), implying 
+\[\sup_{t > 0} \max_{k = 1, \cdots, n} \int \|\nabla \pi_k\|^2 \dd \mu_t = 
+\sup_{t > 0} \max_{k = 1, \cdots, n} \int x_k^2 \dd \mu_t < \infty.\] 
+Thus, by taking \(t \to \infty\) we have \((A_t)_{ij} \to 0\) for all \(i, j \in \{1, \cdots, n\}\) as claimed 
+and we have the following corollary.
 
 \begin{corollary}
   \((\mu_t)\) converges weakly to some Dirac measure almost everywhere. We denote this 
@@ -152,3 +155,9 @@ about \(a_\infty\).
 
 Using the same proof as corollary~\ref{cor:lim_dis}, we observe \(M_t\) converges a.e. to some \(M_\infty\) 
 with law \(\phi_* \mu\).
+
+\subsection{Reduction of KLS to thin-shell}
+
+We recall that the KLS conjecture states the existence of a universal (independent of dimension) bound 
+for the concentration of any log-concave measures, i.e. existence of some \(C\) such that, 
+\[\text{Var}\]

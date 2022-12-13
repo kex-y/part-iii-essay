@@ -15,7 +15,7 @@ KLS conjecture into the thin-shell conjecture, i.e. we will describe a proof of 
 \end{definition}
 
 Given the above definition, we now define the following construction central to the stochastic 
-localisation scheme. Let \((W_t)_{t \ge 0}\) be a Wiener process, we define the random functions 
+localisation scheme. Let \((W_t)_{t \ge 0}\) be a standard Wiener process in \(\mathbb{R}^n\), we define the random functions 
 \((F_t)_{t \ge 0}\) to be the solution of the following infinite system of SDEs: 
 \begin{equation}\label{eq:stoch_loc}
   F_0 = 1, \dd F_t(x) = \langle x - \bar{\mu}(F_t), \dd W_t \rangle F_t(x),
@@ -175,3 +175,51 @@ Before delving into the details, let us first outline the approach.
 \end{enumerate}
 
 \subsubsection{Analysis of the covariance matrix}
+
+As shown in the previous section, we know the limiting behavior of the covariance matrices, namely 
+\(A_t \to 0\) as \(t \to \infty\). This is important for us to establish the existence of the limit 
+of \((a_t)\) and \((M_t)\). However, as outlined above, we will also require some quantitative bounds for 
+\(A_t\) bounds. We will in this subsection compute some properties of \(A_t\) useful for this 
+quantitative analysis.
+
+Observing 
+\[\int \dd F_t(x) \mu(\dd x) = \int \langle x - a_t, \dd W_t\rangle \mu_t(\dd x) = 
+  \left\langle\int x \mu_t(\dd x) - a_t, \dd W_t\right\rangle = 0,\]
+we have
+\begin{equation}\label{eq:diff_center}
+  \begin{split}
+    \dd a_t & = \dd \int x F_t(x) \mu(\dd x) = \int x \dd F_t(x) \mu(\dd x) 
+        = \int (x - a_t) \dd F_t(x) \mu(\dd x)\\
+      & = \int (x - a_t) \langle x - a_t, \dd W_t \rangle F_t(x) \mu(\dd x) 
+        = \int (x - a_t)^{\otimes 2} \dd W_t \mu_t(\dd x) = A_t \dd W_t
+  \end{split}
+\end{equation}
+where the second to last equality used the fact that \(v \langle v, w \rangle = v^{\otimes 2} w\).
+
+Similarly, computing using Itô's formula, we have
+\begin{equation}\label{eq:diff_cov_aux}
+  \begin{split}
+    \dd A_t & = \dd \int (x - a_t)^{\otimes 2} F_t(x) \mu(\dd x)\\
+      & = \int (x - a_t)^{\otimes 2} \dd F_t(x) + F_t(x) \dd (x - a_t)^{\otimes 2}\\
+      & \hspace{1cm} - 2 (x - a_t) \otimes \dd[][a_t, F_t(x)]_t +F_t(x)\dd[][a_t]_t\mu(\dd x).
+  \end{split}
+\end{equation}
+The second term vanishes as 
+\[\int F_t(x) \dd (x - a_t)^{\otimes 2} \mu(\dd x) = -2 \dd a_t \otimes \int (x - a_t) \mu_t(\dd x) = 0.\]
+Also, by equation~\ref{eq:diff_center}, \(\dd a_t = A_t \dd W_t\) implying \(\dd[][a_t]_t = A_t^2 \dd t\).
+Finally, as both \((a_t)\) and \((F_t(x))\) are martingales, \(\dd[] [a_t, F_t(x)]_t = F_t(x) A_t x \dd t\), and 
+the third term becomes
+\begin{align*}
+  -2 \int (x - a_t) \otimes \dd[] [a_t, F_t(x)] \mu_t(\dd x) 
+  & = - 2A_t \left(\int (x - a_t) \otimes x \mu_t(\dd x)\right) \dd t \\
+  & = -2 A_t \left(\overbrace{\int (x - a_t)^{\otimes 2} \mu_t(\dd x)}^{A_t} + 
+    \overbrace{\int (x - a_t) \mu_t(\dd x)}^{= 0} \otimes a_t \right) \dd t\\ 
+  & = -2 A_t^2 \dd t.
+\end{align*}
+Hence, combining these and equation~\ref{eq:stoch_loc} together in \ref{eq:diff_cov_aux}, we have
+\begin{equation}\label{eq:diff_cov}
+  \begin{split}
+    \dd A_t & = \int (x - a_t)^{\otimes 2} \langle x - a_t, \dd W_t \rangle \mu_t(\dd x) - A_t^2 \dd t
+      = \left(\int (x - a_t)^{\otimes 3} \mu_t(\dd x)\right)\dd W_t - A_t^2 \dd t.
+  \end{split}
+\end{equation}

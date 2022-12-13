@@ -161,7 +161,17 @@ where \(\phi_*\mu\) denotes the push-forward measure of \(\mu\) along \(\phi\).
 
 \subsection{Reduction of KLS to thin-shell}
 
-In this section we will present Eldan's proof \cite{Eldan_notes} of theorem~\ref{thm:KLS_to_TS}.
+In this section we will present a version of Eldan's proof \cite{Eldan_notes} of theorem~\ref{thm:KLS_to_TS}.
 We recall the goal of theorem~\ref{thm:KLS_to_TS} is to control \(\text{Var}_\mu[\phi]\) by 
-a logarithmic factor of \(\text{Var}_\mu[\|\cdot\|]\). To achieve this, we will make use the 
-equation~\ref{eq:lim_mart} reducing the problem to that of a martingale.
+a logarithmic factor of \(\text{Var}_\mu[\|\cdot\|]\). 
+
+Before delving into the details, let us first outline the approach. 
+\begin{enumerate}
+  \item Making use of equation~\ref{eq:lim_mart}, we rewrite \(\text{Var}_\mu[\phi]\) in terms of 
+    variances relating to \(M_t\).
+  \item Bound these terms by the operator norm of the covariance matrix \(A_t\).
+  \item Observing \(\|A_t\|_{\text{OP}}\) equals to its largest eigenvalue, we analyze \(A_t\) 
+    via its differential.
+\end{enumerate}
+
+\subsubsection{Analysis of the covariance matrix}

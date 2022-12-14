@@ -6,7 +6,7 @@ KLS conjecture into the thin-shell conjecture, i.e. we will describe a proof of 
 % converges weakly to the some Dirac measure. Furthermore, the mass of these Dirac measures are 
 % distributed according to the original measure.
 
-\subsection{Construction and basic properties}
+\subsection{Construction and basic properties}\label{sec:construct}
 
 \begin{definition}[Barycenter]
   Given a (probability) measure \(\mu\) on \(\mathbb{R}^n\), we define 
@@ -136,14 +136,14 @@ about \(a_\infty\).
 
 \begin{proposition}
   For all \(x \in \mathbb{R}^n\), \((F_t(x))_{t \ge 0}\) is a martingale. Furthermore, for any 
-  continuous bounded \(\phi : \mathbb{R}^n \to \mathbb{R}\), defining the process 
+  continuous \(\phi : \mathbb{R}^n \to \mathbb{R}\), defining the process 
   \(M_t := \int \phi \dd \mu_t\), \((M_t)_{t \ge 0}\) is also a martingale.
 \end{proposition}
 \begin{proof}
   By its very construction, \((F_t(x))\) is a martingale by observing equation \ref{eq:stoch_loc} has no 
   drift term.
   
-  Now, for all \(s \le t\) we have
+  Now, for all \(s \le t\) we have by the conditional Fubini's theorem,
   \begin{align*}
     \mathbb{E}[M_t \mid \mathscr{F}_s] 
     & = \mathbb{E}\left[\int \phi(x) F_t(x) \mu(\dd x) \middle\vert \mathscr{F}_s\right]\\
@@ -164,11 +164,10 @@ where \(\phi_*\mu\) denotes the push-forward measure of \(\mu\) along \(\phi\).
 
 In this section we will present a version of Eldan's proof \cite{Eldan_notes} of theorem~\ref{thm:KLS_to_TS}.
 We recall the goal of theorem~\ref{thm:KLS_to_TS} is to control \(\text{Var}_\mu[\phi]\) by 
-a logarithmic factor of \(\text{Var}_\mu[\|\cdot\|]\). Thus, as translating the barycenter of \(\mu\)
+a logarithmic factor of \(\text{Var}_\mu[\|\cdot\|]\). As translating the barycenter of \(\mu\)
 does not affect its variance, we may assume \(\mu\) has its barycenter \(\overline{\mu}\) at the origin.
-
-Before delving into the details, let us first outline the approach. 
-Fix \(\phi : \mathbb{R}^n \to \mathbb{R}\) some bounded continuous function and let \((M_t)\) be the 
+ 
+Fix \(\phi : \mathbb{R}^n \to \mathbb{R}\) some 1-Lipschitz function and let \((M_t)\) be the 
 martingale as described above and in particular we recall equation~\ref{cor:lim_dis} and so, 
 \(\text{Var}_\mu[\phi] = \text{Var}[M_\infty]\) where \(M_t \xrightarrow{\text{a.e.}} M_\infty\).
 Hence, for all \(t > 0\), by the martingale property we have
@@ -176,10 +175,11 @@ Hence, for all \(t > 0\), by the martingale property we have
   \text{Var}[M_t] + \mathbb{E}[\text{Var}[M_\infty \mid \mathscr{F}_t]] 
     & = (\mathbb{E}[M_t^2] - \mathbb{E}[M_t]^2) 
       + \mathbb{E}\left[\mathbb{E}[M_\infty^2 \mid \mathscr{F}_t] - \mathbb{E}[M_\infty \mid \mathscr{F}_t]^2\right]\\
-    & = \mathbb{E}[M_t^2] + \mathbb{E}[\mathbb{E}[M_\infty^2 \mid \mathscr{F}_t]] 
-      = \mathbb{E}[M_\infty^2]= \text{Var}[M_\infty],
+    & = \mathbb{E}[M_t^2] + (\mathbb{E}[\mathbb{E}[M_\infty^2 \mid \mathscr{F}_t]] - \mathbb{E}[M_t^2])\\
+    & = \mathbb{E}[M_\infty^2] = \text{Var}[M_\infty],
 \end{align*}
-where we used the fact that \(\mathbb{E}[M_t] = \bar{\mu} = 0\) for the second equality.
+where the second equality follows as \(\mathbb{E}[M_t] = \mathbb{E}[M_\infty] = \mathbb{E}_\mu[\phi] = 0\) as 
+a linear map 
 
 On the other hand, as \((M_t)\) is a martingale, \(M_t^2 - [M]_t\) is also a martingale implying
 \(\mathbb{E}[M_t^2] = \mathbb{E}[M]_t\) and so \(\text{Var}[M_t] = \mathbb{E}[M_t^2] - \mathbb{E}[M_t]^2 
@@ -194,13 +194,48 @@ the bound \(\text{Var}_{\mu_t}[\phi] \le t^{-1}\). Thus, the second term \(\math
 is bounded by \(t^{-1}\). With this in mind, we see that the reduction of KLS to thin-shell relies on bounding 
 \(\mathbb{E}[M]_t\) which we will dedicate the remainder of this section to.
 
+\subsubsection{Differential of the quadratic variation}
+
+To bound the term \(\mathbb{E}[M]_t\) we will compute its differential and bound it 
+sufficiently such that we reobtain a bound for \([M]_t\) after integrating. In particular, 
+we will show \(\dd[] [M]_t\) is bounded by a quantity concerning \(A_t\). This should not be at all 
+surprising as both \(\dd[] [M]_t\) and \(A_t\) describes the variation of \(M_t\) at a infinitesimal time 
+neighborhood of \(t\).
+
+We compute
+\begin{align*}
+  \dd M_t & = d \int \phi(x) F_t(x) \mu(\dd x) = \int \phi(x) \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\\
+  & = \left\langle \int \phi(x)(x - a_t)\mu_t(\dd x), \dd W_t\right\rangle
+\end{align*}
+and so, by considering the component-wise quadratic variation, we have
+\begin{equation}\label{eq:diff_qvar}
+  \dd[] [M]_t = \left\| \int \phi(x)(x - a_t)\mu_t(\dd x) \right\|^2 \dd t.
+\end{equation}
+Then, denoting \(\alpha\) the vector \(\int \phi(x)(x - a_t)\mu_t(\dd x)\) normalized to have norm 1, so 
+\[\left\langle \alpha, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle = \left\|\int \phi(x)(x - a_t)\mu_t(\dd x)\right\|\]
+we observe,
+\begin{equation}
+  \begin{split}
+    \dd[] [M]_t & = \left\langle \alpha, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle^2 
+      = \left\langle \alpha, \int (\phi(x) - a_t)(x - a_t)\mu_t(\dd x)\right\rangle^2 \\
+    & = \left(\int (\phi(x) - a_t) \langle \alpha, x - a_t\rangle \mu_t(\dd x)\right)^2\\
+    & \le \left(\int (\phi(x) - a_t)^2 \mu_t(\dd x)\right) \left(\int \langle \alpha, x - a_t\rangle^2 \mu_t(\dd x)\right)\\
+    & = \text{Var}_{\mu_t}[\phi] \int \alpha^T (x - a_t)^{\otimes 2} \alpha \mu_t(\dd x) 
+      = \text{Var}_{\mu_t}[\phi] \alpha^T A_t \alpha\\ 
+    & \le \text{Var}_{\mu_t}[\phi] \|A_t\|_{\text{op}}.
+  \end{split}
+\end{equation}
+where the inequality is due to Cauchy-Schwarz and \(\|\cdot\|_{\text{op}}\) denotes the operator norm. 
+Thus, as we know \(\text{Var}_{\mu_t}[\phi] \le t^{-1}\), the problem is now reduced to that of
+bounding \(\|A_t\|_{\text{op}}\).
+
 \subsubsection{Analysis of the covariance matrix}
 
-As shown in the previous section, we know the limiting behavior of the covariance matrices, namely 
-\(A_t \to 0\) point-wise as \(t \to \infty\). This is important for us to establish the existence of the limit 
-of \((a_t)\) and \((M_t)\). However, as outlined above, we will also require some quantitative bounds for 
-\(A_t\). We will in this subsection compute some properties of \(A_t\) useful for this 
-quantitative analysis.
+
+As demonstrated in section~\ref{sec:construct}, we know the limiting behavior of the covariance matrices, namely 
+\(A_t \to 0\) point-wise as \(t \to \infty\). This was important for us to establish the existence of the limit 
+of \((a_t)\) and \((M_t)\). However, as shown above, we now require some quantitative bounds for 
+\(A_t\). We will in this subsection compute some properties of \(A_t\) useful for this purpose.
 
 Observing 
 \[\int \dd F_t(x) \mu(\dd x) = \int \langle x - a_t, \dd W_t\rangle \mu_t(\dd x) = 

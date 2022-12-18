@@ -331,18 +331,18 @@ denoting \(\lambda_i = \lambda_i(t_0)\), we have by Itô's formula
 \end{equation}
 at \(t = t_0\). As a result, it is also clear that \(\dd[][\lambda_i(t)]_{t_0} = \|\xi_{ii}\|^2 \dd t\). 
 
-Again applying Itô's formula, we may finally compute \(\dd \Phi^\alpha(t)|_{t = t_0}\):
+Again applying Itô's formula, we may finally compute
 \begin{align*}
-  \dd \Phi^\alpha(t)|_{t = t_0} & = \sum_{i = 1}^n \pdv{\Phi^\alpha}{\lambda_i} \dd \lambda_i(t)|_{t = t_0} 
-    + \frac{1}{2}\sum_{i, j = 1}^n \pdv[2]{\Phi^\alpha}{\lambda_i}{\lambda_j} \dd[][\lambda_i, \lambda_j]_{t_0}\\
-  & = \alpha \sum_{i = 1}^n \lambda_i^{\alpha - 1} \dd \lambda_i(t)|_{t = t_0} 
-    + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i^{\alpha - 2} \dd[][\lambda_i(t)]_{t_0}\\
+  \dd \Phi^\alpha(t) & = \sum_{i = 1}^n \pdv{\Phi^\alpha}{\lambda_i}\Big\vert_{t = t_0} \dd \lambda_i(t)
+    + \frac{1}{2}\sum_{i, j = 1}^n \pdv[2]{\Phi^\alpha}{\lambda_i}{\lambda_j}\Big\vert_{t = t_0} \dd[][\lambda_i, \lambda_j]_{t}\\
+  & = \alpha \sum_{i = 1}^n \lambda_i^{\alpha - 1} \dd \lambda_i(t)
+    + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i^{\alpha - 2} \dd[][\lambda_i(t)]_{t}\\
   & = \alpha \sum_{i = 1}^n \lambda_i^{\alpha - 1} \left(\langle \xi_{ii}, \dd W_t\rangle 
     + \sum_{j \neq i} \frac{\|\xi_{ij}\|^2}{\lambda_i - \lambda_j} \dd t\right) 
-    + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i^{\alpha - 2} \dd[][\lambda_i(t)]_{t_0}\\
+    + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i^{\alpha - 2} \dd[][\lambda_i(t)]_{t}\\
   & = \alpha \sum_{i \neq j}\lambda_i^{\alpha - 1} \frac{\|\xi_{ij}\|^2}{\lambda_i - \lambda_j} \dd t 
     + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i^{\alpha - 2} \|\xi_{ii}\|^2 \dd t
-    + \underbrace{\alpha \sum_{i = 1}^n \lambda_i \langle \xi_{ii}, \dd W_t\rangle}_{=: N_t}\\
+    + \underbrace{\alpha \sum_{i = 1}^n \lambda_i^{\alpha - 1} \langle \xi_{ii}, \dd W_t\rangle}_{=: N_t}\\
   & = \frac{1}{2}\alpha \sum_{i \neq j}\|\xi_{ij}\|^2\frac{\lambda_i^{\alpha - 1} - \lambda_j^{\alpha -1}}{\lambda_i - \lambda_j}\dd t
     + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i(t)^{\alpha - 2} \|\xi_{ii}\|^2 \dd t + N_t\\
   & \le \frac{1}{2}\alpha(\alpha - 1) \sum_{i \neq j}\|\xi_{ij}\|^2 (\lambda_i \vee \lambda_j)^{\alpha - 2} \dd t

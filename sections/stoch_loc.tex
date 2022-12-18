@@ -234,8 +234,8 @@ bounding \(\|A_t\|_{\text{op}}\).
 
 As demonstrated in section~\ref{sec:construct}, we know the limiting behavior of the covariance matrices, namely 
 \(A_t \to 0\) point-wise as \(t \to \infty\). This was important for us to establish the existence of the limit 
-of \((a_t)\) and \((M_t)\). However, as shown above, we now require some quantitative bounds for 
-\(A_t\). For this purpose, we first compute some useful properties of \(A_t\).
+of \((a_t)\) and \((M_t)\). However, as shown above, we now require some quantitative bounds for the operator 
+norm of \(A_t\). For this purpose, we first compute some useful properties of \(A_t\).
 
 Observing 
 \[\int \dd F_t(x) \mu(\dd x) = \int \langle x - a_t, \dd W_t\rangle \mu_t(\dd x) = 
@@ -274,23 +274,24 @@ and the third term becomes
   & = -2 A_t^2 \dd t.
 \end{align*}
 Hence, combining these and equation~\ref{eq:stoch_loc} together in \ref{eq:diff_cov_aux}, we have
+\[\dd A_t = \int (x - a_t)^{\otimes 2} \langle x - a_t, \dd W_t \rangle \mu_t(\dd x) - A_t^2 \dd t\]
+However, since we wish to bound \(A_t\) from above, as the drift term \(- A_t^2 \dd t\) only contributes 
+negatively, an upper bound for the process of the form 
+\(\int (x - a_t)^{\otimes 2} \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\) is also sufficient for \(A_t\).
+Hence, we proceed by ignoring the drift term and redefine the process \(A_t\) such that
 \begin{equation}\label{eq:diff_cov}
-  \begin{split}
-    \dd A_t & = \int (x - a_t)^{\otimes 2} \langle x - a_t, \dd W_t \rangle \mu_t(\dd x) - A_t^2 \dd t
-      %= \left(\int (x - a_t)^{\otimes 3} \mu_t(\dd x)\right)\dd W_t - A_t^2 \dd t.
-  \end{split}
+  \dd A_t = \int (x - a_t)^{\otimes 2} \langle x - a_t, \dd W_t \rangle \mu_t(\dd x).
 \end{equation}
-
-With this computation in mind, we now proceed to bound the operator norm of \(A_t\). In particular, 
+With this justification, we now proceed to bound the operator norm of this new \(A_t\). In particular, 
 by recalling that \(\|A_t\|_{\text{op}} = \max_{i= 1, \cdots, n} \lambda_i(t) = \|(\lambda_i(t))_{i = 1}^n\|_\infty\) 
 where \(\lambda_i(t)\) denotes the distinct eigenvalues of \(A_t\), it suffices to find a bound for the potential 
 \begin{equation}
-  \Phi_t^{\alpha} = \sum_{i = 1}^n |\lambda_i(t)|^{\alpha} = \|(\lambda_i(t))_{i = 1}^n\|_\alpha^\alpha
+  \Phi^{\alpha}(t) = \sum_{i = 1}^n |\lambda_i(t)|^{\alpha} = \|(\lambda_i(t))_{i = 1}^n\|_\alpha^\alpha
 \end{equation} 
 for some \(\alpha > 0\). Furthermore, as \(A_t\) is positive 
 semi-definite, \(\lambda_i(t) \ge 0\) for all \(i = 1, \cdots, n\) and thus we have
-\(\Phi_t^\alpha = \sum_{i = 1}^n \lambda_i(t)^{\alpha}\). Again, to proceed, we will attempt to compute 
-\(\dd \Phi_t^\alpha\) at some \(t = t_0 > 0\) utilizing the following lemma.
+\(\Phi^\alpha(t) = \sum_{i = 1}^n \lambda_i(t)^{\alpha}\). Again, to proceed, we will attempt to compute 
+\(\dd \Phi^\alpha(t)\) at some \(t = t_0 > 0\) utilizing the following lemma.
 
 \begin{lemma}\label{lem:diff_eig}
   If \(A = [a_{ij}]\) is a diagonal matrix with distinct eigenvalues \(\lambda_i, \cdots, \lambda_n\), then 
@@ -309,28 +310,57 @@ eigenbasis of \(A_{t_0}\) (they are in fact orthonormal as \(A_{t_0}\) is positi
 we will consider \(A_t\) with respect to this basis by considering the entries 
 \[a_{ij}(t) := \langle e_i, A_t e_j\rangle.\]
 Using equation~\ref{eq:diff_cov}, we compute 
-\begin{equation}
-  \begin{split}
-    \dd a_{ij}(t) & = \left\langle e_i, \left(\int (x - a_t)^{\otimes 2} 
-      \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\right) e_j \right\rangle - \langle e_i, A^2_t e_j\rangle \dd t\\
-      & = \left\langle\int \langle e_i, (x - a_t)^{\otimes 2} e_j\rangle
-        (x - a_t) \mu_t(\dd x), \dd W_t\right\rangle - \langle e_i, A^2_t e_j\rangle \dd t.
-  \end{split}
-\end{equation}
-Since by construction, \(A_{t_0}\) is diagonal with respect to the eigenbasis \((e_i)_{i = 1}^n\), we have 
-\(\langle e_i, A^2_{t_0} e_j\rangle = \langle e_i, A_{t_0} e_j\rangle^2 \ge 0\) and thus the term \(- \langle e_i, A^2_t e_j\rangle \dd t\) 
-contributes negatively around \(t_0\). Hence, as we are interested in bounding \(\dd a_{ij}(t)\) from 
-above, we may ignore the second term. With this in mind, denoting 
-\[\xi_{ij} = \int \langle e_i, (x - a_t)^{\otimes 2} e_j\rangle (x - a_t) \mu_t(\dd x),\] 
-we have \(\dd a_{ij}(t) \le \langle \xi_{ij}, \dd W_t\rangle\). Thus, combining this with lemma~\ref{lem:diff_eig}, 
-we have by Itô's formula
+\begin{align*}
+  \dd a_{ij}(t) & = \left\langle e_i, \left(\int (x - a_t)^{\otimes 2} 
+    \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\right) e_j \right\rangle\\
+    & = \left\langle\int \langle e_i, (x - a_t)^{\otimes 2} e_j\rangle
+      (x - a_t) \mu_t(\dd x), \dd W_t\right\rangle
+      = \langle \xi_{ij}, \dd W_t\rangle
+\end{align*}
+where we introduce the notation \(\xi_{ij} = \int \langle e_i, (x - a_t)^{\otimes 2} e_j\rangle (x - a_t) \mu_t(\dd x).\)
+Thus, combining this with lemma~\ref{lem:diff_eig}, 
+denoting \(\lambda_i = \lambda_i(t_0)\), we have by Itô's formula
 \begin{equation}
   \begin{split}
     \dd \lambda_i(t) 
     & = \sum_{j, k = 1}^n \pdv{\lambda_i}{a_{jk}} \dd a_{jk}(t) 
       + \frac{1}{2}\sum_{j, k = 1}^n \sum_{l, m = 1}^n \pdv[2]{\lambda_i}{a_{jk}}{a_{lm}} \dd[] [a_{jk}, a_{lm}]_t\\
-    & \le \langle \xi_{ii}, \dd W_t\rangle + \sum_{j \neq i} \frac{\dd[][a_{ij}]_t}{\lambda_i - \lambda_j}
-      \le \langle \xi_{ii}, \dd W_t\rangle + \sum_{j \neq i} \frac{\|\xi_{ij}\|^2}{\lambda_i - \lambda_{j}}.
+    & = \langle \xi_{ii}, \dd W_t\rangle + \sum_{j \neq i} \frac{\dd[][a_{ij}]_t}{\lambda_i - \lambda_j}
+      = \langle \xi_{ii}, \dd W_t\rangle + \sum_{j \neq i} \frac{\|\xi_{ij}\|^2}{\lambda_i - \lambda_{j}} \dd t.
   \end{split}
 \end{equation}
-at \(t = t_0\).
+at \(t = t_0\). As a result, it is also clear that \(\dd[][\lambda_i(t)]_{t_0} = \|\xi_{ii}\|^2 \dd t\). 
+
+Again applying Itô's formula, we may finally compute \(\dd \Phi^\alpha(t)|_{t = t_0}\):
+\begin{align*}
+  \dd \Phi^\alpha(t)|_{t = t_0} & = \sum_{i = 1}^n \pdv{\Phi^\alpha}{\lambda_i} \dd \lambda_i(t)|_{t = t_0} 
+    + \frac{1}{2}\sum_{i, j = 1}^n \pdv[2]{\Phi^\alpha}{\lambda_i}{\lambda_j} \dd[][\lambda_i, \lambda_j]_{t_0}\\
+  & = \alpha \sum_{i = 1}^n \lambda_i^{\alpha - 1} \dd \lambda_i(t)|_{t = t_0} 
+    + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i^{\alpha - 2} \dd[][\lambda_i(t)]_{t_0}\\
+  & = \alpha \sum_{i = 1}^n \lambda_i^{\alpha - 1} \left(\langle \xi_{ii}, \dd W_t\rangle 
+    + \sum_{j \neq i} \frac{\|\xi_{ij}\|^2}{\lambda_i - \lambda_j} \dd t\right) 
+    + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i^{\alpha - 2} \dd[][\lambda_i(t)]_{t_0}\\
+  & = \alpha \sum_{i \neq j}\lambda_i^{\alpha - 1} \frac{\|\xi_{ij}\|^2}{\lambda_i - \lambda_j} \dd t 
+    + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i^{\alpha - 2} \|\xi_{ii}\|^2 \dd t
+    + \underbrace{\alpha \sum_{i = 1}^n \lambda_i \langle \xi_{ii}, \dd W_t\rangle}_{=: N_t}\\
+  & = \frac{1}{2}\alpha \sum_{i \neq j}\|\xi_{ij}\|^2\frac{\lambda_i^{\alpha - 1} - \lambda_j^{\alpha -1}}{\lambda_i - \lambda_j}\dd t
+    + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i(t)^{\alpha - 2} \|\xi_{ii}\|^2 \dd t + N_t\\
+  & \le \frac{1}{2}\alpha(\alpha - 1) \sum_{i \neq j}\|\xi_{ij}\|^2 (\lambda_i \vee \lambda_j)^{\alpha - 2} \dd t
+    + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i(t)^{\alpha - 2} \|\xi_{ii}\|^2 \dd t + N_t\\
+  & = \frac{1}{2}\alpha(\alpha - 1) \sum_{i, j = 1}^n\|\xi_{ij}\|^2 (\lambda_i \vee \lambda_j)^{\alpha - 2} \dd t
+    + N_t
+    \le \alpha^2 \sum_{i, j = 1}^n\|\xi_{ij}\|^2 \lambda_i^{\alpha - 2} \dd t + N_t,
+\end{align*}
+where the first inequality holds as 
+\[\frac{\lambda_i^{\alpha - 1} - \lambda_j^{\alpha -1}}{\lambda_i - \lambda_j}
+  = \lambda_i^{\alpha - 2} + \lambda_i^{\alpha - 3}\lambda_j + \cdots + \lambda_i^{\alpha - 2} 
+  \le (\alpha - 1)(\lambda_i \vee \lambda_j)^{\alpha - 2}.\]
+Thus, we have shown 
+\begin{equation}
+  \dd \Phi^\alpha(t) \le \alpha^2 \sum_{i = 1}^n \lambda_i(t)^{\alpha - 2} \sum_{j = 1}^n \|\xi_{ij}\|^2 \dd t + N_t
+\end{equation}
+where \((N_t)\) is a martingale.
+
+\subsubsection{Stopping the process early}
+
+\subsection{Lee-Vempala's bound}

@@ -162,7 +162,8 @@ where \(\phi_*\mu\) denotes the push-forward measure of \(\mu\) along \(\phi\).
 
 \subsection{Reduction of KLS to thin-shell}
 
-In this section we will present a version of Eldan's proof \cite{Eldan_notes} of theorem~\ref{thm:KLS_to_TS}.
+In this section we will present a proof of theorem~\ref{thm:KLS_to_TS} as described by \cite{Lee_2016} and 
+reformulated in terms of concentration in \cite{Eldan_notes}.
 We recall the goal of theorem~\ref{thm:KLS_to_TS} is to control \(\text{Var}_\mu[\phi]\) by 
 a logarithmic factor of \(\text{Var}_\mu[\|\cdot\|]\). As translating the barycenter of \(\mu\)
 does not affect its variance, we may assume \(\mu\) has its barycenter \(\overline{\mu}\) at the origin.
@@ -197,9 +198,9 @@ is bounded by \(t^{-1}\). With this in mind, we see that the reduction of KLS to
 \subsubsection{Differential of the quadratic variation}
 
 To bound the term \(\mathbb{E}[M]_t\) we will compute its differential and bound it 
-sufficiently such that we reobtain a bound for \([M]_t\) after integrating. In particular, 
+sufficiently such that we reobtain a bound for \([M]_t\) after integration. In particular, 
 we will show \(\dd[] [M]_t\) is bounded by a quantity concerning \(A_t\). This should not be at all 
-surprising as both \(\dd[] [M]_t\) and \(A_t\) describes the variation of \(M_t\) at a infinitesimal time 
+surprising as both \(\dd[] [M]_t\) and \(A_t\) describes the variation of \(M_t\) in a infinitesimal time 
 neighborhood of \(t\).
 
 We compute
@@ -225,17 +226,16 @@ we observe,
     & \le \text{Var}_{\mu_t}[\phi] \|A_t\|_{\text{op}}.
   \end{split}
 \end{equation}
-where the inequality is due to Cauchy-Schwarz and \(\|\cdot\|_{\text{op}}\) denotes the operator norm. 
+where the inequality follows by the Cauchy-Schwarz inequality and \(\|\cdot\|_{\text{op}}\) denotes the operator norm. 
 Thus, as we know \(\text{Var}_{\mu_t}[\phi] \le t^{-1}\), the problem is now reduced to that of
 bounding \(\|A_t\|_{\text{op}}\).
 
 \subsubsection{Analysis of the covariance matrix}
 
-
 As demonstrated in section~\ref{sec:construct}, we know the limiting behavior of the covariance matrices, namely 
 \(A_t \to 0\) point-wise as \(t \to \infty\). This was important for us to establish the existence of the limit 
 of \((a_t)\) and \((M_t)\). However, as shown above, we now require some quantitative bounds for 
-\(A_t\). We will in this subsection compute some properties of \(A_t\) useful for this purpose.
+\(A_t\). For this purpose, we first compute some useful properties of \(A_t\).
 
 Observing 
 \[\int \dd F_t(x) \mu(\dd x) = \int \langle x - a_t, \dd W_t\rangle \mu_t(\dd x) = 
@@ -277,6 +277,60 @@ Hence, combining these and equation~\ref{eq:stoch_loc} together in \ref{eq:diff_
 \begin{equation}\label{eq:diff_cov}
   \begin{split}
     \dd A_t & = \int (x - a_t)^{\otimes 2} \langle x - a_t, \dd W_t \rangle \mu_t(\dd x) - A_t^2 \dd t
-      = \left(\int (x - a_t)^{\otimes 3} \mu_t(\dd x)\right)\dd W_t - A_t^2 \dd t.
+      %= \left(\int (x - a_t)^{\otimes 3} \mu_t(\dd x)\right)\dd W_t - A_t^2 \dd t.
   \end{split}
 \end{equation}
+
+With this computation in mind, we now proceed to bound the operator norm of \(A_t\). In particular, 
+by recalling that \(\|A_t\|_{\text{op}} = \max_{i= 1, \cdots, n} \lambda_i(t) = \|(\lambda_i(t))_{i = 1}^n\|_\infty\) 
+where \(\lambda_i(t)\) denotes the distinct eigenvalues of \(A_t\), it suffices to find a bound for the potential 
+\begin{equation}
+  \Phi_t^{\alpha} = \sum_{i = 1}^n |\lambda_i(t)|^{\alpha} = \|(\lambda_i(t))_{i = 1}^n\|_\alpha^\alpha
+\end{equation} 
+for some \(\alpha > 0\). Furthermore, as \(A_t\) is positive 
+semi-definite, \(\lambda_i(t) \ge 0\) for all \(i = 1, \cdots, n\) and thus we have
+\(\Phi_t^\alpha = \sum_{i = 1}^n \lambda_i(t)^{\alpha}\). Again, to proceed, we will attempt to compute 
+\(\dd \Phi_t^\alpha\) at some \(t = t_0 > 0\) utilizing the following lemma.
+
+\begin{lemma}\label{lem:diff_eig}
+  If \(A = [a_{ij}]\) is a diagonal matrix with distinct eigenvalues \(\lambda_i, \cdots, \lambda_n\), then 
+  for all \(i, j, k, l, m \in {1, \cdots n}\), we have
+  \begin{itemize}
+    \item \(\pdv{\lambda_i}{a_{jk}} = \delta_{ij} \delta_{ik}\);
+    \item whenever \(i \neq j\), \(\pdv[2]{\lambda_i}{a_{ij}} = 2(\lambda_i - \lambda_j)^{-1}\);
+    \item and for \(j \neq l, k \neq m\) or \(i \neq j\) and \(i \neq k\),
+      \(\pdv[2]{\lambda_i}{a_{jk}}{a_{lm}} = 0\),
+  \end{itemize}
+  where \(\delta_{ij}\) denotes the Kronecker delta function.
+\end{lemma}
+
+As this lemma requires the matrix to be diagonal, denoting \(e_1, \cdots, e_n\) as the normalized 
+eigenbasis of \(A_{t_0}\) (they are in fact orthonormal as \(A_{t_0}\) is positive semi-definite), 
+we will consider \(A_t\) with respect to this basis by considering the entries 
+\[a_{ij}(t) := \langle e_i, A_t e_j\rangle.\]
+Using equation~\ref{eq:diff_cov}, we compute 
+\begin{equation}
+  \begin{split}
+    \dd a_{ij}(t) & = \left\langle e_i, \left(\int (x - a_t)^{\otimes 2} 
+      \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\right) e_j \right\rangle - \langle e_i, A^2_t e_j\rangle \dd t\\
+      & = \left\langle\int \langle e_i, (x - a_t)^{\otimes 2} e_j\rangle
+        (x - a_t) \mu_t(\dd x), \dd W_t\right\rangle - \langle e_i, A^2_t e_j\rangle \dd t.
+  \end{split}
+\end{equation}
+Since by construction, \(A_{t_0}\) is diagonal with respect to the eigenbasis \((e_i)_{i = 1}^n\), we have 
+\(\langle e_i, A^2_{t_0} e_j\rangle = \langle e_i, A_{t_0} e_j\rangle^2 \ge 0\) and thus the term \(- \langle e_i, A^2_t e_j\rangle \dd t\) 
+contributes negatively around \(t_0\). Hence, as we are interested in bounding \(\dd a_{ij}(t)\) from 
+above, we may ignore the second term. With this in mind, denoting 
+\[\xi_{ij} = \int \langle e_i, (x - a_t)^{\otimes 2} e_j\rangle (x - a_t) \mu_t(\dd x),\] 
+we have \(\dd a_{ij}(t) \le \langle \xi_{ij}, \dd W_t\rangle\). Thus, combining this with lemma~\ref{lem:diff_eig}, 
+we have by Itô's formula
+\begin{equation}
+  \begin{split}
+    \dd \lambda_i(t) 
+    & = \sum_{j, k = 1}^n \pdv{\lambda_i}{a_{jk}} \dd a_{jk}(t) 
+      + \frac{1}{2}\sum_{j, k = 1}^n \sum_{l, m = 1}^n \pdv[2]{\lambda_i}{a_{jk}}{a_{lm}} \dd[] [a_{jk}, a_{lm}]_t\\
+    & \le \langle \xi_{ii}, \dd W_t\rangle + \sum_{j \neq i} \frac{\dd[][a_{ij}]_t}{\lambda_i - \lambda_j}
+      \le \langle \xi_{ii}, \dd W_t\rangle + \sum_{j \neq i} \frac{\|\xi_{ij}\|^2}{\lambda_i - \lambda_{j}}.
+  \end{split}
+\end{equation}
+at \(t = t_0\).

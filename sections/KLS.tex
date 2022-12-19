@@ -123,11 +123,11 @@ With this theorem in mind, we establish the following correspondence.
 
 Informally, the KLS conjecture suggests that any log-concave measure on \(\mathbb{R}^n\) admits 
 the same concentration as that of the Gaussian measure. However, unlike the Gaussian, as the 
-concentration of measures is not invariant under linear transformations, it is clear that the KLS 
+concentration of measures is not invariant under linear functions, it is clear that the KLS 
 conjecture would not hold without a suitable normalization. This leads us to the following formulation 
 of the KLS conjecture.
 
-\begin{conjecture}[Kannan-Lovász-Simonovitz, \cite{Eldan_notes}]
+\begin{conjecture}[Kannan-Lovász-Simonovitz, \cite{Eldan_notes}]\label{conj:KLS}
   Denoting \(\mathscr{M}^n_{\text{con}}\) the set of all log-concave probability measures \(\mu\) on 
   \(\mathbb{R}^n\) satisfying \(\text{Var}_\mu[T] \le 1\) for all 1-Lipschitz linear maps 
   \(T : \mathbb{R}^n \to \mathbb{R}\), there exists a \textit{universal} constant \(C\) such that for all 
@@ -160,8 +160,9 @@ of the KLS conjecture to the thin-shell conjecture up to logarithmic factors.
   \[C^n_{\text{TS}} \le C^n_{\text{con}} \le C^n_{\text{TS}} \log n.\]
 \end{theorem}
 
-We remark that while the constants in theorem~\ref{thm:KLS_to_TS} depends on the dimension \(n\), if 
-\(\sup_n C^n_{\text{TS}} \log n < \infty\), we can obtain the universal bound for the KLS conjecture 
+We remark that while the constants in theorem~\ref{thm:KLS_to_TS} depends on the dimension \(n\), the 
+KLS conjecture is reduced to the thin-shell conjecture in the sense that it suffices to show 
+\(\sup_n C^n_{\text{TS}} \log n < \infty\). Then, the universal bound for the KLS conjecture is obtained 
 by taking the constant \(C = \sup_n C^n_{\text{con}} \le \sup_n C^n_{\text{TS}} \log n < \infty\).
 
 \subsubsection{Equivalent formulation of the KLS conjecture}
@@ -202,7 +203,7 @@ instead formulated with any of these inequalities instead.
 
 \begin{conjecture}[KLS, \cite{Eldan_2013}]
   Denoting \(\mathscr{M}^n_{\text{iso}}\) the set of all log-concave probability measures \(\mu\) on 
-  \(\mathbb{R}^n\) satisfying \(\int x \mu(\dd x) = 0\) (namely \(\mu\) is isotropic), there exists
+  \(\mathbb{R}^n\) satisfying \(\mathbb{E}_{X \sim \mu}[X] = 0\) and \(\text{Cov}_{X \sim \mu}(X) = \text{id}\) (namely \(\mu\) is isotropic), there exists
   a \textit{universal} constant \(D\) such that for all \(\mu \in \mathscr{M}^n_{\text{iso}}\), 
   \(\mu\) satisfy the Cheeger's inequality with constant \(D\).\todo{Why are the normalisations equivalent?}
 \end{conjecture}
@@ -210,12 +211,19 @@ instead formulated with any of these inequalities instead.
 Similarly, we may also reformulate the KLS conjecture using the constant provided by the Poincaré inequality. 
 
 \begin{conjecture}[KLS, \cite{Eldan_2013}]
-    Denoting \(\mathscr{M}^n_{\text{iso}}\) as above, there exist a \textit{universal} constant \(D\) 
-    such that for all \(\mu \in \mathscr{M}_{\text{iso}}\), \(\mu\) satisfy the Poincaré inequality 
-    with constant \(D\).
-  \end{conjecture}
-  
-  By observing that \(\text{Var}_\mu[\phi] = \int \phi^2 \dd \mu\) for all differentiable \(\phi\) 
-  satisfying \(\int \phi \dd \mu = 0\), we remark that the Poincaré inequality can be alternatively 
-  written as 
-  \[\frac{\int \phi^2 \dd \mu}{\int \|\nabla \phi\|^2 \dd \mu} \le D^{-1}.\]
+  Denoting \(\mathscr{M}^n_{\text{iso}}\) as above, there exist a \textit{universal} constant \(D\) 
+  such that for all \(\mu \in \mathscr{M}^n_{\text{iso}}\), \(\mu\) satisfy the Poincaré inequality 
+  with constant \(D\).
+\end{conjecture}
+
+We remark that isotropic measures satisfy the normalization condition in \ref{conj:KLS}. Indeed, if 
+\(T : \mathbb{R}^n \to \mathbb{R}\) is a 1-Lipschitz linear function, i.e. is of the form \(v \mapsto w^T v + d\) 
+for some \(w \in S^{n - 1}\) and \(d \in \mathbb{R}\), then we have
+\[\text{Var}_{\mu}[T] = \text{Var}_{X \sim \mu}\left[\sum_{i = 1}^n w_i X_i + d\right] 
+    = \sum_{i, j = 1}^n w_i w_j \text{Cov}_{X \sim \mu}(X_i, X_j) = \sum_{i = 1}^n w_i^2 = 1,\]
+as \(\text{Cov}_{X \sim \mu}(X) = \text{id}\).
+
+  % By observing that \(\text{Var}_\mu[\phi] = \int \phi^2 \dd \mu\) for all differentiable \(\phi\) 
+  % satisfying \(\int \phi \dd \mu = 0\), we remark that the Poincaré inequality can be alternatively 
+  % written as 
+  % \[\frac{\int \phi^2 \dd \mu}{\int \|\nabla \phi\|^2 \dd \mu} \le D^{-1}.\]

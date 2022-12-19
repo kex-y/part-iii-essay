@@ -167,6 +167,11 @@ reformulated in terms of concentration in \cite{Eldan_notes}.
 We recall the goal of theorem~\ref{thm:KLS_to_TS} is to control \(\text{Var}_\mu[\phi]\) by 
 a logarithmic factor of \(\text{Var}_\mu[\|\cdot\|]\). As translating the barycenter of \(\mu\)
 does not affect its variance, we may assume \(\mu\) has its barycenter \(\overline{\mu}\) at the origin.
+
+Furthermore, \todo{explain} we may assume \(\mu\) is supported on \(B_n(0) \subseteq \mathbb{R}^n\) with 
+\(B_n(0)\) the ball at the origin of radius \(n\). Thus, we also have 
+\[\text{supp}\ \mu_t = \text{supp}\ F_t\mu \subseteq \text{supp}\ \mu \subseteq B_n(0)\] 
+for all \(t > 0\).
  
 Fix \(\phi : \mathbb{R}^n \to \mathbb{R}\) some 1-Lipschitz function and let \((M_t)\) be the 
 martingale as described above and in particular we recall equation~\ref{cor:lim_dis} and so, 
@@ -191,15 +196,17 @@ the bound
     = \mathbb{E}[M]_t + \mathbb{E}[\text{Var}_{\mu_t}[\phi]].
 \end{equation}
 Now, observing that \(\phi\) is 1-Lipschitz implies \(\|\nabla \phi\|^2 \le 1\), we have by lemma~\ref{lem:brascamp-lieb} 
-the bound \(\text{Var}_{\mu_t}[\phi] \le t^{-1}\). Thus, the second term \(\mathbb{E}[\text{Var}_{\mu_t}[\phi]]\) 
-is bounded by \(t^{-1}\). With this in mind, we see that the reduction of KLS to thin-shell relies on bounding 
-\(\mathbb{E}[M]_t\) which we will dedicate the remainder of this section to.
+the bound \(\text{Var}_{\mu_t}[\phi] \le t^{-1}\) (in fact \(\text{Var}_{\mu_t}[\phi] \le t^{-1} \wedge n^2\) as 
+we have assumed \(\text{supp}\ \mu_t \subseteq B_n(0)\)). Thus, the second term \(\mathbb{E}[\text{Var}_{\mu_t}[\phi]]\) 
+is bounded by \(t^{-1}\). With this in mind, by choosing an appropriate random time \(\tau\) to stop the process such that 
+\(\mathbb{E}[M]_\tau\) is nicely bounded, the result follow by bounding \(\mathbb{E}[\tau^{-1}]\). We dedicate 
+the remainder of this section to describe said procedure in detail.
 
 \subsubsection{Differential of the quadratic variation}
 
-To bound the term \(\mathbb{E}[M]_t\) we will compute its differential and bound it 
-sufficiently such that we reobtain a bound for \([M]_t\) after integration. In particular, 
-we will show \(\dd[] [M]_t\) is bounded by a quantity concerning \(A_t\). This should not be at all 
+To bound the term \(\mathbb{E}[M]_\tau\) we will compute its differential and bound it 
+sufficiently such that we reobtain a bound for \([M]_\tau\) after integration. 
+We will show \(\dd[] [M]_t\) is bounded by a quantity concerning \(A_t\). This should not be at all 
 surprising as both \(\dd[] [M]_t\) and \(A_t\) describes the variation of \(M_t\) in a infinitesimal time 
 neighborhood of \(t\).
 
@@ -212,18 +219,18 @@ and so, by considering the component-wise quadratic variation, we have
 \begin{equation}\label{eq:diff_qvar}
   \dd[] [M]_t = \left\| \int \phi(x)(x - a_t)\mu_t(\dd x) \right\|^2 \dd t.
 \end{equation}
-Then, denoting \(\alpha\) the vector \(\int \phi(x)(x - a_t)\mu_t(\dd x)\) normalized to have norm 1, so 
-\[\left\langle \alpha, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle = \left\|\int \phi(x)(x - a_t)\mu_t(\dd x)\right\|\]
+Then, denoting \(\theta\) the vector \(\int \phi(x)(x - a_t)\mu_t(\dd x)\) normalized to have norm 1, so 
+\[\left\langle \theta, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle = \left\|\int \phi(x)(x - a_t)\mu_t(\dd x)\right\|\]
 we observe,
-\begin{equation}
+\begin{equation}\label{eq:red_a}
   \begin{split}
-    \dd[] [M]_t & = \left\langle \alpha, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle^2 
-      = \left\langle \alpha, \int (\phi(x) - a_t)(x - a_t)\mu_t(\dd x)\right\rangle^2 \\
-    & = \left(\int (\phi(x) - a_t) \langle \alpha, x - a_t\rangle \mu_t(\dd x)\right)^2\\
-    & \le \left(\int (\phi(x) - a_t)^2 \mu_t(\dd x)\right) \left(\int \langle \alpha, x - a_t\rangle^2 \mu_t(\dd x)\right)\\
-    & = \text{Var}_{\mu_t}[\phi] \int \alpha^T (x - a_t)^{\otimes 2} \alpha \mu_t(\dd x) 
-      = \text{Var}_{\mu_t}[\phi] \alpha^T A_t \alpha\\ 
-    & \le \text{Var}_{\mu_t}[\phi] \|A_t\|_{\text{op}}.
+    \dd[] [M]_t & = \left\langle \theta, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t
+      = \left\langle \theta, \int (\phi(x) - a_t)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t\\
+    & = \left(\int (\phi(x) - a_t) \langle \theta, x - a_t\rangle \mu_t(\dd x)\right)^2 \dd t\\
+    & \le \left(\int (\phi(x) - a_t)^2 \mu_t(\dd x)\right) \left(\int \langle \theta, x - a_t\rangle^2 \mu_t(\dd x)\right) \dd t\\
+    & = \text{Var}_{\mu_t}[\phi] \left(\int \theta^T (x - a_t)^{\otimes 2} \theta \mu_t(\dd x)\right) \dd t
+      = \text{Var}_{\mu_t}[\phi] (\theta^T A_t \theta)\dd t\\ 
+    & \le \text{Var}_{\mu_t}[\phi] \|A_t\|_{\text{op}} \dd t.
   \end{split}
 \end{equation}
 where the inequality follows by the Cauchy-Schwarz inequality and \(\|\cdot\|_{\text{op}}\) denotes the operator norm. 
@@ -283,8 +290,8 @@ Hence, we proceed by ignoring the drift term and redefine the process \(A_t\) su
   \dd A_t = \int (x - a_t)^{\otimes 2} \langle x - a_t, \dd W_t \rangle \mu_t(\dd x).
 \end{equation}
 With this justification, we now proceed to bound the operator norm of this new \(A_t\). In particular, 
-by recalling that \(\|A_t\|_{\text{op}} = \max_{i= 1, \cdots, n} \lambda_i(t) = \|(\lambda_i(t))_{i = 1}^n\|_\infty\) 
-where \(\lambda_i(t)\) denotes the distinct eigenvalues of \(A_t\), it suffices to find a bound for the potential 
+as \(A_t\) is symmetric, we recall that \(\|A_t\|_{\text{op}} = \max_{i= 1, \cdots, n} \lambda_i(t) = \|(\lambda_i(t))_{i = 1}^n\|_\infty\) 
+where \(\lambda_i(t)\) denotes the distinct eigenvalues of \(A_t\). Hence, it suffices to find a bound for the potential 
 \begin{equation}
   \Phi^{\alpha}(t) = \sum_{i = 1}^n |\lambda_i(t)|^{\alpha} = \|(\lambda_i(t))_{i = 1}^n\|_\alpha^\alpha
 \end{equation} 
@@ -362,5 +369,22 @@ Thus, we have shown
 where \((N_t)\) is a martingale.
 
 \subsubsection{Stopping the process early}
+
+As outlined in the beginning of this section, we will stop the process early in order to provide a 
+bound for the right hand side of equation~\ref{eq:bound}. By observing equation~\ref{eq:red_a}, we hypothesize that
+we should stop the process once \(\|A_t\|_{\text{op}}\) grows too large. As a result we define the stopping time 
+\[\tau := \inf\{t > 0 \mid \|A_t\|_{\text{op}} > 2\} \wedge 1.\]
+Then, we have by the optional stopping theorem
+\begin{align*}
+  [M]_\tau & = \int_0^\tau \dd[] [M]_t 
+      \le \int_0^\tau \overbrace{\text{Var}_\mu[\phi]}^{\le t^{-1} \wedge n^2} \overbrace{\|A_t\|_{\text{op}}}^{\le 2} \dd t\\
+    & \le 2 \int_0^\tau t^{-1} \wedge n^2 \dd t \le 2 \int_0^1 t^{-1} \wedge n^2 \dd t = 2 + 4 \log n.
+\end{align*}
+Combining this with equation~\ref{eq:bound}, we obtain
+\begin{equation}
+  \text{Var}_\mu[\phi] \le 2 + 4 \log n + \mathbb{E}[\tau^{-1}],
+\end{equation}
+as it remains to find an upper bound for \(\mathbb{E}[\tau^{-1}]\).
+
 
 \subsection{Lee-Vempala's bound}

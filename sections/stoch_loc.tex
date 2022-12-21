@@ -1,10 +1,13 @@
 We will in this section provide a description of the stochastic localisation scheme introduced by 
 Eldan \cite{Eldan_2013} and describe its application in reducing (up to a logarithmic factor) the 
-KLS conjecture into the thin-shell conjecture, i.e. we will describe a proof of \ref{thm:KLS_to_TS}.
+KLS conjecture into the thin-shell conjecture, i.e. we will describe a proof of theorem~\ref{thm:KLS_to_TS}.
 
-% As a broad overview, given a measure, we will construct random sequences of measures for which each realization 
-% converges weakly to the some Dirac measure. Furthermore, the mass of these Dirac measures are 
-% distributed according to the original measure.
+As a high level overview, given a measure, the stochastic localization scheme constructs a measure-valued martingale
+for which the original measure is recovered in the limit. Then, as the concentration of the measure 
+relates to the covariance of said measure, we will stop the martingale before the covariance grows too large. 
+This allows us to analyze the martingale in a more tractable manner. However, as the the sequence is 
+a martingale, some properties are invariant in time and hence allowing us to conclude that these properties 
+also hold for the original measure.
 
 \subsection{Construction and basic properties}\label{sec:construct}
 
@@ -163,11 +166,12 @@ where \(\phi_*\mu\) denotes the push-forward measure of \(\mu\) along \(\phi\).
 \subsection{Reduction of KLS to thin-shell}
 
 In this section we will present a proof of theorem~\ref{thm:KLS_to_TS} as presented in \cite{Eldan_notes} 
-based on the method as described by \cite{Lee_2016}.
+based on the method as described by \cite{Lee_2016}. Furthermore, by making small modifications to this 
+method, we will also present the main result of \cite{Lee_2016}.
+
 We recall the goal of theorem~\ref{thm:KLS_to_TS} is to control \(\text{Var}_\mu[\phi]\) by 
 a logarithmic factor of \(\text{Var}_\mu[\|\cdot\|]\). As translating the barycenter of \(\mu\)
 does not affect its variance, we may assume \(\mu\) has its barycenter \(\overline{\mu}\) at the origin.
-
 Furthermore, \todo{explain} we may assume \(\mu\) is supported on \(B_n(0) \subseteq \mathbb{R}^n\) with 
 \(B_n(0)\) the ball at the origin of radius \(n\). Thus, we also have 
 \[\text{supp}\ \mu_t = \text{supp}\ F_t\mu \subseteq \text{supp}\ \mu \subseteq B_n(0)\] 
@@ -338,7 +342,7 @@ denoting \(\lambda_i = \lambda_i(t_0)\), we have by Itô's formula
 \end{equation}
 at \(t = t_0\). As a result, it is also clear that \(\dd[][\lambda_i(t)]_{t_0} = \|\xi_{ii}\|^2 \dd t\). 
 
-Again applying Itô's formula, we may finally compute
+Again applying Itô's formula, we may finally compute\todo{Move computation to appendix}
 \begin{align*}
   \dd \Phi^\alpha(t) & = \sum_{i = 1}^n \pdv{\Phi^\alpha}{\lambda_i}\Big\vert_{t = t_0} \dd \lambda_i(t)
     + \frac{1}{2}\sum_{i, j = 1}^n \pdv[2]{\Phi^\alpha}{\lambda_i}{\lambda_j}\Big\vert_{t = t_0} \dd[][\lambda_i, \lambda_j]_{t}\\
@@ -468,5 +472,12 @@ implying there exists a constant \(R > 0\) such that for all 1-Lipschitz \(\phi\
 \(R C_{\text{TS}}^n \log n\)-concentrated and so, \(C_{\text{con}}^n \le R C_{\text{TS}}^n \log n\)
 as required.
 
+% \subsection{Lee-Vempala's bound}
 
-\subsection{Lee-Vempala's bound}
+% \begin{theorem}[Lee-Vempala, \cite{Lee_2016}]
+  
+% \end{theorem}
+
+% By taking \(\alpha = 2\) in equation~\eqref{eq:potential_bound}, we have 
+% \[\dd \Phi^2(t) \le 4 \sum_{i, j = 1}^n \|\xi_{ij}\|^2 + \langle v_t, \dd W_t\rangle,\]
+% where \(v_t = 2 \sum_{i = 1}^n \lambda_i \xi_{ii}\).

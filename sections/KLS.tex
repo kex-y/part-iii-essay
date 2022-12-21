@@ -1,6 +1,8 @@
-While the KLS conjecture is often phrased as a isoperimetric problem, we will mainly consider the 
-conjecture here as a problem regarding measures while providing some discussions regarding its 
-equivalent formulations. \todo{Mention we only work with Borel measures}
+
+
+% While the KLS conjecture is often phrased as a isoperimetric problem, we will mainly consider the 
+% conjecture here as a problem regarding measures while providing some discussions regarding its 
+% equivalent formulations. \todo{Mention we only work with Borel measures}
 
 \subsection{Concentration}
 
@@ -167,22 +169,42 @@ by taking the constant \(C = \sup_n C^n_{\text{con}} \le \sup_n C^n_{\text{TS}} 
 
 \subsubsection{Equivalent formulation of the KLS conjecture}
 
-While the formulation of the KLS conjecture above is very useful, as mentioned previously, the KLS 
-conjecture has several equivalent formulations; we will quickly present them here. However, before 
-stating these formulations, let us quickly complete theorem \ref{thm:milman} with two 
-additional equivalences.
+While we have formulated the KLS conjecture using the language of concentration, the conjecture itself 
+is originally formulated as an isoperimetric problem. The isoperimetric problem is the problem in finding 
+the set of unit volume with minimum surface area. In the case of the \(\mathbb{R}^n\) equipped with the 
+Lebesgue measure, we have known since the ancient Greeks \cite{iso_hist} that the solution is the unit ball. 
+With this in mind, it is natural for us to generalize the problem for arbitrary measures. 
+
+\begin{definition}[Minkowski's boundary measure]
+  Given a measure \(\mu\) on \(\mathbb{R}^n\) and a Borel set \(A \subseteq \mathbb{R}^n\), the Minkowski's 
+  boundary measure of \(A\), 
+  \[\mu^+(\partial A) := \liminf_{\epsilon \downarrow 0} \frac{\mu(A_\epsilon) - \mu(A)}{\epsilon}.\]
+  where \(A_\epsilon := \{x \in \mathbb{R}^n \mid \text{dist}(x, A) \le \epsilon\}\) is the 
+  \(\epsilon\)-thickening of some Borel set \(A\). 
+\end{definition}
+
+The isoperimetric problem for the measure \(\mu\) then becomes the problem of finding the set \(A\) 
+satisfying \(\mu(A) = 1\) with minimum \(\mu^+(\partial A)\). 
 
 \begin{definition}[Cheeger's inequality, \cite{Milman_2008}]
-  Given a measure \(\mu\) on \(\mathbb{R}^n\), we recall the Minkowski's boundary measure 
-  defined by 
-  \[\mu^+(A) := \liminf_{\epsilon \downarrow 0} \frac{\mu(A_\epsilon) - \mu(A)}{\epsilon}\]
-  where \(A_\epsilon := \{x \in \mathbb{R}^n \mid \text{dist}(x, A) \le \epsilon\}\) is the 
-  \(\epsilon\)-thickening of some Borel set \(A\). Then, we say \(\mu\) satisfy Cheeger's inequality 
-  if there exists some \(D\) such that for all \(A\) satisfying \(\mu(A) \le \frac{1}{2}\),
-  \todo{This definition is from Eldan not Milman, can we show equivalence?}
-  \[\mu(A) \le D\mu^+(A).\]
-  We denote the largest such \(D\) by \(D^\mu_{\text{C}}\).
+  Given a measure \(\mu\) on \(\mathbb{R}^n\), we say \(\mu\) satisfy Cheeger's inequality 
+  if there exists some \(D\) such that for all \(A\),
+  \[\mu(A) \wedge \mu(A^c) \le D\mu^+(A).\]
+  We call the largest such \(D\) the inverse Cheeger's constant (or the inverse isoperimetric constant) and 
+  denote it by \(D^\mu_{\text{C}}\).
 \end{definition}
+
+With this, the KLS conjecture can be reformulated as the following.
+
+\begin{conjecture}[KLS, \cite{Eldan_2013}]
+  Denoting \(\mathscr{M}^n_{\text{iso}}\) the set of all log-concave probability measures \(\mu\) on 
+  \(\mathbb{R}^n\) satisfying \(\mathbb{E}_{X \sim \mu}[X] = 0\) and \(\text{Cov}_{X \sim \mu}(X) = \text{id}\) (namely \(\mu\) is isotropic), there exists
+  a \textit{universal} constant \(D\) such that for all \(\mu \in \mathscr{M}^n_{\text{iso}}\), 
+  \(\mu\) satisfy the Cheeger's inequality with constant \(D\).\todo{Why are the normalisations equivalent?}
+\end{conjecture}
+
+The equivalence of the reformulation follows by completing theorem~\ref{thm:equiv} with two additional 
+equivalences.
 
 \begin{theorem}[Milman, \cite{Milman_2008}]\label{thm:milman2}
   For all log-concave measure \(\mu\) on \(\mathbb{R}^n\), the following are equivalent
@@ -199,16 +221,8 @@ additional equivalences.
 \end{theorem}
 
 With this theorem and proposition \ref{thm:equiv} in mind, it is clear that the KLS conjecture can be 
-instead formulated with any of these inequalities instead. 
-
-\begin{conjecture}[KLS, \cite{Eldan_2013}]
-  Denoting \(\mathscr{M}^n_{\text{iso}}\) the set of all log-concave probability measures \(\mu\) on 
-  \(\mathbb{R}^n\) satisfying \(\mathbb{E}_{X \sim \mu}[X] = 0\) and \(\text{Cov}_{X \sim \mu}(X) = \text{id}\) (namely \(\mu\) is isotropic), there exists
-  a \textit{universal} constant \(D\) such that for all \(\mu \in \mathscr{M}^n_{\text{iso}}\), 
-  \(\mu\) satisfy the Cheeger's inequality with constant \(D\).\todo{Why are the normalisations equivalent?}
-\end{conjecture}
-
-Similarly, we may also reformulate the KLS conjecture using the constant provided by the Poincaré inequality. 
+instead formulated with any of these inequalities instead. Thus, the KLS conjecture can also be phrased 
+using the constant provided by the Poincaré inequality. 
 
 \begin{conjecture}[KLS, \cite{Eldan_2013}]
   Denoting \(\mathscr{M}^n_{\text{iso}}\) as above, there exist a \textit{universal} constant \(D\) 
@@ -222,8 +236,3 @@ for some \(w \in S^{n - 1}\) and \(d \in \mathbb{R}\), then we have
 \[\text{Var}_{\mu}[T] = \text{Var}_{X \sim \mu}\left[\sum_{i = 1}^n w_i X_i + d\right] 
     = \sum_{i, j = 1}^n w_i w_j \text{Cov}_{X \sim \mu}(X_i, X_j) = \sum_{i = 1}^n w_i^2 = 1,\]
 as \(\text{Cov}_{X \sim \mu}(X) = \text{id}\).
-
-  % By observing that \(\text{Var}_\mu[\phi] = \int \phi^2 \dd \mu\) for all differentiable \(\phi\) 
-  % satisfying \(\int \phi \dd \mu = 0\), we remark that the Poincaré inequality can be alternatively 
-  % written as 
-  % \[\frac{\int \phi^2 \dd \mu}{\int \|\nabla \phi\|^2 \dd \mu} \le D^{-1}.\]

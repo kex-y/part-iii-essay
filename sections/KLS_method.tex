@@ -1,0 +1,334 @@
+\todo{reformat}
+
+We will in this section provide a description of the stochastic localization scheme introduced by 
+Eldan \cite{Eldan_2013} and describe its application in reducing (up to a logarithmic factor) the 
+KLS conjecture into the thin-shell conjecture, i.e. we will describe a proof of theorem~\ref{thm:KLS_to_TS}.
+
+As a high level overview, given a measure, the stochastic localization scheme constructs a measure-valued martingale
+for which the original measure is recovered in the limit. Then, as the concentration of the measure 
+relates to the covariance of said measure, we will stop the martingale before the covariance grows too large. 
+This allows us to analyze the martingale in a more tractable manner. However, as the the sequence is 
+a martingale, some properties are invariant in time and hence allowing us to conclude that these properties 
+also hold for the original measure.
+
+\subsection{Construction and basic properties}\label{sec:construct}
+\todo{Move to section 2}
+
+\subsection{Reduction of KLS to thin-shell}
+
+In this section we will present a proof of theorem~\ref{thm:KLS_to_TS} as presented in \cite{Eldan_notes} 
+based on the method as described by \cite{Lee_2016}. Furthermore, by making small modifications to this 
+method, we will also present the main result of \cite{Lee_2016}.
+
+We recall the goal of theorem~\ref{thm:KLS_to_TS} is to control \(\text{Var}_\mu[\phi]\) by 
+a logarithmic factor of \(\text{Var}_\mu[\|\cdot\|]\). As translating the barycenter of \(\mu\)
+does not affect its variance, we may assume \(\mu\) has its barycenter \(\overline{\mu}\) at the origin.
+Furthermore, \todo{explain} we may assume \(\mu\) is supported on \(B_n(0) \subseteq \mathbb{R}^n\) with 
+\(B_n(0)\) the ball at the origin of radius \(n\). Thus, we also have 
+\[\text{supp}\ \mu_t = \text{supp}\ F_t\mu \subseteq \text{supp}\ \mu \subseteq B_n(0)\] 
+for all \(t > 0\).
+ 
+Fix \(\phi : \mathbb{R}^n \to \mathbb{R}\) some 1-Lipschitz function and let \((M_t)\) be the 
+martingale as described above and in particular we recall equation~\eqref{cor:lim_dis} and so, 
+\(\text{Var}_\mu[\phi] = \text{Var}[M_\infty]\) where \(M_t \xrightarrow{\text{a.e.}} M_\infty\).
+Hence, for all \(t > 0\), by the martingale property we have
+\begin{align*}
+  \text{Var}[M_t] + \mathbb{E}[\text{Var}[M_\infty \mid \mathscr{F}_t]] 
+    & = (\mathbb{E}[M_t^2] - \mathbb{E}[M_t]^2) 
+      + \mathbb{E}\left[\mathbb{E}[M_\infty^2 \mid \mathscr{F}_t] - \mathbb{E}[M_\infty \mid \mathscr{F}_t]^2\right]\\
+    & = \mathbb{E}[M_t^2] + (\mathbb{E}[\mathbb{E}[M_\infty^2 \mid \mathscr{F}_t]] - \mathbb{E}[M_t^2])\\
+    & = \mathbb{E}[M_\infty^2] = \text{Var}[M_\infty],
+\end{align*}
+where the second equality follows as \(\mathbb{E}[M_t] = \mathbb{E}[M_\infty] = \mathbb{E}_\mu[\phi] = 0\) as 
+a linear map 
+
+On the other hand, as \((M_t)\) is a martingale, \(M_t^2 - [M]_t\) is also a martingale implying
+\(\mathbb{E}[M_t^2] = \mathbb{E}[M]_t\) and so \(\text{Var}[M_t] = \mathbb{E}[M_t^2] - \mathbb{E}[M_t]^2 
+  = \mathbb{E}[M]_t - \overline{\mu}^2 = \mathbb{E}[M]_t\). Hence, combining this with the above, we obtain 
+the bound
+\begin{equation}\label{eq:bound}
+  \text{Var}_\mu[\phi] = \text{Var}[M_\infty] = \text{Var}[M_t] + \mathbb{E}[\text{Var}[M_\infty \mid \mathscr{F}_t]] 
+    = \mathbb{E}[M]_t + \mathbb{E}[\text{Var}_{\mu_t}[\phi]].
+\end{equation}
+Now, observing that \(\phi\) is 1-Lipschitz implies \(\|\nabla \phi\|^2 \le 1\), we have by lemma~\ref{lem:brascamp-lieb} 
+the bound \(\text{Var}_{\mu_t}[\phi] \le t^{-1}\) (in fact \(\text{Var}_{\mu_t}[\phi] \le t^{-1} \wedge n^2\) as 
+we have assumed \(\text{supp}\ \mu_t \subseteq B_n(0)\)). Thus, the second term \(\mathbb{E}[\text{Var}_{\mu_t}[\phi]]\) 
+is bounded by \(t^{-1}\). With this in mind, by choosing an appropriate random time \(\tau\) to stop the process such that 
+\(\mathbb{E}[M]_\tau\) is nicely bounded, the result follow by bounding \(\mathbb{E}[\tau^{-1}]\). We dedicate 
+the remainder of this section to describe said procedure in detail.
+
+\subsubsection{Differential of the quadratic variation}
+
+To bound the term \(\mathbb{E}[M]_\tau\) we will compute its differential and bound it 
+sufficiently such that we reobtain a bound for \([M]_\tau\) after integration. 
+We will show \(\dd[] [M]_t\) is bounded by a quantity concerning \(A_t\). This should not be at all 
+surprising as both \(\dd[] [M]_t\) and \(A_t\) describes the variation of \(M_t\) in a infinitesimal time 
+neighborhood of \(t\).
+
+We compute
+\begin{align*}
+  \dd M_t & = d \int \phi(x) F_t(x) \mu(\dd x) = \int \phi(x) \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\\
+  & = \left\langle \int \phi(x)(x - a_t)\mu_t(\dd x), \dd W_t\right\rangle
+\end{align*}
+and so, by considering the component-wise quadratic variation, we have
+\begin{equation}\label{eq:diff_qvar}
+  \dd[] [M]_t = \left\| \int \phi(x)(x - a_t)\mu_t(\dd x) \right\|^2 \dd t.
+\end{equation}
+Then, denoting \(\theta\) the vector \(\int \phi(x)(x - a_t)\mu_t(\dd x)\) normalized to have norm 1, so 
+\[\left\langle \theta, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle = \left\|\int \phi(x)(x - a_t)\mu_t(\dd x)\right\|\]
+we observe,
+\begin{equation}\label{eq:red_a}
+  \begin{split}
+    \dd[] [M]_t & = \left\langle \theta, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t
+      = \left\langle \theta, \int (\phi(x) - a_t)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t\\
+    & = \left(\int (\phi(x) - a_t) \langle \theta, x - a_t\rangle \mu_t(\dd x)\right)^2 \dd t\\
+    & \le \left(\int (\phi(x) - a_t)^2 \mu_t(\dd x)\right) \left(\int \langle \theta, x - a_t\rangle^2 \mu_t(\dd x)\right) \dd t\\
+    & = \text{Var}_{\mu_t}[\phi] \left(\int \theta^T (x - a_t)^{\otimes 2} \theta \mu_t(\dd x)\right) \dd t
+      = \text{Var}_{\mu_t}[\phi] (\theta^T A_t \theta)\dd t\\ 
+    & \le \text{Var}_{\mu_t}[\phi] \|A_t\|_{\text{op}} \dd t.
+  \end{split}
+\end{equation}
+where the inequality follows by the Cauchy-Schwarz inequality and \(\|\cdot\|_{\text{op}}\) denotes the operator norm. 
+Thus, as we know \(\text{Var}_{\mu_t}[\phi] \le t^{-1}\), the problem is now reduced to that of
+bounding \(\|A_t\|_{\text{op}}\).
+
+\subsubsection{Analysis of the covariance matrix}
+
+As demonstrated in section~\ref{sec:construct}, we know the limiting behavior of the covariance matrices, namely 
+\(A_t \to 0\) point-wise as \(t \to \infty\). This was important for us to establish the existence of the limit 
+of \((a_t)\) and \((M_t)\). However, as shown above, we now require some quantitative bounds for the operator 
+norm of \(A_t\). For this purpose, we first compute some useful properties of \(A_t\).
+
+Observing 
+\[\int \dd F_t(x) \mu(\dd x) = \int \langle x - a_t, \dd W_t\rangle \mu_t(\dd x) = 
+  \left\langle\int x \mu_t(\dd x) - a_t, \dd W_t\right\rangle = 0,\]
+we have
+\begin{equation}\label{eq:diff_center}
+  \begin{split}
+    \dd a_t & = \dd \int x F_t(x) \mu(\dd x) = \int x \dd F_t(x) \mu(\dd x) 
+        = \int (x - a_t) \dd F_t(x) \mu(\dd x)\\
+      & = \int (x - a_t) \langle x - a_t, \dd W_t \rangle F_t(x) \mu(\dd x) 
+        = \int (x - a_t)^{\otimes 2} \dd W_t \mu_t(\dd x) = A_t \dd W_t
+  \end{split}
+\end{equation}
+where the second to last equality used the fact that \(v \langle v, w \rangle = v^{\otimes 2} w\) for 
+any appropriate \(v, w\).
+
+Similarly, computing using Itô's formula, we have
+\begin{equation}\label{eq:diff_cov_aux}
+  \begin{split}
+    \dd A_t & = \dd \int (x - a_t)^{\otimes 2} F_t(x) \mu(\dd x)\\
+      & = \int (x - a_t)^{\otimes 2} \dd F_t(x) + F_t(x) \dd (x - a_t)^{\otimes 2}\\
+      & \hspace{1cm} - 2 (x - a_t) \otimes \dd[][a_t, F_t(x)]_t +F_t(x)\dd[][a_t]_t\mu(\dd x).
+  \end{split}
+\end{equation}
+The second term vanishes as 
+\[\int F_t(x) \dd (x - a_t)^{\otimes 2} \mu(\dd x) = -2 \dd a_t \otimes 
+  \overbrace{\int (x - a_t) \mu_t(\dd x)}^{= 0} = 0.\]
+Also, by equation~\eqref{eq:diff_center}, \(\dd a_t = A_t \dd W_t\) implying \(\dd[][a_t]_t = A_t^2 \dd t\).
+Finally, as both \((a_t)\) and \((F_t(x))\) are martingales, \(\dd[] [a_t, F_t(x)]_t = F_t(x) A_t x \dd t\) 
+and the third term becomes
+\begin{align*}
+  -2 \int (x - a_t) \otimes \dd[] [a_t, F_t(x)] \mu_t(\dd x) 
+  & = - 2A_t \left(\int (x - a_t) \otimes x \mu_t(\dd x)\right) \dd t \\
+  & = -2 A_t \left(\overbrace{\int (x - a_t)^{\otimes 2} \mu_t(\dd x)}^{A_t} + 
+    \overbrace{\int (x - a_t) \mu_t(\dd x)}^{= 0} \otimes a_t \right) \dd t\\ 
+  & = -2 A_t^2 \dd t.
+\end{align*}
+Hence, combining these and equation~\eqref{eq:stoch_loc} together in \eqref{eq:diff_cov_aux}, we have
+\[\dd A_t = \int (x - a_t)^{\otimes 2} \langle x - a_t, \dd W_t \rangle \mu_t(\dd x) - A_t^2 \dd t\]
+However, since we wish to bound \(A_t\) from above, as the drift term \(- A_t^2 \dd t\) only contributes 
+negatively, an upper bound for the process of the form 
+\(\int (x - a_t)^{\otimes 2} \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\) is also sufficient for \(A_t\).
+Hence, we proceed by ignoring the drift term and redefine the process \(A_t\) such that
+\begin{equation}\label{eq:diff_cov}
+  \dd A_t = \int (x - a_t)^{\otimes 2} \langle x - a_t, \dd W_t \rangle \mu_t(\dd x).
+\end{equation}
+With this justification, we now proceed to bound the operator norm of this new \(A_t\). In particular, 
+as \(A_t\) is symmetric, we recall that \(\|A_t\|_{\text{op}} = \max_{i= 1, \cdots, n} \lambda_i(t) = \|(\lambda_i(t))_{i = 1}^n\|_\infty\) 
+where \(\lambda_i(t)\) denotes the distinct eigenvalues of \(A_t\). Hence, it suffices to find a bound for the potential 
+\begin{equation}
+  \Phi^{\alpha}(t) = \sum_{i = 1}^n |\lambda_i(t)|^{\alpha} = \|(\lambda_i(t))_{i = 1}^n\|_\alpha^\alpha
+\end{equation} 
+for some \(\alpha > 0\). Furthermore, as \(A_t\) is positive 
+semi-definite, \(\lambda_i(t) \ge 0\) for all \(i = 1, \cdots, n\) and thus we have
+\(\Phi^\alpha(t) = \sum_{i = 1}^n \lambda_i(t)^{\alpha}\). Again, to proceed, we will attempt to compute 
+\(\dd \Phi^\alpha(t)\) at some \(t = t_0 > 0\) utilizing the following lemma.
+
+\begin{lemma}\label{lem:diff_eig}
+  If \(A = [a_{ij}]\) is a diagonal matrix with distinct eigenvalues \(\lambda_i, \cdots, \lambda_n\), then 
+  for all \(i, j, k, l, m \in {1, \cdots n}\), we have
+  \begin{itemize}
+    \item \(\pdv{\lambda_i}{a_{jk}} = \delta_{ij} \delta_{ik}\);
+    \item whenever \(i \neq j\), \(\pdv[2]{\lambda_i}{a_{ij}} = 2(\lambda_i - \lambda_j)^{-1}\);
+    \item and for \(j \neq l, k \neq m\) or \(i \neq j\) and \(i \neq k\),
+      \(\pdv[2]{\lambda_i}{a_{jk}}{a_{lm}} = 0\),
+  \end{itemize}
+  where \(\delta_{ij}\) denotes the Kronecker delta function.
+\end{lemma}
+
+As this lemma requires the matrix to be diagonal, denoting \(e_1, \cdots, e_n\) as the normalized 
+eigenbasis of \(A_{t_0}\) (they are in fact orthonormal as \(A_{t_0}\) is positive semi-definite), 
+we will consider \(A_t\) with respect to this basis by considering the entries 
+\[a_{ij}(t) := \langle e_i, A_t e_j\rangle.\]
+Using equation~\eqref{eq:diff_cov}, we compute 
+\begin{align*}
+  \dd a_{ij}(t) & = \left\langle e_i, \left(\int (x - a_t)^{\otimes 2} 
+    \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\right) e_j \right\rangle\\
+    & = \left\langle\int \langle e_i, (x - a_t)^{\otimes 2} e_j\rangle
+      (x - a_t) \mu_t(\dd x), \dd W_t\right\rangle
+      = \langle \xi_{ij}, \dd W_t\rangle
+\end{align*}
+where we introduce the notation \(\xi_{ij} = \int \langle e_i, (x - a_t)^{\otimes 2} e_j\rangle (x - a_t) \mu_t(\dd x).\)
+Thus, combining this with lemma~\ref{lem:diff_eig}, 
+denoting \(\lambda_i = \lambda_i(t_0)\), we have by Itô's formula
+\begin{equation}
+  \begin{split}
+    \dd \lambda_i(t) 
+    & = \sum_{j, k = 1}^n \pdv{\lambda_i}{a_{jk}} \dd a_{jk}(t) 
+      + \frac{1}{2}\sum_{j, k = 1}^n \sum_{l, m = 1}^n \pdv[2]{\lambda_i}{a_{jk}}{a_{lm}} \dd[] [a_{jk}, a_{lm}]_t\\
+    & = \langle \xi_{ii}, \dd W_t\rangle + \sum_{j \neq i} \frac{\dd[][a_{ij}]_t}{\lambda_i - \lambda_j}
+      = \langle \xi_{ii}, \dd W_t\rangle + \sum_{j \neq i} \frac{\|\xi_{ij}\|^2}{\lambda_i - \lambda_{j}} \dd t.
+  \end{split}
+\end{equation}
+at \(t = t_0\). As a result, it is also clear that \(\dd[][\lambda_i(t)]_{t_0} = \|\xi_{ii}\|^2 \dd t\). 
+
+Again applying Itô's formula, we may finally compute\todo{Maybe move computation to appendix}
+\begin{align*}
+  \dd \Phi^\alpha(t) & = \sum_{i = 1}^n \pdv{\Phi^\alpha}{\lambda_i}\Big\vert_{t = t_0} \dd \lambda_i(t)
+    + \frac{1}{2}\sum_{i, j = 1}^n \pdv[2]{\Phi^\alpha}{\lambda_i}{\lambda_j}\Big\vert_{t = t_0} \dd[][\lambda_i, \lambda_j]_{t}\\
+  & = \alpha \sum_{i = 1}^n \lambda_i^{\alpha - 1} \dd \lambda_i(t)
+    + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i^{\alpha - 2} \dd[][\lambda_i(t)]_{t}\\
+  & = \alpha \sum_{i = 1}^n \lambda_i^{\alpha - 1} \left(\langle \xi_{ii}, \dd W_t\rangle 
+    + \sum_{j \neq i} \frac{\|\xi_{ij}\|^2}{\lambda_i - \lambda_j} \dd t\right) 
+    + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i^{\alpha - 2} \dd[][\lambda_i(t)]_{t}\\
+  & = \alpha \sum_{i \neq j}\lambda_i^{\alpha - 1} \frac{\|\xi_{ij}\|^2}{\lambda_i - \lambda_j} \dd t 
+    + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i^{\alpha - 2} \|\xi_{ii}\|^2 \dd t
+    + \left\langle\underbrace{\alpha \sum_{i = 1}^n \lambda_i^{\alpha - 1} \xi_{ii}}_{=: v_t}, \dd W_t\right\rangle\\
+  & = \frac{1}{2}\alpha \sum_{i \neq j}\|\xi_{ij}\|^2\frac{\lambda_i^{\alpha - 1} - \lambda_j^{\alpha -1}}{\lambda_i - \lambda_j}\dd t
+    + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i(t)^{\alpha - 2} \|\xi_{ii}\|^2 \dd t + \langle v_t, \dd W_t\rangle\\
+  & \le \frac{1}{2}\alpha(\alpha - 1) \sum_{i \neq j}\|\xi_{ij}\|^2 (\lambda_i \vee \lambda_j)^{\alpha - 2} \dd t
+    + \frac{1}{2}\alpha(\alpha - 1)\sum_{i = 1}^n \lambda_i(t)^{\alpha - 2} \|\xi_{ii}\|^2 \dd t + \langle v_t, \dd W_t\rangle\\
+  & = \frac{1}{2}\alpha(\alpha - 1) \sum_{i, j = 1}^n\|\xi_{ij}\|^2 (\lambda_i \vee \lambda_j)^{\alpha - 2} \dd t
+    + \langle v_t, \dd W_t\rangle
+    \le \alpha^2 \sum_{i, j = 1}^n\|\xi_{ij}\|^2 \lambda_i^{\alpha - 2} \dd t + \langle v_t, \dd W_t\rangle,
+\end{align*}
+where the first inequality holds as 
+\[\frac{\lambda_i^{\alpha - 1} - \lambda_j^{\alpha -1}}{\lambda_i - \lambda_j}
+  = \lambda_i^{\alpha - 2} + \lambda_i^{\alpha - 3}\lambda_j + \cdots + \lambda_i^{\alpha - 2} 
+  \le (\alpha - 1)(\lambda_i \vee \lambda_j)^{\alpha - 2}.\]
+Thus, we have shown 
+\begin{equation}\label{eq:potential_bound}
+  \dd \Phi^\alpha(t) \le \alpha^2 \sum_{i = 1}^n \lambda_i(t)^{\alpha - 2} \sum_{j = 1}^n \|\xi_{ij}\|^2 \dd t + \langle v_t, \dd W_t\rangle
+\end{equation}
+where \(v_t := \alpha \sum_{i = 1}^n \lambda_i^{\alpha - 1}\xi_{ii}\).
+
+By recalling that our goal is to bound \(\|A_t\|_{\text{op}}\) from above (c.f. equation~\eqref{eq:bound} and \eqref{eq:red_a}), 
+we may assume without loss of generality that \(\|A_t\|_{\text{op}} \ge 1\). Thus, applying the reverse Cauchy-Schwarz inequality to 
+equation~\eqref{eq:potential_bound}, we have
+\begin{align*}
+  \dd \Phi^\alpha(t) & \le 2\alpha^2 \sum_{i = 1}^n \lambda_i(t)^{\alpha - 2} \sum_{j = 1}^n \|\xi_{ij}\|^2 \dd t + \langle v_t, \dd W_t\rangle\\
+    & \le 2\alpha^2 \|A_t\|_{\text{op}}^2 \sum_{i = 1}^n \lambda_i(t)^{\alpha - 2} \sum_{j = 1}^n \|\xi_{ij}\|^2 \dd t + \langle v_t, \dd W_t\rangle\\
+    & \lesssim 2\alpha^2\sum_{i = 1}^n \lambda_i(t)^\alpha \sum_{j = 1}^n \|\xi_{ij}\|^2 \dd t + \langle v_t, \dd W_t\rangle.
+\end{align*} 
+Thus, defining \(K_t := \sup_i \sum_{j = 1}^n \|\xi_{ij}\|^2\), we have the bound 
+\begin{equation}\label{eq:potential_bound_2}
+  \dd \Phi^\alpha(t) \lesssim 2\alpha^2 K_t \Phi^\alpha(t) \dd t + \langle v_t, \dd W_t\rangle.
+\end{equation}
+
+\subsubsection{Stopping the process early}
+
+As outlined in the beginning of this section, we will stop the process early in order to provide a 
+bound for the right hand side of equation~\eqref{eq:bound}. By observing equation~\eqref{eq:red_a}, we hypothesize that
+we should stop the process once \(\|A_t\|_{\text{op}}\) grows too large. As a result we define the stopping time 
+\[\tau := \inf\{t > 0 \mid \|A_t\|_{\text{op}} > 2\} \wedge 1.\]
+By the optional stopping theorem we have
+\begin{align*}
+  [M]_\tau & = \int_0^\tau \dd[] [M]_t 
+      \le \int_0^\tau \overbrace{\text{Var}_\mu[\phi]}^{\le t^{-1} \wedge n^2} \overbrace{\|A_t\|_{\text{op}}}^{\le 2} \dd t\\
+    & \le 2 \int_0^\tau t^{-1} \wedge n^2 \dd t \le 2 \int_0^1 t^{-1} \wedge n^2 \dd t = 2 + 4 \log n.
+\end{align*}
+Combining this with equation~\eqref{eq:bound}, we obtain
+\begin{equation}\label{eq:tau_bd}
+  \text{Var}_\mu[\phi] \le 2 + 4 \log n + \mathbb{E}[\tau^{-1}],
+\end{equation}
+and it remains to find an upper bound for \(\mathbb{E}[\tau^{-1}]\). Observing that \(t < \tau\) whenever 
+\(\Phi^\alpha(t) < 2^\alpha\), we define the \(\sigma\) the first time for which the potential \(\Phi^\alpha(t)\) reaches \(2^\alpha\),
+namely
+\[\sigma := \inf \{t > 0 \mid \Phi^\alpha(t) = 2^\alpha\},\] 
+we have \(\sigma^{-1} \ge \tau^{-1}\) and so it suffices to bound \(\sigma\) from below. 
+
+For simplicity\todo{Maybe not ignore the martingale term if we want a complete proof}, let us ignore the stochastic term in 
+equation~\eqref{eq:potential_bound_2} and regard it as an ODE. Then, by Gronwall's inequality, if we can 
+find some constant \(K\) such that \(K_t \le K\) for all \(t \le \tau\), we have the bound
+\[S_t \le n e^{2\alpha^2 K t}.\]
+Thus, substituting \(\sigma\) into the above, we have 
+\[2^\alpha = S_\sigma \le ne^{2\alpha^2 K\sigma}\]
+implying 
+\[\frac{\alpha \log 2 - \log n}{2\alpha^2 K} \le \sigma \le \tau.\]
+Then, taking \(\alpha = 10K\log n\), it is easy to check that 
+\[\frac{1}{10K \log n} \le \frac{\alpha \log 2 - \log n}{2\alpha^2 K}\]
+implying \(\mathbb{E}[\tau^{-1}] \le 10K \log n\). Of course, this deduction only holds while ignoring the stochastic term 
+\(\langle v_t, \dd W_t\rangle\). Nonetheless, this is justified as one can show that \(\|v_t\|_2\) is bounded 
+\(\alpha \Phi^\alpha(t)\) and so the same analysis holds by applying the stochastic Gronwall's inequality
+(c.f. second part of lemma 34 in \cite{Lee_2018}).
+
+Finally, to find a bound for \((K_t)\), we employ the following lemma.
+
+\begin{lemma}[Lemma 1.6 in \cite{Eldan_2013}]\label{lem:final_bd}
+  Denoting \(C_{\text{TS}}^n\) as in theorem~\ref{thm:KLS_to_TS}, there exists a constant \(C\) such that 
+  for any log-concave, isotropic probability measure \(\mu\), we have
+  \[\sup_{\theta \in S^{n - 1}}\sum_{i, j = 1}^n 
+    \mathbb{E}_{X \sim \mu}[\langle X, e_i\rangle \langle X, e_j\rangle \langle X, \theta\rangle]^2 \le 
+    C \sum_{k = 1}^n \frac{(C_{\text{TS}}^n)^2}{k},\]
+  where \(\{e_1, \cdots, e_n\}\) is any orthonormal basis on \(\mathbb{R}^n\).
+\end{lemma}
+
+Recalling that
+\[\xi_{ij} = \mathbb{E}_{X + a_t \sim \mu_t}[\langle e_i, X^{\otimes 2} e_j\rangle X] = 
+  \mathbb{E}_{X + a_t \sim \mu_t}[\langle X, e_i\rangle \langle X, e_j\rangle X],\]
+we have by Parseval's identity 
+\begin{align*}
+  K_t & = \sup_i \sum_{j = 1}^n \|\xi_{ij}\|^2 
+    = \sup_i \sum_{j = 1}^n \|\mathbb{E}_{X + a_t \sim \mu_t}[\langle X, e_i\rangle \langle X, e_j\rangle X]\|^2\\
+  & = \sup_i \sum_{j = 1}^n \sum_{k = 1}^n 
+    \left\langle \mathbb{E}_{X + a_t \sim \mu_t}[\langle X, e_i\rangle \langle X, e_j\rangle X], e_k\right\rangle^2\\
+  & = \sup_i \sum_{j, k = 1}^n \mathbb{E}_{X + a_t \sim \mu_t}[\langle X, e_i\rangle \langle X, e_j\rangle \langle X, e_k\rangle]^2\\
+  & \le \sup_{\theta \in S^{n - 1}}\sum_{i, j = 1}^n 
+    \mathbb{E}_{X + a_t \sim \mu}[\langle X, e_i\rangle \langle X, e_j\rangle \langle X, \theta\rangle]^2.
+\end{align*}
+We note that we cannot direct apply lemma~\ref{lem:final_bd} at this point since the measure \(\mu_t\) 
+might not be isotropic. Hence, to be able to use the lemma, we need to normalize the covariance of \(\mu_t\). 
+Namely, taking \(X + a_t \sim \mu_t\), we define \(Y = A^{-1/2} X\) which by construction is isotropic. 
+Thus, by observing that 
+\[\mathbb{E}_{X + a_t \sim \mu}[\langle X, e_i\rangle \langle X, e_j\rangle \langle X, \theta\rangle]^2 
+  \le \|A_t\|_{\text{op}}^3 \mathbb{E}_{X + a_t \sim \mu}[\langle Y, e_i\rangle \langle Y, e_j\rangle \langle Y, \theta\rangle]^2,\]
+we have 
+\begin{equation}\label{eq:K_bd}
+  \begin{split}
+    K_t & \le \sup_{\theta \in S^{n - 1}}\sum_{i, j = 1}^n 
+        \mathbb{E}_{X + a_t \sim \mu}[\langle X, e_i\rangle \langle X, e_j\rangle \langle X, \theta\rangle]^2\\
+      & \le \|A_t\|_{\text{op}}^3 \sup_{\theta \in S^{n - 1}}\sum_{i, j = 1}^n 
+        \mathbb{E}_{X + a_t \sim \mu}[\langle Y, e_i\rangle \langle Y, e_j\rangle \langle Y, \theta\rangle]^2
+        \le 8 C \sum_{k = 1}^n \frac{(C_{\text{TS}}^n)^2}{k}
+      \end{split}
+\end{equation}
+where the last inequality follows as \(\|A_t\|_{\text{op}} \le 2\) for all \(t < \tau\). 
+    
+At last, combining equation~\eqref{eq:K_bd} and~\eqref{eq:tau_bd}, we have
+\[\text{Var}_\mu[\phi] \le 2 + \log n\left(4 + \overbrace{80 C \sum_{k = 1}^n \frac{1}{k}}^{\Theta(\log n)}(C_{\text{TS}}^n)^2\right)
+   = \Theta_n((C_{\text{TS}}^n \log n)^2)\]
+implying there exists a constant \(R > 0\) such that for all 1-Lipschitz \(\phi\), 
+\(\sqrt{\text{Var}_\mu[\phi]} \le R C_{\text{TS}}^n \log n\), i.e. \(\mu\) is 
+\(R C_{\text{TS}}^n \log n\)-concentrated and so, \(C_{\text{con}}^n \le R C_{\text{TS}}^n \log n\)
+as required.
+
+% \subsection{Lee-Vempala's bound}
+
+% \begin{theorem}[Lee-Vempala, \cite{Lee_2016}]
+  
+% \end{theorem}
+
+% By taking \(\alpha = 2\) in equation~\eqref{eq:potential_bound}, we have 
+% \[\dd \Phi^2(t) \le 4 \sum_{i, j = 1}^n \|\xi_{ij}\|^2 + \langle v_t, \dd W_t\rangle,\]
+% where \(v_t = 2 \sum_{i = 1}^n \lambda_i \xi_{ii}\).

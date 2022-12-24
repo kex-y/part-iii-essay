@@ -1,7 +1,7 @@
 \documentclass[]{article}
 \usepackage{amsmath}
-\usepackage[bitstream-charter]{mathdesign}
 \usepackage[T1]{fontenc}
+\usepackage[bitstream-charter]{mathdesign}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{hyperref}
 \hypersetup{
@@ -35,6 +35,7 @@
 \usepackage{physics}
 \usepackage{amsthm}
 \usepackage{mathtools}
+\usepackage{enumitem}
 \usepackage{todonotes} % remove for final version
 
 \theoremstyle{definition}
@@ -64,14 +65,15 @@
 \input{sections/introduction.tex}
 
 \newpage
+\section{Stochastic Localization Scheme}
+\label{sec:stoch_loc}
+\input{sections/stoch_loc.tex}
+
+\newpage
 \section{The KLS and Thin-Shell Conjecture}
 \label{sec:KLS}
 \input{sections/KLS.tex}
-
-\newpage
-\section{The Stochastic Localisation Scheme}
-\label{sec:stoch_loc}
-\input{sections/stoch_loc.tex}
+\input{sections/KLS_method.tex}
 
 \newpage
 \section{Almost Constant Bound}

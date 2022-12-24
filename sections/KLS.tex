@@ -147,7 +147,7 @@ particular is independent of the dimension \(n\).
 
 As the norm function is 1-Lipschitz, it is \textit{a priori} that the thin-shell conjecture is 
 weaker than that of the KLS conjecture. On the other hand, as we shall describe in the next section, 
-as a consequence of the stochastic localisation scheme, Eldan \cite{Eldan_2013} provides a reduction 
+as a consequence of the stochastic localization scheme, Eldan \cite{Eldan_2013} provides a reduction 
 of the KLS conjecture to the thin-shell conjecture up to logarithmic factors. 
 
 \begin{theorem}[Eldan, \cite{Eldan_2013}]\label{thm:KLS_to_TS}
@@ -162,10 +162,20 @@ of the KLS conjecture to the thin-shell conjecture up to logarithmic factors.
   \[C^n_{\text{TS}} \le C^n_{\text{con}} \lesssim C^n_{\text{TS}} \log n.\]
 \end{theorem}
 
-We remark that while the constants in theorem~\ref{thm:KLS_to_TS} depends on the dimension \(n\), the 
-KLS conjecture is reduced to the thin-shell conjecture in the sense that it suffices to show 
-\(\sup_n C^n_{\text{TS}} \log n < \infty\). Then, the universal bound for the KLS conjecture is obtained 
-by taking the constant \(C = \sup_n C^n_{\text{con}} \le \sup_n C^n_{\text{TS}} \log n < \infty\).
+% We remark that while the constants in theorem~\ref{thm:KLS_to_TS} depends on the dimension \(n\), the 
+% KLS conjecture is reduced to the thin-shell conjecture in the sense that it suffices to show 
+% \(\sup_n C^n_{\text{TS}} \log n < \infty\). Then, the universal bound for the KLS conjecture is obtained 
+% by taking the constant \(C = \sup_n C^n_{\text{con}} \le \sup_n C^n_{\text{TS}} \log n < \infty\).
+
+The stochastic localization scheme has been wildly successful in making progress towards the KLS conjecture. 
+Modifying the original arguments by Eldan, Lee and Vempala \cite{Lee_2016} obtained the bound 
+\(C_{\text{con}}^n \lesssim n^{-1 / 4}\). Further modifying their arguments, a recent breakthrough by 
+Chen \cite{Chen_2020} improves the bound providing the following theorem. 
+
+\begin{theorem}[Chen, \cite{Chen_2020}]
+  \(\log C_{\text{con}}^n \lesssim \sqrt{\log n \log \log n}\) and so \(C_{\text{con}}^n = n^{-o(1)}\).
+\end{theorem}
+
 
 \subsubsection{Equivalent formulation of the KLS conjecture}
 
@@ -176,7 +186,7 @@ Lebesgue measure, we have known since the ancient Greeks \cite{iso_hist} that th
 With this in mind, it is natural for us to generalize the problem for arbitrary measures. 
 
 \begin{definition}[Minkowski's boundary measure]
-  Given a measure \(\mu\) on \(\mathbb{R}^n\) and a Borel set \(A \subseteq \mathbb{R}^n\), the Minkowski's 
+  Given a measure \(\mu\) on \(\mathbb{R}^n\) and a Borel set \(A \subseteq <\mathbb{R}^n\), the Minkowski's 
   boundary measure of \(A\), 
   \[\mu^+(\partial A) := \liminf_{\epsilon \downarrow 0} \frac{\mu(A_\epsilon) - \mu(A)}{\epsilon}.\]
   where \(A_\epsilon := \{x \in \mathbb{R}^n \mid \text{dist}(x, A) \le \epsilon\}\) is the 
@@ -197,10 +207,10 @@ satisfying \(\mu(A) = 1\) with minimum \(\mu^+(\partial A)\).
 With this, the KLS conjecture can be reformulated as the following.
 
 \begin{conjecture}[KLS, \cite{Eldan_2013}]
-  Denoting \(\mathscr{M}^n_{\text{iso}}\) the set of all log-concave probability measures \(\mu\) on 
-  \(\mathbb{R}^n\) satisfying \(\mathbb{E}_{X \sim \mu}[X] = 0\) and \(\text{Cov}_{X \sim \mu}(X) = \text{id}\) (namely \(\mu\) is isotropic), there exists
-  a \textit{universal} constant \(D\) such that for all \(\mu \in \mathscr{M}^n_{\text{iso}}\), 
-  \(\mu\) satisfy the Cheeger's inequality with constant \(D\).\todo{Why are the normalisations equivalent?}
+  Denoting \(\mathscr{M}^n_{\text{iso}}\) the set of all log-concave and isotropic 
+  (i.e. \(\mathbb{E}_{X \sim \mu}[X] = 0\) and \(\text{Cov}_{X \sim \mu}(X) = \text{id}\)) probability measures \(\mu\) on 
+  \(\mathbb{R}^n\), there exists a \textit{universal} constant \(D\) such that for all 
+  \(\mu \in \mathscr{M}^n_{\text{iso}}\), \(\mu\) satisfy the Cheeger's inequality with constant \(D\).
 \end{conjecture}
 
 The equivalence of the reformulation follows by completing theorem~\ref{thm:equiv} with two additional 
@@ -236,3 +246,4 @@ for some \(w \in S^{n - 1}\) and \(d \in \mathbb{R}\), then we have
 \[\text{Var}_{\mu}[T] = \text{Var}_{X \sim \mu}\left[\sum_{i = 1}^n w_i X_i + d\right] 
     = \sum_{i, j = 1}^n w_i w_j \text{Cov}_{X \sim \mu}(X_i, X_j) = \sum_{i = 1}^n w_i^2 = 1,\]
 as \(\text{Cov}_{X \sim \mu}(X) = \text{id}\).
+

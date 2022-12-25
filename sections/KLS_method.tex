@@ -1,24 +1,12 @@
-\todo{reformat}
+\subsection{Reduction of KLS to thin-shell}
 
-We will in this section provide a description of the stochastic localization scheme introduced by 
-Eldan \cite{Eldan_2013} and describe its application in reducing (up to a logarithmic factor) the 
-KLS conjecture into the thin-shell conjecture, i.e. we will describe a proof of theorem~\ref{thm:KLS_to_TS}.
-
-As a high level overview, given a measure, the stochastic localization scheme constructs a measure-valued martingale
+We will now present a proof of theorem~\ref{thm:KLS_to_TS}.
+As a high level overview, recall that the linear-tilt localization of a given measure is a measure-valued martingale
 for which the original measure is recovered in the limit. Then, as the concentration of the measure 
 relates to the covariance of said measure, we will stop the martingale before the covariance grows too large. 
 This allows us to analyze the martingale in a more tractable manner. However, as the the sequence is 
 a martingale, some properties are invariant in time and hence allowing us to conclude that these properties 
 also hold for the original measure.
-
-\subsection{Construction and basic properties}\label{sec:construct}
-\todo{Move to section 2}
-
-\subsection{Reduction of KLS to thin-shell}
-
-In this section we will present a proof of theorem~\ref{thm:KLS_to_TS} as presented in \cite{Eldan_notes} 
-based on the method as described by \cite{Lee_2016}. Furthermore, by making small modifications to this 
-method, we will also present the main result of \cite{Lee_2016}.
 
 We recall the goal of theorem~\ref{thm:KLS_to_TS} is to control \(\text{Var}_\mu[\phi]\) by 
 a logarithmic factor of \(\text{Var}_\mu[\|\cdot\|]\). As translating the barycenter of \(\mu\)

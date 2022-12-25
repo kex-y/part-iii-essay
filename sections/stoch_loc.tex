@@ -24,7 +24,7 @@ and we introduce the notation \(\mathcal{M}(\mathcal{X})\) for the space of prob
 \begin{definition}[Stochastic localization scheme, \cite{Chen_2022}]
   Denoting \(\mathcal{L}(\mu)\) the set of all stochastic localization processes of the measure
   \(\mu\), a stochastic localization scheme is a map 
-  \[\Phi : \mathcal{M}(\mathcal{X}) \to \prod_{\mu \in \mathcal{X}} \mathcal{L}(\mu)\] 
+  \[\Phi : \mathcal{M}(\mathcal{X}) \to \coprod_{\mu \in \mathcal{M}(\mathcal{X})} \mathcal{L}(\mu)\] 
   such that \(\Phi(\mu) \in \mathcal{L}(\mu)\) for all \(\mu \in \mathcal{M}(\mathcal{X})\).
 \end{definition}
 
@@ -33,6 +33,8 @@ if \(t\) takes value in \(\mathbb{R}_{\ge 0}\). For shorthand, we denote \((\mu_
 discrete stochastic localization of \(\mu\).
 
 \subsection{Examples of stochastic localizations}
+
+\subsubsection{Coordinate by coordinate localization}
 
 An example of a stochastic localization scheme is the coordinate by coordinate localization scheme 
 on \(\mathcal{X} = \{-1, 1\}^n\). This scheme relates to the Glauber dynamics for which the stochastic 
@@ -63,7 +65,7 @@ we introduce the random variable \(X \sim \mu\) and \(Y\) a uniform random varia
 independent of \(X\). Then, we define the random subspace stochastic localization of \(\mu\) as \((\mu_k)_k\) 
 where \(\mu_k\) is the law of \(X\) conditioned on \(\langle X, Y_1\rangle, \cdots, \langle X, Y_{n \wedge k}\rangle\).
 
-\subsubsection{Linear-tilt localization}
+\subsubsection{Linear-tilt localization}\label{sec:construct}
 
 An important class of stochastic localization schemes are the linear-tilt schemes. Introduced by Eldan 
 in \cite{Eldan_2013}, linear-tilt schemes had been vital in the recent progress regarding the KLS 

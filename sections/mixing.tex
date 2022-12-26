@@ -1,0 +1,67 @@
+An application of stochastic localizations is used to prove mixing bounds for Markov chains. 
+Expanding on the work of Anari, Liu and Oveis in \cite{Anari_2020}, Chen and Eldan in \cite{Chen_2022} 
+established a framework in which mixing bounds of a special class of Markov chains arises, namely Markov 
+chains associated with stochastic localizations. We will in this section provide an overview of this 
+framework and describe its application to the Glauber dynamics.
+
+\subsection{Mixing bounds and spectral independence}
+
+The motivation for Markov mixing bounds fundamentally comes from sampling. Suppose we wish to sample 
+from some probability distribution $\mu$. A common method to achieve this to through the use of the 
+Markov chain Monte Carlo (MCMC):
+\begin{theorem}\label{thm:markov_conv}
+  Given \((X_n)\) an irreducible positively recurrent homogenous Markov chain on \(\mathcal{X}\) with
+  stationary distribution \(\mu\), for any \(\phi : \mathcal{X} \to \mathbb{R}\) integrable, 
+  \[\lim_{n \to \infty} \frac{1}{n} \sum_{k = 1}^n \phi(X_k) = \int f \dd \mu\]
+  almost everywhere.  
+\end{theorem}
+With this theorem in mind, MCMC allows us to sample \(\mu\) by sampling from \((X_n)\) instead. It is in general 
+not difficult to come up with such Markov chains, although it is often difficult to show its rate of convergence. 
+This motivates the notion of mixing bounds which quantifies the time for which the Markov process takes before 
+its law is approximately stationary.
+
+\begin{definition}[Total variation mixing time]
+  Given a probability measure \(\nu \in \mathcal{M}(\mathcal{X})\), a Markov kernel \(K\) with stationary 
+  distribution \(\mu\) and some \(\epsilon > 0\), the \(\epsilon\)-total variation mixing time is defined as 
+  \[t_{\text{mix}}(P, \epsilon, \mu) := \inf \{t \ge 0 \mid \|P^t\nu - \mu\|_{\text{TV}} < \epsilon\},\]
+  Furthermore, we denote 
+  \[t_{\text{mix}}(P, \epsilon) = \sup_{x \in \mathcal{X}} t_{\text{mix}}(P, \epsilon, \delta_x)\]
+  the worst mixing time starting at a point.
+\end{definition}
+
+\subsubsection{Ising model and Glauber dynamics}
+
+\begin{definition}[Ising model]
+  Given a graph \(G = (V, E)\), \(\beta > 0\) and \(h \in \mathbb{R}\), the Ising model on \(G\) 
+  with inverse temperature \(\beta\) and external field \(h\) is the probability measure \(\mu_{\beta, h}\) on 
+  \(\{-1, 1\}^V\) defined such that for all \(\sigma \in \{-1, 1\}^V\),
+  \[\mu_{\beta, h}(\sigma) := 
+    \frac{1}{Z} \exp\left\{\beta \sum_{xy \in E} \sigma_x \sigma_y + h \sum_{x \in V} \sigma_x\right\}\]
+  where \(Z > 0\) is the normalizing constant.
+\end{definition}
+
+Heuristically, the Ising model measures the probability that a graph is in a specific configuration of 
+up and down spins in which neighboring vertices are more likely to have the same spin. This ``likeliness'' 
+is controlled by \(\beta\) in which a larger \(\beta\) means that neighboring vertices are more likely to
+align. 
+
+As illustrated by theorem~\ref{thm:markov_conv}, in order to sample from the Ising model, we can 
+construct a Markov chain which has the Ising model as its stationary distribution. One such Markov chain 
+is known as the Glauber dynamics.
+
+\begin{definition}[Glauber dynamics]
+  Given a measure \(\mu\) of \(\{-1, 1\}^n\), the Glauber dynamics of \(\mu\) is the Markov chain 
+  with kernel 
+  \[K_{\sigma^1 \to \sigma^2} := 
+    \mathbf{1}_{\{\|\sigma^1 - \sigma^2\|_1 = 1\}}\frac{1}{n}\frac{\mu(\sigma^2)}{\mu(\sigma^1) + \mu(\sigma^2)}
+  + \mathbf{1}_{\{\sigma^1 = \sigma^2\}} \frac{1}{n}\sum_{\|\tilde \sigma - \sigma^1\|_1 = 1}
+    \frac{\mu(\sigma^1)}{\mu(\sigma^1) + \mu(\tilde \sigma)}.\]  
+\end{definition}
+
+Parsing this definition, we see that the Glauber dynamics is the Markov chain such that, starting at a 
+configuration \(\sigma_1 \in \{-1, 1\}^n\), the configuration at the next time step either remains the 
+same or change at one vertex. Furthermore, the probability of this occurring is weighted according to 
+\(\mu\). As we hoped, the Glauber dynamics of the Ising model \(\mu_{\beta, h}\) has \(\mu_{\beta, h}\) 
+as its stationary distribution.
+
+\subsection{Dynamics of stochastic localizations}

@@ -155,7 +155,8 @@ where \(\otimes\) denotes the Kronecker product. In particular, we will show \((
   \[K\text{Var}_\nu[\phi] \le \int \|\nabla\phi\|^2 \dd\nu.\]
 \end{lemma}
 
-With this lemma in mind, by taking \(\nu = \mu_t\) using equation~\eqref{eq:stoch_loc_alt} and defining
+With this lemma\todo{We need \(\mu\) to be log-concave here} in mind, by taking \(\nu = \mu_t\) using 
+equation~\eqref{eq:stoch_loc_alt} and defining
 \(\pi_i(x) := x_i\), we have by the Cauchy-Schwarz inequality
 \[(A_t)_{ij} \le \sqrt{\text{Var}_{\mu_t}[\pi_i]}\sqrt{\text{Var}_{\mu_t}[\pi_j]} 
   \le \max_{k = 1, \cdots, n} \frac{1}{t}\int \|\nabla \pi_k\|^2 \dd \mu_t\]

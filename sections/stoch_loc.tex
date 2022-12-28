@@ -55,7 +55,10 @@ discrete stochastic localization of \(\mu\).
   defining the random variable \(X : \omega \mapsto x_\omega\), it suffices to show \(X \sim \mu\). 
   Indeed, by taking \(\phi : \mathcal{X} \to \mathbb{R}\) to be any bounded and continuous function, by the 
   definition of \(X\)
-  \[\int \phi(x) \mu_t(\dd x) \xrightarrow{\text{a.e.}} \int \phi(x) \delta_{X}(\dd x) \text{ as } t \to \infty\]
+  \[\int \phi(x) \mu_t(\dd x) \xrightarrow{\text{a.e.}} \int \phi(x) \delta_{X}(\dd x) = \phi(X) \text{ as } t \to \infty.\]
+  Thus, taking expectation on both sides, we have 
+  \[\mathbb{E}[\phi(X)] = \mathbb{E}\left[\int \phi \dd \mu_t\right] = 
+    \int \phi \dd \mathbb{E}[\mu_t] = \int \phi \dd \mu\]
   implying \(X \sim \mu\) as required.
 \end{proof}
 

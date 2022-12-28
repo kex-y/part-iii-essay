@@ -1,8 +1,8 @@
 An application of stochastic localizations is used to prove mixing bounds for Markov processes. 
 Expanding on the work of Anari, Liu and Oveis in \cite{Anari_2020}, Chen and Eldan in \cite{Chen_2022} 
 established a framework in which mixing bounds of a special class of Markov processes arises, namely Markov 
-chains associated with stochastic localizations. We will in this section provide an overview of this 
-framework and describe its application to the Glauber dynamics.
+chains associated with stochastic localizations. We will in this section present this 
+framework and describe its application to the Glauber dynamics.\todo{Fix!}
 
 \subsection{Mixing bounds}
 
@@ -37,11 +37,13 @@ A standard method of analyzing the mixing times of Markov chains is through the 
 \end{definition}
 
 It is not difficult to show that 
-\[\mathfrak{gap}(K) = 
-  \inf_{\substack{\phi : \mathcal{X} \to \mathbb{R}\\ \int \phi \dd \mu = 0}} 1 
-    - \frac{\int \phi K \phi \dd \mu}{\int \phi^2 \dd \mu}
-  = \inf_{\phi : \mathcal{X} \to \mathbb{R}} 
-    \frac{\int (\phi(x) - \phi(y))^2 K(x, \dd y) \mu(\dd x)}{2 \text{Var}_\mu[\phi]},\]
+\begin{equation}\label{eq:gap}
+  \mathfrak{gap}(K) = 
+    \inf_{\substack{\phi : \mathcal{X} \to \mathbb{R}\\ \int \phi \dd \mu = 0}} 1 
+      - \frac{\int \phi K \phi \dd \mu}{\int \phi^2 \dd \mu}
+    = \inf_{\phi : \mathcal{X} \to \mathbb{R}} 
+      \frac{1}{2 \text{Var}_\mu[\phi]} \int (\phi(x) - \phi(y))^2 K(x, \dd y) \mu(\dd x),
+\end{equation}
 where \(\mu\) is the stationary measure of \(K\) and \(K\phi = \int \phi(y) K(\cdot, \dd y)\).
 
 \begin{theorem}[\cite{Levin_2017}]\label{thm:levin}
@@ -136,12 +138,14 @@ we have
 \end{proposition}
 \begin{proof}
   Taking \(\phi : \mathcal{X}^2 \to \mathbb{R}\) integrable, we have by Fubini's theorem
-  \begin{align*}
-    \int_{\mathcal{X}^2} \phi(x, y) K(x, \dd y) \mu(\dd x) & = 
-    \int \phi(x, y) \mathbb{E}_\mathbb{P}\left[\frac{\dd \mu_\tau}{\dd \mu}(x) \mu_\tau(\dd y)\right]\mu(\dd x)\\
-    & = \mathbb{E}_\mathbb{P}\left[\int \phi(x, y) \mu_\tau(\dd y) \frac{\dd \mu_\tau}{\dd \mu}(x) \mu(\dd x)\right]\\
-    & = \mathbb{E}_\mathbb{P}\left[\int \phi(x, y) \mu_\tau(\dd y) \mu_\tau(\dd x)\right].
-  \end{align*}
+  \begin{equation}\label{eq:markov_assoc}
+    \begin{split}
+      \int_{\mathcal{X}^2} \phi(x, y) K(x, \dd y) \mu(\dd x) & = 
+      \int \phi(x, y) \mathbb{E}_\mathbb{P}\left[\frac{\dd \mu_\tau}{\dd \mu}(x) \mu_\tau(\dd y)\right]\mu(\dd x)\\
+      & = \mathbb{E}_\mathbb{P}\left[\int \phi(x, y) \mu_\tau(\dd y) \frac{\dd \mu_\tau}{\dd \mu}(x) \mu(\dd x)\right]\\
+      & = \mathbb{E}_\mathbb{P}\left[\int \phi(x, y) \mu_\tau(\dd y) \mu_\tau(\dd x)\right].
+    \end{split}
+  \end{equation}
   Similarly, by the same calculation,   
   \[\int_{\mathcal{X}^2} \phi(x, y) K(y, \dd x) \mu(\dd y) = \mathbb{E}_\mathbb{P}\left[\int \phi(x, y) \mu_\tau(\dd y) \mu_\tau(\dd x)\right].\]
   Thus, 
@@ -157,8 +161,46 @@ we have
   implying \(\mu\) is the stationary measure of \(K\).
 \end{proof}
 
-With regards to theorem~\ref{thm:levin}, our later analysis will mostly take place when \(\mathcal{X}\) 
-is finite (e.g. in the setting of the Glauber dynamics). In this case, the kernel associated with a 
-stochastic localization can be equivalently written as 
-\[K(x, y) = \mathbb{E}_\mathbb{P}\left[\frac{\mu_\tau(x) \mu_\tau(y)}{\mu(x)}\right].\]
-for all \(x, y \in \mathcal{X}\).
+\begin{proposition}\label{prop:gap_assoc}
+  Taking \(K\) to be the kernel of the Markov process associated with a stochastic localization \((\mu_t)_{t \ge 0}\)
+  of \(\mu\) at time \(\tau\), we have 
+  \[\mathfrak{gap}(K) = \inf_{\phi : \mathcal{X} \to \mathbb{R}} \frac{\mathbb{E}[\text{Var}_{\mu_\tau}[\phi]]}{\text{Var}_\mu[\phi]}.\]
+\end{proposition}
+\begin{proof}
+  By equation~\eqref{eq:markov_assoc} (where we take \(\phi(x, y) = \phi(x)\phi(y)\)), we have 
+  \begin{equation}
+    \int_{\mathcal{X}^2} \phi(x)\phi(y) K(x, \dd y) \mu(\dd x) = \mathbb{E}_\mathbb{P}\left[\left(\int_\mathcal{X} \phi \dd\mu_\tau\right)^2\right],
+  \end{equation}
+  for any integrable \(\phi : \mathcal{X} \to \mathbb{R}\). On the other hand, we observe 
+  \[\int_{\mathcal{X}^2} \phi(y)^2 K(x, \dd y) \mu(\dd x) = \int (K \phi^2)(x) \mu(\dd x) = 
+      \int \phi(x)^2 (K\mu)(\dd x) = \int \phi(x)^2 \mu(\dd x)\]
+  as \(\mu\) is the stationary measure of \(K\). Thus, for any integrable \(\phi : \mathcal{X} \to \mathbb{R}\),
+  by substituting the above two equations, we have
+  \begin{align*}
+    \hspace{1cm} & \frac{1}{2\text{Var}_\mu[\phi]} \int_{\mathcal{X}^2}(\phi(x) - \phi(y))^2 K(x, \dd y) \mu(\dd x) \\
+    = & \frac{1}{2\text{Var}_\mu[\phi]} \left(\int\phi(x)^2\mu(\dd x) 
+      - 2\int \phi(x)\phi(y) K(x, \dd y) \mu(\dd x) + \int \phi(y)^2 K(x, \dd y) \mu(\dd x)\right) \\
+    = & \frac{1}{\text{Var}_\mu[\phi]}\left(\int\phi^2 \dd \mu 
+      - \mathbb{E}_\mathbb{P}\left[\left(\int_\mathcal{X} \phi \dd\mu_\tau\right)^2\right]\right) \\
+    = & \frac{1}{\text{Var}_\mu[\phi]} 
+        \mathbb{E}_\mathbb{P}\left[\int\phi^2 \dd \mu_\tau - \left(\int_\mathcal{X} \phi \dd\mu_\tau\right)^2\right]
+      = \frac{\mathbb{E}[\text{Var}_{\mu_\tau}[\phi]]}{\text{Var}_\mu[\phi]}.
+  \end{align*}
+  Hence, recalling the equivalent form of the spectral gap as described by \eqref{eq:gap}, the result follows 
+  by taking infimum on both sides.
+\end{proof}
+
+This proposition has a nice intuitive interpretation. By recalling that the limit of a stochastic 
+localization as \(t \to \infty\) is a Dirac measure, we may imagine a stochastic localization zooms in 
+(in \(t\)) towards a region containing the massive point. Then, the spectral gap of the 
+associated Markov process at time \(\tau\) is simply the smallest proportion of the local variation around this 
+zoomed in region at time \(\tau\) to that of the global variation. This is achieved by a test function 
+with minimal variation within this region and maximal variation outside of it.
+
+\subsubsection{Glauber dynamics as an associated Markov process}
+
+% With regards to theorem~\ref{thm:levin}, our later analysis will mostly take place when \(\mathcal{X}\) 
+% is finite (e.g. in the setting of the Glauber dynamics). In this case, the kernel associated with a 
+% stochastic localization can be equivalently written as 
+% \[K(x, y) = \mathbb{E}_\mathbb{P}\left[\frac{\mu_\tau(x) \mu_\tau(y)}{\mu(x)}\right].\]
+% for all \(x, y \in \mathcal{X}\).

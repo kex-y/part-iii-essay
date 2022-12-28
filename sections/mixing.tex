@@ -1,22 +1,22 @@
-An application of stochastic localizations is used to prove mixing bounds for Markov chains. 
+An application of stochastic localizations is used to prove mixing bounds for Markov processes. 
 Expanding on the work of Anari, Liu and Oveis in \cite{Anari_2020}, Chen and Eldan in \cite{Chen_2022} 
-established a framework in which mixing bounds of a special class of Markov chains arises, namely Markov 
+established a framework in which mixing bounds of a special class of Markov processes arises, namely Markov 
 chains associated with stochastic localizations. We will in this section provide an overview of this 
 framework and describe its application to the Glauber dynamics.
 
-\subsection{Mixing bounds and spectral independence}
+\subsection{Mixing bounds}
 
 The motivation for Markov mixing bounds fundamentally comes from sampling. Suppose we wish to sample 
 from some probability distribution $\mu$. A common method to achieve this to through the use of the 
 Markov chain Monte Carlo (MCMC):
 \begin{theorem}\label{thm:markov_conv}
-  Given \((X_n)\) an irreducible positively recurrent homogenous Markov chain on \(\mathcal{X}\) with
+  Given \((X_n)\) an irreducible positively recurrent homogenous Markov process on \(\mathcal{X}\) with
   stationary distribution \(\mu\), for any \(\phi : \mathcal{X} \to \mathbb{R}\) integrable, 
   \[\lim_{n \to \infty} \frac{1}{n} \sum_{k = 1}^n \phi(X_k) = \int f \dd \mu\]
   almost everywhere.  
 \end{theorem}
 With this theorem in mind, MCMC allows us to sample \(\mu\) by sampling from \((X_n)\) instead. It is in general 
-not difficult to come up with such Markov chains, although it is often difficult to show its rate of convergence. 
+not difficult to come up with such Markov processes, although it is often difficult to show its rate of convergence. 
 This motivates the notion of mixing bounds which quantifies the time for which the Markov process takes before 
 its law is approximately stationary.
 
@@ -27,6 +27,44 @@ its law is approximately stationary.
   Furthermore, we denote 
   \[t_{\text{mix}}(P, \epsilon) = \sup_{x \in \mathcal{X}} t_{\text{mix}}(P, \epsilon, \delta_x)\]
   the worst mixing time starting at a point.
+\end{definition}
+
+A standard method of analyzing the mixing times of Markov chains is through the use of the spectral gap. 
+
+\begin{definition}[Spectral gap, \cite{Levin_2017}]
+  The spectral gap of a Markov kernel \(K\) is defined to be 
+  \[\mathfrak{gap}(K) := 1 - \sup\{\lambda \mid \lambda \text{ is an eigenvalue of } K, \lambda \neq 1\}.\]
+\end{definition}
+
+It is not difficult to show that 
+\[\mathfrak{gap}(K) = 
+  \inf_{\substack{\phi : \mathcal{X} \to \mathbb{R}\\ \int \phi \dd \mu = 0}} 1 
+    - \frac{\int \phi K \phi \dd \mu}{\int \phi^2 \dd \mu}
+  = \inf_{\phi : \mathcal{X} \to \mathbb{R}} 
+    \frac{\int (\phi(x) - \phi(y))^2 K(x, \dd y) \mu(\dd x)}{2 \text{Var}_\mu[\phi]},\]
+where \(\mu\) is the stationary measure of \(K\) and \(K\phi = \int \phi(y) K(\cdot, \dd y)\).
+
+\begin{theorem}[\cite{Levin_2017}]\label{thm:levin}
+  Given a reversible and irreducible Markov chain with kernel \(K\) on the state space \(\mathcal{X}\) 
+  with stationary distribution \(\mu\), denoting \(\mu_{\min} = \inf_{x \in \mathcal{X}} \mu(x)\), we have 
+  \[t_{\text{mix}}(K, \epsilon) \le \left\lceil\frac{1}{\mathfrak{gap}(K)}
+    \left(\frac{1}{2}\log\left(\frac{1}{\mu_{\min}}\right) + \log\left(\frac{1}{2\epsilon}\right)\right)\right\rceil.\]
+\end{theorem}
+
+We remark that this inequality is only meaningful whenever \(\mu_{\min} > 0\) and thus, this theorem is 
+only meaningful for Markov chains on finite state space (and we can replace \(\inf\) with \(\min\)).
+
+A similar bound can also be established using the modified log-Sobolev inequality (MLSI).
+
+\begin{definition}[Entropy, \cite{Liu_2020}]
+  Given \(\phi : \mathcal{X} \to \mathbb{R}_{\ge 0}\) and a measure \(\mu\), we define the entropy of \(\phi\) 
+  with respect to \(\mu\) to be 
+  \[\text{Ent}_\mu[\phi] := \mathbb{E}_\mu\left[\phi \log\left(\frac{1}{\mathbb{E}_\mu[\phi]} \phi\right)\right]
+   = \int \phi \log \phi \dd \mu - \int \phi \dd \mu \log\left(\int \phi \dd \mu\right).\]
+\end{definition}
+
+\begin{definition}\todo{TODO}
+  
 \end{definition}
 
 \subsubsection{Ising model and Glauber dynamics}
@@ -52,7 +90,7 @@ is known as the Glauber dynamics.
 \begin{definition}[Glauber dynamics]
   Given a measure \(\mu\) of \(\{-1, 1\}^n\), the Glauber dynamics of \(\mu\) is the Markov chain 
   with kernel 
-  \[K_{\sigma^1 \to \sigma^2} := 
+  \[K(\sigma^1, \sigma^2) := 
     \mathbf{1}_{\{\|\sigma^1 - \sigma^2\|_1 = 1\}}\frac{1}{n}\frac{\mu(\sigma^2)}{\mu(\sigma^1) + \mu(\sigma^2)}
   + \mathbf{1}_{\{\sigma^1 = \sigma^2\}} \frac{1}{n}\sum_{\|\tilde \sigma - \sigma^1\|_1 = 1}
     \frac{\mu(\sigma^1)}{\mu(\sigma^1) + \mu(\tilde \sigma)}.\]  
@@ -62,6 +100,65 @@ Parsing this definition, we see that the Glauber dynamics is the Markov chain su
 configuration \(\sigma_1 \in \{-1, 1\}^n\), the configuration at the next time step either remains the 
 same or change at one vertex. Furthermore, the probability of this occurring is weighted according to 
 \(\mu\). As we hoped, the Glauber dynamics of the Ising model \(\mu_{\beta, h}\) has \(\mu_{\beta, h}\) 
-as its stationary distribution.
+as its stationary distribution.\todo{Prove this.}
 
 \subsection{Dynamics of stochastic localizations}
+
+As alluded to previously, one may associate a Markov process at each time step of a stochastic 
+localization process for which the original process is stationary. We will in this section define 
+these Markov processes and show that the Glauber dynamics can be constructed using this method. 
+
+\begin{definition}[Markov process associated with a stochastic localization, \cite{Chen_2022}]
+  Let \((\mu_t)_{t \ge 0}\) be a stochastic localization of \(\mu\) such that \(\mu_t\) is absolutely 
+  continuous (almost everywhere) with respect to \(\mu\) for all \(t\). For all \(\tau > 0\), we define the dynamics 
+  associated with \((\mu_t)_t\) at \(\tau\) to be the Markov process with kernel 
+  \[K(x, A) := \mathbb{E}_\mathbb{P}\left[\frac{\dd \mu_\tau}{\dd \mu}(x) \mu_\tau(A)\right]\]
+  for all \(x \in \mathcal{X}, A \in \Sigma\).
+\end{definition}
+
+As alluded by the notation, rather than a deterministic time \(\tau\), \(\tau\) can be taken to be an 
+appropriate stopping time. In this case, the theorems below will remain to hold by invoking the optional stopping 
+theorem whenever necessary.
+
+This is indeed a kernel since for each \(x \in \mathcal{X}\), as \(\mathbb{E}_\mathbb{P}[\mu_\tau] = \mu\) 
+by \ref{L2},
+\[K(x, \Omega) = \mathbb{E}_\mathbb{P}\left[\frac{\dd \mu_\tau}{\dd \mu}(x)\right] 
+  = \frac{\dd}{\dd \mu}\mathbb{E}_\mathbb{P}[\mu_\tau](x) = \frac{\dd \mu}{\dd \mu}(x) = 1\]
+where the third equality follows by the uniqueness of the Radon-Nikodym derivative as for all \(A \in \Sigma\), 
+we have
+\[\int_A \mathbb{E}_\mathbb{P}\left[\frac{\dd \mu_\tau}{\dd \mu}\right] \dd \mu = 
+  \mathbb{E}_\mathbb{P}\left[\int_A \frac{\dd \mu_\tau}{\dd \mu} \dd \mu \right] = 
+  \mathbb{E}_\mathbb{P}[\mu_\tau](A).\]
+
+\begin{proposition}
+  The Markov process associated with a stochastic localization \((\mu_t)_{t \ge 0}\) of \(\mu\) is reversible and 
+  has stationary distribution \(\mu\). 
+\end{proposition}
+\begin{proof}
+  Taking \(\phi : \mathcal{X}^2 \to \mathbb{R}\) integrable, we have by Fubini's theorem
+  \begin{align*}
+    \int_{\mathcal{X}^2} \phi(x, y) K(x, \dd y) \mu(\dd x) & = 
+    \int \phi(x, y) \mathbb{E}_\mathbb{P}\left[\frac{\dd \mu_\tau}{\dd \mu}(x) \mu_\tau(\dd y)\right]\mu(\dd x)\\
+    & = \mathbb{E}_\mathbb{P}\left[\int \phi(x, y) \mu_\tau(\dd y) \frac{\dd \mu_\tau}{\dd \mu}(x) \mu(\dd x)\right]\\
+    & = \mathbb{E}_\mathbb{P}\left[\int \phi(x, y) \mu_\tau(\dd y) \mu_\tau(\dd x)\right].
+  \end{align*}
+  Similarly, by the same calculation,   
+  \[\int_{\mathcal{X}^2} \phi(x, y) K(y, \dd x) \mu(\dd y) = \mathbb{E}_\mathbb{P}\left[\int \phi(x, y) \mu_\tau(\dd y) \mu_\tau(\dd x)\right].\]
+  Thus, 
+  \[\int_{\mathcal{X}^2} \phi(x, y) K(x, \dd y) \mu(\dd x) = \int_{\mathcal{X}^2} \phi(x, y) K(y, \dd x) \mu(\dd y)\]
+  for any integrable \(\phi : \mathcal{X}^2 \to \mathbb{R}\) implying \(K\) is reversible.
+
+  On the other hand, for all \(A \in \Sigma\), we compute using the martingale property
+  \begin{align*} 
+    K\mu(A) & = \int K(x, A) \mu(\dd x) = \int \mathbb{E}_\mathbb{P}\left[\frac{\dd \mu_\tau}{\dd \mu}(x) \mu_\tau(A)\right] 
+    = \mathbb{E}_\mathbb{P}\left[\mu_\tau(A) \int \frac{\dd \mu_\tau}{\dd \mu} \dd \mu\right] \\
+    & = \mathbb{E}_\mathbb{P}[\mu_\tau(A) \mu_\tau(\Omega)] = \mathbb{E}_\mathbb{P}[\mu_\tau(A)] = \mu(A)
+  \end{align*}
+  implying \(\mu\) is the stationary measure of \(K\).
+\end{proof}
+
+With regards to theorem~\ref{thm:levin}, our later analysis will mostly take place when \(\mathcal{X}\) 
+is finite (e.g. in the setting of the Glauber dynamics). In this case, the kernel associated with a 
+stochastic localization can be equivalently written as 
+\[K(x, y) = \mathbb{E}_\mathbb{P}\left[\frac{\mu_\tau(x) \mu_\tau(y)}{\mu(x)}\right].\]
+for all \(x, y \in \mathcal{X}\).

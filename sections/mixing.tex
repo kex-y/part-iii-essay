@@ -44,7 +44,9 @@ It is not difficult to show that
     = \inf_{\phi : \mathcal{X} \to \mathbb{R}} 
       \frac{1}{2 \text{Var}_\mu[\phi]} \int (\phi(x) - \phi(y))^2 K(x, \dd y) \mu(\dd x),
 \end{equation}
-where \(\mu\) is the stationary measure of \(K\) and \(K\phi = \int \phi(y) K(\cdot, \dd y)\).
+where \(\mu\) is the stationary measure of \(K\) and \(K\phi = \int \phi(y) K(\cdot, \dd y)\). We will take 
+equation~\eqref{eq:gap} to be the defining property of the spectral gap in the case \(K\) is defined on 
+a general state space.
 
 \begin{theorem}[\cite{Levin_2017}]\label{thm:levin}
   Given a reversible and irreducible Markov chain with kernel \(K\) on the state space \(\mathcal{X}\) 
@@ -197,10 +199,28 @@ associated Markov process at time \(\tau\) is simply the smallest proportion of 
 zoomed in region at time \(\tau\) to that of the global variation. This is achieved by a test function 
 with minimal variation within this region and maximal variation outside of it.
 
-\subsubsection{Glauber dynamics as an associated Markov process}
+With regards to theorem~\ref{thm:levin}, in the case \(\mu\) has full support on the finite state space 
+\(\mathcal{X}\) (e.g. in the setting of Glauber dynamics) the above proposition provides a method for 
+computing an upper bound for the mixing time. In particular, should the stochastic localization \((\mu_k)_k\)
+satisfy 
+\[\mathbb{E}[\text{Var}_{\mu_{k + 1}}[\phi] \mid \mu_t] \ge (1 - \epsilon)\text{Var}_{\mu_k}[\phi]\]
+for given \(\epsilon > 0\) and any integrable function \(\phi : \mathcal{X} \to \mathbb{R}\), we have the 
+telescoping product
+\[\frac{\mathbb{E}[\text{Var}_{\mu_k}[\phi]]}{\text{Var}_\mu[\phi]} 
+  = \mathbb{E}\left[\prod_{i = 1}^k\frac{\mathbb{E}[\text{Var}_{\mu_i}[\phi] \mid \mu_{i - 1}]}{\text{Var}_{\mu_{i - 1}}[\phi]}\right]
+  \ge (1 - \epsilon)^k.\]
+Hence, we have the bound 
+\[\mathfrak{gap}(K)^{-1} \le (1 - \epsilon)^{-k}\]
+which immediately provides an upper bound for the mixing time of \(K\) in light of theorem~\ref{thm:levin}.
+This motivates the following definition.
 
-% With regards to theorem~\ref{thm:levin}, our later analysis will mostly take place when \(\mathcal{X}\) 
-% is finite (e.g. in the setting of the Glauber dynamics). In this case, the kernel associated with a 
-% stochastic localization can be equivalently written as 
-% \[K(x, y) = \mathbb{E}_\mathbb{P}\left[\frac{\mu_\tau(x) \mu_\tau(y)}{\mu(x)}\right].\]
-% for all \(x, y \in \mathcal{X}\).
+\begin{definition}[Approximate conservation of variance, \cite{Chen_2022}]
+  A stochastic localization process \((\mu_k)_k\) is said satisfy conserve \((\kappa_k)\)-variance 
+  up to time \(n\) if for any integrable function \(\phi : \mathcal{X} \to \mathbb{R}\), \(1 \le k \le n\),
+  \[\mathbb{E}[\text{Var}_{\mu_{k + 1}}[\phi] \mid \mu_t] \ge (1 - \kappa_k)\text{Var}_{\mu_k}[\phi].\]
+\end{definition}
+
+By the same computation above, if \((\mu_k)_k\) conserves \((\kappa_k)\)-variance up to time \(n\), 
+then it associated dynamics has a spectral gap of at least \(\prod_{i = 1}^n (1 - \kappa_i)\).
+
+\subsection{Glauber dynamics as an associated Markov process}

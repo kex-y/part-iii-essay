@@ -26,8 +26,8 @@ and we introduce the notation \(\mathcal{M}(\mathcal{X})\) for the space of prob
 
 \begin{definition}[Stochastic localization process, \cite{Chen_2022}]
   Given \(\mu \in \mathcal{M}(\mathcal{X})\), a measure-valued stochastic process 
-  \((\mu_t)_{t \ge 0}\) is said to be a stochastic localization of \(\mu\) if in addition to being 
-  a prelocalization of \(\mu\) it also satisfies
+  \((\mu_t)_{t \ge 0}\) is said to be a stochastic localization of \(\mu\) if in addition to being a 
+  prelocalization of \(\mu\), \((\mu_t)_{t \ge 0}\) also satisfies
   \begin{enumerate}[label=(L\arabic*), start=3]
     \item \label{L3} For all \(A \in \Sigma\), \(\mu_t(A)\) converges almost everywhere to \(0\) 
       or \(1\) as \(t \to \infty\).
@@ -69,16 +69,12 @@ discrete stochastic localization of \(\mu\).
   implying \(X \sim \mu\) as required.
 \end{proof}
 
-\subsection{Examples of stochastic localizations}
-
-\subsubsection{Coordinate by coordinate localization}
-
 An example of a stochastic localization scheme is the coordinate by coordinate localization scheme 
 on \(\mathcal{X} = \{-1, 1\}^n\). This scheme relates to the Glauber dynamics for which the stochastic 
 localization scheme provides a mixing bound. We shall examine the property in section~\ref{sec:Glauber}\todo{TODO!}, 
 though we will construct the scheme now. 
 
-Given a probability measure \(\mu\) on \(\{-1, +1\}^n\), we introduce the random variable \(X \sim \mu\), and 
+Given a probability measure \(\mu\) on \(\{-1, 1\}^n\), we introduce the random variable \(X \sim \mu\), and 
 \(Y\) a uniform random variable over all permutations of \([n] = \{1, \cdots, n\}\) independent of \(X\). 
 Then, the coordinate by coordinate stochastic localization of \(\mu\) is the process \((\mu_k)_{k}\)
 such that for all \(x \in \{-1, 1\}^n\),
@@ -102,74 +98,84 @@ we introduce the random variable \(X \sim \mu\) and \(Y\) a uniform random varia
 independent of \(X\). Then, we define the random subspace stochastic localization of \(\mu\) as \((\mu_k)_k\) 
 where \(\mu_k\) is the law of \(X\) conditioned on \(\langle X, Y_1\rangle, \cdots, \langle X, Y_{n \wedge k}\rangle\).
 
-% \subsection{Linear-tilt localization}\label{sec:construct}
-
-% An important class of stochastic localization schemes are the linear-tilt schemes. Introduced by Eldan 
-% in \cite{Eldan_2013}, linear-tilt schemes has been vital in the recent progress regarding the KLS 
-% conjecture. More recently, a discrete version of the linear-tilt scheme was introduced in \cite{Chen_2022}
-% and is used to provide a mixing bound for Glauber dynamics. We will in this section introduce both 
-% the discrete and continuous versions of the linear-tilt scheme.
-
-% Let \(\mu\) be a probability measure on \(\mathbb{R}^n\), we introduce the following definition.
-% \begin{definition}[Barycenter]
-%   The barycenter of \(\mu\) with respect to the function \(F : \mathbb{R}^n \to \mathbb{R}\) is
-%   \[\bar{\mu}(F) := \int_{\mathbb{R}^n} x F(x) \mu(\dd x).\]
-%   In the case that \(F = \text{id}\), we simply write \(\bar{\mu} = \bar{\mu}(F) = \mathbb{E}_{X \sim \mu}[X]\).
-% \end{definition}
-
-% \subsubsection{General linear-tilt scheme}
-
-% Informally, given a probability measure \(\mu\) on \(\mathbb{R}^n\), the linear-tilt scheme
-% of \(\mu\) is constructed recursively in which at each step, we pick a random direction and multiply 
-% the density at this time with a linear function along this direction (i.e. a tilt along a random 
-% direction). 
-
-% \begin{definition}[Discrete time linear-tilt scheme, \cite{Chen_2022}]
-%   Given a probability measure \(\mu\) on \(\mathbb{R}^n\), the discrete time linear-tilt scheme of \(\mu\) is the 
-%   stochastic localization \((\mu_k)_{k = 0}^\infty\) defined recursively such that \(\mu_0 := \mu\) and 
-%   for all \(n \in \mathbb{N}\),
-%   \[\dd \mu_{n + 1}(x) := (1 + \langle x - \overline{\mu_n}, Z_n\rangle) \dd \mu_n(x),\]
-%   where \((Z_k)_k\) is a sequence of \(\mathbb{R}^n\)-valued random variables such that 
-%   \(\mathbb{E}[Z_k \mid \mu_k] = 0\) and \ref{L3} holds.
-% \end{definition}
-
-% It is not difficult to see that this is indeed a stochastic localization scheme. Clearly, \ref{L0} and \ref{L3} are 
-% satisfied by construction, while by induction, 
-% \[\mu_{n + 1}(\mathbb{R}^n) = \mathbb{E}_{\mu_n}[1 + \langle x - \overline{\mu_n}, Z_n\rangle] 
-%   = \mu_n(\mathbb{R}^n) - \langle \mathbb{E}_{\mu_n}[x - \overline{\mu_n}], Z_n\rangle = \mu_n(\mathbb{R}^n)\]
-% implying \ref{L1}. Finally, \ref{L2} is satisfied as \(\mathbb{E}[Z_k \mid \mu_k] = 0\) for all \(k\).
-
-% There are different sufficient conditions for which \ref{L3} holds and for generality we will not 
-% restrict ourselves to one of these conditions. However, a intuitive condition for which \ref{L3} holds 
-% is that \(\|\mathbb{E}[\text{Cov}(Z_n) \mid \mu_n]\|_{\text{op}}\) is decreasing sufficiently fast. We will not 
-% use this condition however so we omit the details. 
-
-
-
-\subsubsection{Linear-tilt localization}\label{sec:construct}
+\subsection{Linear-tilt localization schemes}
 
 An important class of stochastic localization schemes are the linear-tilt schemes. Introduced by Eldan 
-in \cite{Eldan_2013}, linear-tilt schemes had been vital in the recent progress regarding the KLS 
-conjecture. Informally, given a probability measure \(\mu\) on \(\mathbb{R}^n\), the linear-tilt scheme
+in \cite{Eldan_2013}, linear-tilt schemes has been vital in the recent progress regarding the KLS 
+conjecture. More recently, a discrete version of the linear-tilt scheme was introduced in \cite{Chen_2022}
+and is used to provide a mixing bound for Glauber dynamics. We will in this section introduce these family 
+of localizations and consider two specific examples of such linear-tilt schemes which are 
+useful for our analysis later.
+
+Informally, given a probability measure \(\mu\) on \(\mathcal{X} \subseteq \mathbb{R}^n\), the linear-tilt scheme
 of \(\mu\) is constructed recursively in which at each step, we pick a random direction and multiply 
 the density at this time with a linear function along this direction (i.e. a tilt along a random 
 direction). 
 
-Let \(\mu\) be a probability measure on \(\mathbb{R}^n\), we introduce the following definition.
+Let \(\mu\) be a probability measure on \(\mathcal{X} \subseteq \mathbb{R}^n\), we introduce the following definition.
 \begin{definition}[Barycenter]
   The barycenter of \(\mu\) with respect to the function \(F : \mathbb{R}^n \to \mathbb{R}\) is
-  \[\bar{\mu}(F) := \int_{\mathbb{R}^n} x F(x) \mu(\dd x).\]
+  \[\bar{\mu}(F) := \int_{\mathcal{X}} x F(x) \mu(\dd x).\]
   In the case that \(F = \text{id}\), we simply write \(\bar{\mu} = \bar{\mu}(F) = \mathbb{E}_{X \sim \mu}[X]\).
 \end{definition}
 
-Then, given \((W_t)_{t \ge 0}\) be a standard Wiener process in \(\mathbb{R}^n\), we define the random functions 
+\begin{definition}[Linear-tilt localization]
+  A measure-valued stochastic process \((\mu_t)_{t \ge 0}\) is said to be a linear-tilt localization of
+  the probability measure \(\mu\) if 
+  \begin{enumerate}
+    \item \(\mu_t \ll \mu\) for each \(t \ge 0\), and 
+    \item denoting \(F_t := \dd \mu_t / \dd \mu\), we have \(F_0 = 1\) and 
+      \begin{equation}\label{eq:linear-tilt}
+        \dd F_t(x) = \langle x - \bar{\mu}(F_t), \dd Z_t \rangle F_t(x)
+      \end{equation}
+      for some stochastic process \((Z_t)_{t \ge 0}\) such that \(\mathbb{E}[\dd Z_t \mid \mu_t] = 0\) 
+      for all \(t \ge 0\). 
+  \end{enumerate} 
+\end{definition}
+
+\begin{proposition}
+  If \((\mu_t)_t\) is a linear-tilt localization of \(\mu\), then for all \(A \in \Sigma\), 
+  \(\dd \mu_t(A) = 0\) for all \(t\).
+\end{proposition}
+\begin{proof}
+  Let \(A \in \Sigma\), then we have
+  \begin{align*}
+    \dd \mu_t(A) & = \dd \mathbb{E}[\mu_t(A) \mid \mu_t] = \mathbb{E}\left[\int_A \dd F_t(x) \mu(\dd x)\ \middle\vert \ \mu_s\right]\\
+    & = \int_A \mathbb{E}[\langle x - \bar{\mu}(F_t), \dd Z_t \rangle F_t(x) \mid \mu_t] \mu(\dd x)\\
+    & =  \int_A \langle x - \bar{\mu}(F_t), \mathbb{E}[\dd Z_t \mid \mu_t]\rangle F_t(x) \mu(\dd x) = 0
+  \end{align*}
+  as required.
+\end{proof}
+
+Thus, as \(\mu_0 = \mu\) is a probability measure, it follows \(\mu_t\) is a probability measure for each \(t\).
+
+\begin{corollary}
+  If \((\mu_t)_t\) is a linear-tilt localization of \(\mu\) then for all \(t\), \(\mu_t\) is a probability measure. 
+\end{corollary}
+
+Furthermore, as \((F_t(x))_t\) is a martingale by equation~\eqref{eq:linear-tilt}, it follows that \((\mu_t(A))_t\) 
+is a martingale for all \(A \in \Sigma\). Hence, we have:
+
+\begin{corollary}
+  A linear-tilt localization \((\mu_t)_t\) of \(\mu\) is a prelocalization of \(\mu\).
+\end{corollary}
+
+We remark that in general, a linear-tilt localization is not necessarily a stochastic localization as \ref{L3} 
+might not be satisfied. It is possible to impose sufficient conditions on \((Z_t)\) for which \ref{L3} holds,
+e.g. by requiring \(\|\text{Cov}(Z_t)\|_{\text{op}}\) to decrease sufficiently fast. However, for generality, 
+we will not restrict ourselves to one of these conditions. Instead, we will consider \ref{L3} case by case 
+in the following examples of linear-tilt schemes. 
+
+\subsubsection{Linear-tilt localization driven by Wiener process}\label{sec:construct}
+
+A natural choice of \((Z_t)_{t \ge 0}\) is the standard Wiener process on \(\mathbb{R}^n\).
+Denoting \((W_t)_{t \ge 0}\) a standard Wiener process on \(\mathbb{R}^n\), we define the random functions 
 \((F_t)_{t \ge 0}\) to be the solution of the following infinite system of SDEs 
 (existence and uniqueness is established by theorem 5.2 in \cite{Øksendal_2003}): 
 \begin{equation}\label{eq:stoch_loc}
   F_0 = 1, \dd F_t(x) = \langle x - \bar{\mu}(F_t), \dd W_t \rangle F_t(x),
 \end{equation}
-for all \(x \in \mathbb{R}^n\). We shall from this point forward denote the random variables 
-\(a_t := \bar{\mu}(F_t)\).
+for all \(x \in \mathbb{R}^n\). We shall from this point forward denote the random variables \(a_t := \bar{\mu}(F_t)\).
 
 By applying Itô's formula, we make the following useful observation: for all \(x \in \mathbb{R}^n\),
 \begin{equation}
@@ -193,33 +199,19 @@ Thus, taking \(\dd z_t := \langle a_t, \dd W_t\rangle + \frac{1}{2} \|a_t\|^2 \d
 for given Itô processes \((z_t), (v_t)\).
 
 With this formulation of \(F_t(x)\) in mind, it follows \(F_t\) is non-negative, and so, 
-we may define the linear-tilt localization of \(\mu\) to be the process \((\mu_t)_t\) 
-where \(\dd \mu_t = F_t \dd \mu\). The remainder of this section is devoted to showing \((\mu_t)_t\) is 
-indeed a stochastic localization of \(\mu\) (\ref{L0} is clear so it remains to show \ref{L1}, \ref{L2} and \ref{L3}).
+we may define \((\mu_t)_t\) to be the process such that \(\dd \mu_t = F_t \dd \mu\). It is clear that 
+\((\mu_t)_t\) is a linear-tilt localization of \(\mu\) and so, is a prelocalization of \(\mu\).
+The remainder of this section is devoted to showing \((\mu_t)_t\) is furthermore a stochastic localization 
+of \(\mu\) if \(\mu\) is log-concave (namely we will show \ref{L3} for this special case), and prove 
+some basic properties about this process useful for our analysis later.
 
-\begin{proposition}
-  For all \(t \ge 0\), \(\mu_t\) is a probability measure almost everywhere (and so \ref{L1} is satisfied).
-\end{proposition}
-\begin{proof}
-  As \(\mu\) is a probability measure, it suffices to show \(\partial_t \mu_t(\mathbb{R}^n) = 0\).
-  To prove this, we first consider the discrete stochastic integral on the lattice \(\Lambda = \mathbb{Z}^n \dd t\)
-  for some \(\dd t > 0\). Then, constructing \(\mu_t^{\dd t}\) on \(\Lambda\) via the same process as \(\mu_t\),
-  for all \(t = k \dd t \in \Lambda\),
-  \begin{align*}
-    \partial_t \mu_t^{\dd t}(\mathbb{R}^n) 
-      & = \int_{\mathbb{R}^n} \dd F_t(x) \mu(\dd x) 
-        = \int_{\mathbb{R}^n} \langle x - a_t, \dd W_t\rangle F_t(x) \mu(\dd x)\\
-      & = \left\langle \int_{\mathbb{R}^n} (x - a_t) F_t(x)\mu(\dd x), \dd W_t \right\rangle
-        = \langle a_t - a_t\mu_t(\mathbb{R}^n), \dd W_t \rangle = 0
-  \end{align*}
-  by induction on \(k\). However, by the very construction of the stochastic integral, the densities 
-  of \(\mu_t^{\dd t}\): \(F_t^{\dd t}\) converges a.e. to \(F_t\) as \(\dd t \to 0\) implying 
-  \(\mu_t^{\dd t} \to \mu_t\) weakly and so, \(\mu_t^{\dd t}(\mathbb{R}^n) \to \mu_t(\mathbb{R}^n)\)
-  resulting in \(\mu_t(\mathbb{R}^n) = 1\) as required.
-\end{proof}
+\begin{definition}[Log-concave measure]
+  A measure \(\mu\) on \(\mathbb{R}^n\) is said to log-concave if it is of the form 
+  \(\dd \mu = \exp(-H)\dd\text{Leb}^n\) for some convex function \(H : \mathbb{R}^n \to \mathbb{R} \cup \{\infty\}\)
+\end{definition}
 
-To show \((\mu_t)\) satisfies \ref{L3}, we study the limiting behavior of \((\mu_t)\) as \(t \to \infty\). 
-To achieve this, we will consider the covariance matrices
+To show \((\mu_t)\) satisfies \ref{L3} if \(\mu\) is log-concave, we study the limiting behavior of 
+\((\mu_t)\) as \(t \to \infty\) by considering their covariances:
 \begin{equation}
   A_t := \text{Cov}[\mu_t] = \int (x - a_t) \otimes (x - a_t) \mu_t(\dd x),
 \end{equation}
@@ -236,7 +228,7 @@ where \(\otimes\) denotes the Kronecker product. In particular, we will show \((
   \[K\text{Var}_\nu[\phi] \le \int \|\nabla\phi\|^2 \dd\nu.\]
 \end{lemma}
 
-With this lemma\todo{We need \(\mu\) to be log-concave here} in mind, by taking \(\nu = \mu_t\) using 
+With this lemma in mind, by taking \(\nu = \mu_t\) using 
 equation~\eqref{eq:stoch_loc_alt} and defining
 \(\pi_i(x) := x_i\), we have by the Cauchy-Schwarz inequality
 \[(A_t)_{ij} \le \sqrt{\text{Var}_{\mu_t}[\pi_i]}\sqrt{\text{Var}_{\mu_t}[\pi_j]} 
@@ -254,29 +246,6 @@ and we have \((\mu_t)\) satisfying \ref{L3}.
   \(\mathbb{R}^n\)-valued random variable.
 \end{corollary}
 
-Finally, \ref{L2} follows by a straightforward computation (take \(\phi = \mathbf{1}_A\) in the following 
-proposition).
-
-\begin{proposition}
-  For all \(x \in \mathbb{R}^n\), \((F_t(x))_{t \ge 0}\) is a martingale. Furthermore, for any 
-  bounded measurable \(\phi : \mathbb{R}^n \to \mathbb{R}\), defining the process 
-  \(M_t := \int \phi \dd \mu_t\), \((M_t)_{t \ge 0}\) is also a martingale.
-\end{proposition}
-\begin{proof}
-  By its very construction, \((F_t(x))\) is a martingale by observing equation \ref{eq:stoch_loc} has no 
-  drift term.
-  
-  Now, for all \(s \le t\) we have by the conditional Fubini's theorem,
-  \begin{align*}
-    \mathbb{E}[M_t \mid \mathscr{F}_s] 
-    & = \mathbb{E}\left[\int \phi(x) F_t(x) \mu(\dd x) \middle\vert \mathscr{F}_s\right]\\
-    & = \int \phi(x) \mathbb{E}[F_t(x) \mid \mathscr{F}_s] \mu(\dd x) 
-    = \int \phi(x) F_s(x) \mu(\dd x)
-    = M_s
-  \end{align*}
-  implying \((M_t)\) is also a martingale.
-\end{proof}
-
 As a result of \ref{prop:stoch_loc}, we have the following useful corollary.
 
 \begin{corollary}\label{cor:lim_dis}
@@ -291,9 +260,55 @@ As a result of \ref{prop:stoch_loc}, we have the following useful corollary.
 
 \begin{corollary}
   Similarly, taking \(\phi\) to be any continuous function (not necessarily bounded as we have uniform 
-  integrability), we have
+  integrability), defining \(M_t = \int \phi \dd\mu_t\), \((M_t)_t\) is a martingale and
   \begin{equation}\label{eq:lim_mart}
     M_t \xrightarrow{\text{a.e.}} M_\infty \sim \phi_* \mu
   \end{equation}
   where \(\phi_*\mu\) denotes the push-forward measure of \(\mu\) along \(\phi\).
 \end{corollary}
+
+\subsubsection{Discrete time linear-tilt localization}
+
+We may construct an analogous version of the linear-tilt localization for discrete time. By utilizing 
+the little-\(o\) notation, equation~\eqref{eq:linear-tilt} can be rewritten as 
+\[\frac{\dd \mu_{t + h}}{\dd \mu}(x) = 
+  \frac{\dd \mu_t}{\dd \mu}(x) + \langle x - \bar{\mu}_t, h\dd Z_t\rangle \frac{\dd \mu_t}{\dd \mu}(x) 
+  + o(h).\]
+Hence, an discrete analog of the linear tilt localization is defined as the following.
+
+\begin{definition}[Discrete time linear-tilt localization]
+  Given a measure \(\mu \in \mathcal{M}(\mathcal{X})\), the discrete time linear-tilt localization 
+  is the sequence of random measures \((\mu_k)_k\) defined by \(\mu_0 = \mu\) and 
+  \begin{equation}\label{eq:discrete_tilt}
+    \dd \mu_{k + 1} = (1 + \langle x - \bar{\mu}_k, Z_k \rangle)\dd \mu_k
+  \end{equation} 
+  for some sequence of random variables such that \(\mathbb{E}[Z_k \mid \mu_k] = 0\) for all 
+  \(k \in \mathbb{N}\).
+\end{definition}
+
+Using the discrete time linear-tilt localization, let us now provide an alternative construction of the 
+coordinate by coordinate localization.
+
+Given \(\mu\) a probability measure on \(\{-1, 1\}^n\), we recall that the coordinate by coordinate 
+localization is defined by ``pinning'' an additional random coordinate after each time step. To phrase 
+this as a linear-tilt localization, we take the random variables \(Z_k\) to be
+\begin{equation}
+  Z_k := e_{Y_k} \cdot
+    \begin{cases}
+      \frac{1}{1 + (\bar{\mu}_k)_{Y_k}} & \text{with probability } \frac{1 + (\bar{\mu}_k)_{Y_k}}{2} \\
+      \frac{-1}{1 - (\bar{\mu}_k)_{Y_k}} & \text{with probability } \frac{1 - (\bar{\mu}_k)_{Y_k}}{2}
+    \end{cases}
+\end{equation}
+where \(e_1, \cdots, e_n\) are the standard basis of \(\mathbb{R}^n\) and again \(Y\) is a uniform 
+random variable over all permutations of \([n]\). Thus, the linear-tilt localization \((\mu_k)\) given by this 
+choice of \((Z_k)\) is defined by
+\[\mu_{k + 1}(\sigma) = (1 + \|Z_k\|(\sigma_{Y_k} - (\overline{\mu}_k)_{Y_k}))\mu_k(\sigma)\]
+for all \(k < n\). Similar to before, we terminate the process at time \(n\) and so we extend the process 
+to all times by taking \(\mu_k = \mu_{n \wedge k}\).
+
+Let us parse this definition to see why this is equivalent to the coordinate by coordinate localization. 
+Taking \(k < n\), we have at the \(k + 1\)-th step, \(Y_{k + 1}\) chooses a random axis
+which had not been chosen before. Then, \(Z_k\) is chosen such that for each configuration \(\sigma\), 
+the probability of \(\sigma_{Y_k}\) being \(\pm 1\) is proportional the mass of \(\mu_k\) on \(\pm e_{Y_k}\). 
+This is precisely the steps needed to construct the coordinate by coordinate localization as conditioning 
+on an additional axis in this case is simply a projection on to said axis. 

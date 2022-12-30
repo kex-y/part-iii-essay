@@ -94,17 +94,21 @@ is known as the Glauber dynamics.
 \begin{definition}[Glauber dynamics]
   Given a measure \(\mu\) of \(\{-1, 1\}^n\), the Glauber dynamics of \(\mu\) is the Markov chain 
   with kernel 
-  \[K(\sigma^1, \sigma^2) := 
-    \mathbf{1}_{\{\|\sigma^1 - \sigma^2\|_1 = 1\}}\frac{1}{n}\frac{\mu(\sigma^2)}{\mu(\sigma^1) + \mu(\sigma^2)}
-  + \mathbf{1}_{\{\sigma^1 = \sigma^2\}} \frac{1}{n}\sum_{\|\tilde \sigma - \sigma^1\|_1 = 1}
-    \frac{\mu(\sigma^1)}{\mu(\sigma^1) + \mu(\tilde \sigma)}.\]  
+  \begin{equation}\label{eq:glauber_ker}
+    K(\sigma^1, \sigma^2) := 
+      \mathbf{1}_{\{\|\sigma^1 - \sigma^2\|_1 = 1\}}\frac{1}{n}\frac{\mu(\sigma^2)}{\mu(\sigma^1) + \mu(\sigma^2)}
+    + \mathbf{1}_{\{\sigma^1 = \sigma^2\}} \frac{1}{n}\sum_{\|\tilde \sigma - \sigma^1\|_1 = 1}
+    \frac{\mu(\sigma^1)}{\mu(\sigma^1) + \mu(\tilde \sigma)},
+  \end{equation}
+  where we define \(\|\sigma^1 - \sigma^2\|_1 := \frac{1}{2}\sum_{i = 1}^n |\sigma_i^1 - \sigma_i^2|\) 
+  for all \(\sigma^1, \sigma^2 \in \{-1, 1\}^n\).
 \end{definition}
 
 Parsing this definition, we see that the Glauber dynamics is the Markov chain such that, starting at a 
 configuration \(\sigma_1 \in \{-1, 1\}^n\), the configuration at the next time step either remains the 
 same or change at one vertex. Furthermore, the probability of this occurring is weighted according to 
 \(\mu\). As we hoped, the Glauber dynamics of the Ising model \(\mu_{\beta, h}\) has \(\mu_{\beta, h}\) 
-as its stationary distribution.\todo{Prove this.}
+as its stationary distribution.
 
 \subsection{Dynamics of stochastic localizations}
 
@@ -223,4 +227,46 @@ This motivates the following definition.
 By the same computation above, if \((\mu_k)_k\) conserves \((\kappa_k)\)-variance up to time \(n\), 
 then it associated dynamics has a spectral gap of at least \(\prod_{i = 1}^n (1 - \kappa_i)\).
 
-\subsection{Glauber dynamics as an associated Markov process}
+\subsection{Glauber dynamics as an associated Markov process}\label{sec:Glauber_loc}
+
+As alluded to in section~\ref{sec:stoch_loc}, Glauber dynamics can be constructed as an associated Markov 
+chain of the coordinate by coordinate localization. Namely, taking \(\mu \in \mathcal{M}(\{-1, 1\}^n)\)
+and \(\tau = n - 1\), we will show the associate Markov kernel 
+\[\mathbb{E}\left[\frac{\mu_{n - 1}(\sigma^1)\mu_{n - 1}(\sigma^2)}{\mu(\sigma^1)}\right] = K(\sigma^1, \sigma^2)\]
+for all \(\sigma^1, \sigma^2 \in \{-1, 1\}^n\) where \(K(\sigma^1, \sigma^2)\) as defined by equation~\eqref{eq:glauber_ker}.
+
+First, taking \(\sigma^1, \sigma^2 \in \{-1, 1\}^n\) such that \(\|\sigma^1 - \sigma^2\| = 1\), say \(\sigma^1\) 
+and \(\sigma^2\) differs at the \(m\)-th coordinate, we have 
+\[\mathbb{E}\left[\frac{\mu_{n - 1}(\sigma^1)\mu_{n - 1}(\sigma^2)}{\mu(\sigma^1)}\right] = \frac{1}{n}\sum_{k = 1}^n \mathbb{E}
+    \left[\frac{\mu_{n - 1}(\sigma^1)\mu_{n - 1}(\sigma^2)}{\mu(\sigma^1)}\ \middle\vert\ Y_n = k\right].\]
+Now, if \(Y_n = k \neq m\), the configuration is fixed at the \(m\)-th coordinate. However, as \(\sigma^1\) and 
+\(\sigma^2\) differs at the \(m\)-th coordinate, either \(\mu_{n - 1}(\sigma^1) = 0\) or \(\mu_{n - 1}(\sigma^2) = 0\).
+Thus, all but the \(m\)-th term in the above sum vanishes and we have the kernel equals
+\begin{align*}
+  & = \frac{1}{n} \mathbb{E}\left[\frac{\mu_{n - 1}(\sigma^1)\mu_{n - 1}(\sigma^2)}{\mu(\sigma^1)}\ \middle\vert\ Y_n = m\right]\\
+  & = \frac{1}{n} \mathbb{E}\left[\frac{\mu_{n - 1}(\sigma^1)\mu_{n - 1}(\sigma^2)}{\mu(\sigma^1)}
+    \mathbf{1}_{\{\text{supp}\ \mu_{n - 1} = \{\sigma^1, \sigma^2\}\}} \middle\vert\ Y_n = m\right]\\
+  & = \frac{\mathbb{P}(\text{supp}\ \mu_{n - 1} = \{\sigma^1, \sigma^2\})}{n} 
+    \mathbb{E}\left[\frac{\mu_{n - 1}(\sigma^1)\mu_{n - 1}(\sigma^2)}{\mu(\sigma^1)}
+    \middle\vert\ Y_n = m, \text{supp}\ \mu_{n - 1} = \{\sigma^1, \sigma^2\}\right]\\
+\end{align*}
+Then, substituting in the following equalities:
+\[\mathbb{P}(\text{supp}\ \mu_{n - 1} = \{\sigma^1, \sigma^2\}) = \mu(\sigma^1) + \mu(\sigma^2),\]
+and
+\begin{align*}
+  & \mathbb{E}[\mu_{n - 1}(\sigma^1)\mu_{n - 1}(\sigma^2) \mid Y_n = m, \text{supp}\ \mu_{n - 1} = \{\sigma^1, \sigma^2\}]\\
+  = & \mathbb{E}[\mu_{n - 1}(\sigma^1)\mu_{n - 1}(\sigma^2) \mid \text{supp}\ \mu_{n - 1} = \{\sigma^1, \sigma^2\}]\\
+  = & \frac{\mu(\sigma^1)}{\mu(\sigma^1) + \mu(\sigma^2)} \frac{\mu(\sigma^2)}{\mu(\sigma^1) + \mu(\sigma^2)}
+\end{align*}
+we have 
+\[\mathbb{E}\left[\frac{\mu_{n - 1}(\sigma^1)\mu_{n - 1}(\sigma^2)}{\mu(\sigma^1)}\right] =
+  \frac{\mu(\sigma^1) + \mu(\sigma^2)}{n\mu(\sigma^1)}
+  \frac{\mu(\sigma^1)}{\mu(\sigma^1) + \mu(\sigma^2)} 
+  \frac{\mu(\sigma^2)}{\mu(\sigma^1) + \mu(\sigma^2)} = 
+  \frac{1}{n} \frac{\mu(\sigma^2)}{\mu(\sigma^1) + \mu(\sigma^2)}\]
+which is precisely the kernel of the Glauber dynamics of two neighboring configurations. 
+On the other hand, if \(\|\sigma^1 - \sigma^2\| > 1\), then 
+\[\mathbb{E}\left[\frac{\mu_{n - 1}(\sigma^1)\mu_{n - 1}(\sigma^2)}{\mu(\sigma^1)}\right] = 0\] 
+as \(\mu_{n - 1}\) have fixed all but one coordinate. Thus, the dynamics associated with the coordinate 
+is precisely the Glauber dynamics (we don't need to check the case \(\sigma^1 = \sigma^2\) as they are 
+kernels and so \(K(\sigma, \sigma) = 1 - \sum_{\tilde \sigma \neq \sigma}K(\sigma, \tilde \sigma)\)).

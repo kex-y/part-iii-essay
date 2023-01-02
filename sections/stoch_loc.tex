@@ -254,7 +254,7 @@ As a result of \ref{prop:stoch_loc}, we have the following useful corollary.
   where \(\phi_*\mu\) denotes the push-forward measure of \(\mu\) along \(\phi\).
 \end{corollary}
 
-\subsubsection{Discrete time linear-tilt localization}
+\subsubsection{Discrete time linear-tilt localization}\label{sec:discrete_tilt}
 
 We may construct an analogous version of the linear-tilt localization for discrete time. By utilizing 
 the little-\(o\) notation, equation~\eqref{eq:linear-tilt} can be rewritten as 
@@ -279,7 +279,7 @@ coordinate by coordinate localization.
 Given \(\mu\) a probability measure on \(\{-1, 1\}^n\), we recall that the coordinate by coordinate 
 localization is defined by ``pinning'' an additional random coordinate after each time step. To phrase 
 this as a linear-tilt localization, we take the random variables \(Z_k\) to be
-\begin{equation}
+\begin{equation}\label{eq:def_Z}
   Z_k := e_{Y_k} \cdot
     \begin{cases}
       \frac{1}{1 + (\bar{\mu}_k)_{Y_k}} & \text{with probability } \frac{1 + (\bar{\mu}_k)_{Y_k}}{2} \\

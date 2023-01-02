@@ -117,7 +117,7 @@ localization process for which the original process is stationary. We will in th
 these Markov processes and show that the Glauber dynamics can be constructed using this method. 
 
 \begin{definition}[Markov process associated with a stochastic localization, \cite{Chen_2022}]
-  Let \((\mu_t)_{t \ge 0}\) be a stochastic localization of \(\mu\) such that \(\mu_t\) is absolutely 
+  Let \((\mu_t)_{t \ge 0}\) be a prelocalization of \(\mu\) such that \(\mu_t\) is absolutely 
   continuous (almost everywhere) with respect to \(\mu\) for all \(t\). For all \(\tau > 0\), we define the dynamics 
   associated with \((\mu_t)_t\) at \(\tau\) to be the Markov process with kernel 
   \[K(x, A) := \mathbb{E}_\mathbb{P}\left[\frac{\dd \mu_\tau}{\dd \mu}(x) \mu_\tau(A)\right]\]
@@ -139,7 +139,7 @@ we have
   \mathbb{E}_\mathbb{P}[\mu_\tau](A).\]
 
 \begin{proposition}
-  The Markov process associated with a stochastic localization \((\mu_t)_{t \ge 0}\) of \(\mu\) is reversible and 
+  The Markov process associated with a prelocalization \((\mu_t)_{t \ge 0}\) of \(\mu\) is reversible and 
   has stationary distribution \(\mu\). 
 \end{proposition}
 \begin{proof}
@@ -168,7 +168,7 @@ we have
 \end{proof}
 
 \begin{proposition}\label{prop:gap_assoc}
-  Taking \(K\) to be the kernel of the Markov process associated with a stochastic localization \((\mu_t)_{t \ge 0}\)
+  Taking \(K\) to be the kernel of the Markov process associated with a prelocalization \((\mu_t)_{t \ge 0}\)
   of \(\mu\) at time \(\tau\), we have 
   \[\mathfrak{gap}(K) = \inf_{\phi : \mathcal{X} \to \mathbb{R}} \frac{\mathbb{E}[\text{Var}_{\mu_\tau}[\phi]]}{\text{Var}_\mu[\phi]}.\]
 \end{proposition}
@@ -196,16 +196,16 @@ we have
   by taking infimum on both sides.
 \end{proof}
 
-This proposition has a nice intuitive interpretation. By recalling that the limit of a stochastic 
-localization as \(t \to \infty\) is a Dirac measure, we may imagine a stochastic localization zooms in 
-(in \(t\)) towards a region containing the massive point. Then, the spectral gap of the 
-associated Markov process at time \(\tau\) is simply the smallest proportion of the local variation around this 
-zoomed in region at time \(\tau\) to that of the global variation. This is achieved by a test function 
-with minimal variation within this region and maximal variation outside of it.
+% This proposition has a nice intuitive interpretation. By recalling that the limit of a stochastic 
+% localization as \(t \to \infty\) is a Dirac measure, we may imagine a stochastic localization zooms in 
+% (in \(t\)) towards a region containing the massive point. Then, the spectral gap of the 
+% associated Markov process at time \(\tau\) is simply the smallest proportion of the local variation around this 
+% zoomed in region at time \(\tau\) to that of the global variation. This is achieved by a test function 
+% with minimal variation within this region and maximal variation outside of it.
 
 With regards to theorem~\ref{thm:levin}, in the case \(\mu\) has full support on the finite state space 
 \(\mathcal{X}\) (e.g. in the setting of Glauber dynamics) the above proposition provides a method for 
-computing an upper bound for the mixing time. In particular, should the stochastic localization \((\mu_k)_k\)
+computing an upper bound for the mixing time. In particular, should the prelocalization \((\mu_k)_k\)
 satisfy 
 \[\mathbb{E}[\text{Var}_{\mu_{k + 1}}[\phi] \mid \mu_t] \ge (1 - \epsilon)\text{Var}_{\mu_k}[\phi]\]
 for given \(\epsilon > 0\) and any integrable function \(\phi : \mathcal{X} \to \mathbb{R}\), we have the 
@@ -218,14 +218,112 @@ Hence, we have the bound
 which immediately provides an upper bound for the mixing time of \(K\) in light of theorem~\ref{thm:levin}.
 This motivates the following definition.
 
-\begin{definition}[Approximate conservation of variance, \cite{Chen_2022}]
-  A stochastic localization process \((\mu_k)_k\) is said satisfy conserve \((\kappa_k)\)-variance 
+\begin{definition}[Discrete time approximate conservation of variance (ACV), \cite{Chen_2022}]
+  A prelocalization process \((\mu_k)_k\) is said satisfy conserve \((\kappa_k)\)-variance 
   up to time \(n\) if for any integrable function \(\phi : \mathcal{X} \to \mathbb{R}\), \(1 \le k \le n\),
   \[\mathbb{E}[\text{Var}_{\mu_{k + 1}}[\phi] \mid \mu_t] \ge (1 - \kappa_k)\text{Var}_{\mu_k}[\phi].\]
 \end{definition}
 
 By the same computation above, if \((\mu_k)_k\) conserves \((\kappa_k)\)-variance up to time \(n\), 
 then it associated dynamics has a spectral gap of at least \(\prod_{i = 1}^n (1 - \kappa_i)\).
+
+\subsubsection{ACV of discrete time linear-tilt localization}
+
+In the case of the discrete time linear-tilt localization \((\mu_k)_k\) of some \(\mu\), we may compute 
+an explicit value \((\eta_k)\) for which \((\mu_k)_k\) conserves \((\eta_k)\)-variance. Indeed, 
+given integrable \(\phi : \mathcal{X} \to \mathbb{R}\), we have
+\begin{equation}\label{eq:var_bound}
+  \begin{split}
+    \mathbb{E}[\text{Var}_{\mu_{k + 1}}[\phi] \mid \mu_k] 
+    & = \mathbb{E}\left[\int\phi^2 \dd \mu_{k + 1} - \left(\int \phi \dd \mu_{k + 1}\right)^2\ \middle\vert\ \mu_k \right]\\
+    & = \int \phi^2 \dd \mu_k - \mathbb{E}\left[\left(\int \phi(x) 
+          (1 + \langle x - \bar{\mu}_k, Z_k\rangle)\mu_k(\dd x)\right)^2\ \middle\vert\ \mu_k\right]\\
+    & = \int \phi^2 \dd \mu_k - \left(\int \phi \dd \mu_k\right)^2 -
+          \mathbb{E}\left[\left(\int \phi(x) \langle x - \bar{\mu}_k, Z_k\rangle\mu_k(\dd x)\right)^2\ \middle\vert\ \mu_k\right]\\
+    & = \text{Var}_{\mu_k}[\phi] - 
+          \text{Var}\left[\int \phi(x) \langle x - \bar{\mu}_k, Z_k\rangle\mu_k(\dd x)\ \middle\vert \mu_k\right]
+  \end{split}
+\end{equation}
+where the third and last equality follows as \(\mathbb{E}[Z_k \mid \mu_k] = 0\). Then, denoting 
+\[C_k := \text{Cov}(Z_k \mid \mu_k) \text{ and } U_k := \int \phi(x)(x - \bar{\mu}_k) \mu_k(\dd x),\]
+equation~\eqref{eq:var_bound} becomes
+\[\mathbb{E}[\text{Var}_{\mu_{k + 1}}[\phi] \mid \mu_k] = \text{Var}_{\mu_k}[\phi] - \|C_k^{1 / 2}U_k\|^2.\]
+With this reduction, our goal is reduced to bounding \(\|C_k^{1 / 2}U_k\|^2\) by an expression of 
+the form \(\eta_k \text{Var}_{\mu_k}[\phi]\) where \(\eta_k\) is independent of \(\phi\). Indeed, 
+taking \(\theta\) to be the normalized vector \(C^{1/ 2}U_k / \|C_k^{1 / 2}U_k\|\), we have
+\begin{align*}
+  \|C_k^{1 / 2} U_k\|^2 & = \langle C_k^{1 / 2} U_k, \theta\rangle^2 
+    = \left(\int \phi(x)\langle C_k^{1 / 2}(x - \bar{\mu}_k), \theta \rangle \mu_k(\dd x)\right)^2\\
+  & = \left(\int \left(\phi(x) - \int \phi \dd\mu_k\right) \langle C_k^{1 / 2}(x - \bar{\mu}_k), \theta \rangle \mu_k(\dd x)\right)^2\\
+  & \le \text{Var}_{\mu_k}[\phi]\int \langle C_k^{1 / 2}(x - \bar{\mu}_k), \theta \rangle^2 \mu_k(\dd x)
+    \le \text{Var}_{\mu_k}[\phi]\|C_k^{1/ 2}\text{Cov}(\mu_k) C_k^{1 / 2}\|_{\text{op}}
+\end{align*}
+where the inequality is due to Cauchy-Schwarz. Hence, for any discrete linear-tilt 
+localization \((\mu_k)_k\), we have
+\begin{equation}
+  \mathbb{E}[\text{Var}_{\mu_{k + 1}}[\phi] \mid \mu_k] \ge 
+    (1 - \|C_k^{1 / 2}\text{Cov}(\mu_k)C_k^{1 / 2}\|_{\text{op}})\text{Var}_{\mu_k}[\phi]
+\end{equation}
+for any integrable \(\phi : \mathcal{X} \to \mathbb{R}\) and thus, conserve \((1 - \eta_k)\)-variance 
+where we define \(\eta_k := \|C_k^{1 / 2}\text{Cov}(\mu_k)C_k^{1 / 2}\|_{\text{op}}\). 
+
+\subsubsection{ACV of linear-tilt localization driven by a Wiener process}
+
+In the setting of the linear-tilt localization driven by a Wiener process, the computation above remains 
+to work with slight modifications. Namely, rather than considering the discrete differences of the 
+variance, we instead compute and attempt to bound the time derivative of the variance from below. 
+This computation turns out to be very useful with regards to the KLS conjecture which will be discussed 
+in section~\ref{sec:KLS}.
+
+\begin{definition}[Approximate conservation of variance]
+  A prelocalization process \((\mu_t)_{t \ge 0}\) satisfies approximate \((\kappa_t)\)-variance conservation if 
+  for all integrable \(\phi : \mathcal{X} \to \mathbb{R}\) and \(t \ge 0\), 
+  \[\frac{\dd \text{Var}_{\mu_t}[\phi]}{\text{Var}_{\mu_t}[\phi]} \ge -\kappa_t \dd t + N_t,\]
+  for some martingale \((N_t)\).
+\end{definition}
+
+% \begin{proposition}
+%   Given the linear-tilt localization \((\mu_t)_{t \ge 0}\) of \(\mu\) driven by a Wiener process as defined 
+%   in section~\ref{sec:construct}, \((\mu_t)\) satisfies approximate \(\|A_t\|_{\text{op}}\)-variance 
+%   conservation where \(A_t\) is the covariance matrix of \(\mu_t\).
+% \end{proposition}
+
+% To prove this proposition, we first recall the following consequence of Itô's formula: if \((X_t)\) 
+% is an Itô process with no drift term, taking \(f(x) := x^2\), we have  
+% \[\dd f(X_t) = 2 X_t \dd X_t + \dd[] [X]_t.\]
+% Hence, taking expectation on both sides, we obtain \(\text{Var}[X_t] = [X]_t\). With this 
+% in mind, by defining the martingale \((M_t)\) as in corollary~\ref{cor:lim_mart} for the given 
+% \(\phi\), we have 
+% \[\text{Var}_{\mu_t}[\phi] = \text{Var}[M_t] = [M]_t,\]
+% and so, it suffices to analyze \(\dd[] [M]_t\).
+
+% \begin{proof}
+%   With the above remarks in mind, we attempt to bound \(\dd[] [M]_t\) by an expression of the form 
+%   \(\eta_t \text{Var}_{\mu_t}[\phi]\dd t\). Observe that
+%   \begin{align*}
+%     \dd M_t & = d \int \phi(x) F_t(x) \mu(\dd x) = \int \phi(x) \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\\
+%     & = \left\langle \int \phi(x)(x - a_t)\mu_t(\dd x), \dd W_t\right\rangle
+%   \end{align*}
+%   so, by considering the component-wise quadratic variation, we have
+%   \begin{equation}\label{eq:diff_qvar}
+%     \dd[] [M]_t = \left\| \int \phi(x)(x - a_t)\mu_t(\dd x) \right\|^2 \dd t.
+%   \end{equation}
+%   The remainder of the calculation is quite similar to the discrete case. Indeed, denoting \(\theta\) the vector 
+%   \(\int \phi(x)(x - a_t)\mu_t(\dd x)\) normalized to have norm 1, we observe,
+%   \begin{equation}\label{eq:red_a}
+%     \begin{split}
+%       \dd[] [M]_t & = \left\langle \theta, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t
+%         = \left\langle \theta, \int \left(\phi(x) - \int \phi \dd \mu_t\right)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t\\
+%       & = \left(\int \left(\phi(x) - \int \phi \dd \mu_t\right) \langle \theta, x - a_t\rangle \mu_t(\dd x)\right)^2 \dd t\\
+%       & \le \left(\int \left(\phi(x) - \int \phi \dd \mu_t\right)^2 \mu_t(\dd x)\right) \left(\int \langle \theta, x - a_t\rangle^2 \mu_t(\dd x)\right) \dd t\\
+%       & = \text{Var}_{\mu_t}[\phi] \left(\int \langle\theta, (x - a_t)^{\otimes 2} \theta\rangle \mu_t(\dd x)\right) \dd t
+%         = \text{Var}_{\mu_t}[\phi] \langle\theta, A_t \theta\rangle\dd t\\ 
+%       & \le \text{Var}_{\mu_t}[\phi] \|A_t\|_{\text{op}} \dd t.
+%     \end{split}
+%   \end{equation}
+%   where again the inequality follows by the Cauchy-Schwarz inequality and \(A_t\) is the covariance 
+%   matrix of \(\mu_t\).
+% \end{proof}
 
 \subsection{Glauber dynamics as an associated Markov process}\label{sec:Glauber_loc}
 

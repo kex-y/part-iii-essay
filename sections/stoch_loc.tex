@@ -133,28 +133,15 @@ Let \(\mu\) be a probability measure on \(\mathcal{X} \subseteq \mathbb{R}^n\), 
   \end{enumerate} 
 \end{definition}
 
-\begin{proposition}
-  If \((\mu_t)_t\) is a linear-tilt localization of \(\mu\), then for all \(A \in \Sigma\), 
-  \(\dd \mu_t(A) = 0\) for all \(t\).
+It is clear that \((\mu_t(A))_t\) is a martingale for all \(A \in \Sigma\) by observing that 
+equation~\eqref{eq:linear-tilt} has no drift term. Hence, it follows \((\mu_t(\mathcal{X}))\) is a 
+martingale. However, since \(\mu_t(\mathcal{X}) = \int F_t \dd \mu\) is differentiable by 
+construction, \((\mu_t(\mathcal{X}))\) has zero quadratic variation and thus is constant in \(t\). 
+With this in mind, as \(\mu_0 = \mu\) is a probability measure, it follows:
+
+\begin{proposition}\todo{I think Eldan's proof in \cite{Eldan_2013} has a mistake}
+  If \((\mu_t)_t\) is a linear-tilt localization of \(\mu\), then \(\mu_t\) is a probability measure for each \(t\).
 \end{proposition}
-\begin{proof}
-  Let \(A \in \Sigma\), then we have
-  \begin{align*}
-    \dd \mu_t(A) & = \dd \mathbb{E}[\mu_t(A) \mid \mu_t] = \mathbb{E}\left[\int_A \dd F_t(x) \mu(\dd x)\ \middle\vert \ \mu_s\right]\\
-    & = \int_A \mathbb{E}[\langle x - \bar{\mu}(F_t), \dd Z_t \rangle F_t(x) \mid \mu_t] \mu(\dd x)\\
-    & =  \int_A \langle x - \bar{\mu}(F_t), \mathbb{E}[\dd Z_t \mid \mu_t]\rangle F_t(x) \mu(\dd x) = 0
-  \end{align*}
-  as required.
-\end{proof}
-
-Thus, as \(\mu_0 = \mu\) is a probability measure, it follows \(\mu_t\) is a probability measure for each \(t\).
-
-\begin{corollary}
-  If \((\mu_t)_t\) is a linear-tilt localization of \(\mu\) then for all \(t\), \(\mu_t\) is a probability measure. 
-\end{corollary}
-
-Furthermore, as \((F_t(x))_t\) is a martingale by equation~\eqref{eq:linear-tilt}, it follows that \((\mu_t(A))_t\) 
-is a martingale for all \(A \in \Sigma\). Hence, we have:
 
 \begin{corollary}
   A linear-tilt localization \((\mu_t)_t\) of \(\mu\) is a prelocalization of \(\mu\).
@@ -166,7 +153,7 @@ e.g. by requiring \(\|\text{Cov}(Z_t)\|_{\text{op}}\) to decrease sufficiently f
 we will not restrict ourselves to one of these conditions. Instead, we will consider \ref{L3} case by case 
 in the following examples of linear-tilt schemes. 
 
-\subsubsection{Linear-tilt localization driven by Wiener process}\label{sec:construct}
+\subsubsection{Linear-tilt localization driven by a Wiener process}\label{sec:construct}
 
 A natural choice of \((Z_t)_{t \ge 0}\) is the standard Wiener process on \(\mathbb{R}^n\).
 Denoting \((W_t)_{t \ge 0}\) a standard Wiener process on \(\mathbb{R}^n\), we define the random functions 
@@ -258,7 +245,7 @@ As a result of \ref{prop:stoch_loc}, we have the following useful corollary.
   convergence theorem.
 \end{proof}
 
-\begin{corollary}
+\begin{corollary}\label{cor:lim_mart}
   Similarly, taking \(\phi\) to be any continuous function (not necessarily bounded as we have uniform 
   integrability), defining \(M_t = \int \phi \dd\mu_t\), \((M_t)_t\) is a martingale and
   \begin{equation}\label{eq:lim_mart}

@@ -27,8 +27,7 @@ Hence, for all \(t > 0\), by the martingale property we have
     & = \mathbb{E}[M_t^2] + (\mathbb{E}[\mathbb{E}[M_\infty^2 \mid \mathscr{F}_t]] - \mathbb{E}[M_t^2])\\
     & = \mathbb{E}[M_\infty^2] = \text{Var}[M_\infty],
 \end{align*}
-where the second equality follows as \(\mathbb{E}[M_t] = \mathbb{E}[M_\infty] = \mathbb{E}_\mu[\phi] = 0\) as 
-a linear map 
+where the second equality follows as \(\mathbb{E}[M_t] = \mathbb{E}[M_\infty] = \mathbb{E}_\mu[\phi] = 0\).
 
 On the other hand, as \((M_t)\) is a martingale, \(M_t^2 - [M]_t\) is also a martingale implying
 \(\mathbb{E}[M_t^2] = \mathbb{E}[M]_t\) and so \(\text{Var}[M_t] = \mathbb{E}[M_t^2] - \mathbb{E}[M_t]^2 
@@ -68,9 +67,9 @@ we observe,
 \begin{equation}\label{eq:red_a}
   \begin{split}
     \dd[] [M]_t & = \left\langle \theta, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t
-      = \left\langle \theta, \int (\phi(x) - a_t)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t\\
-    & = \left(\int (\phi(x) - a_t) \langle \theta, x - a_t\rangle \mu_t(\dd x)\right)^2 \dd t\\
-    & \le \left(\int (\phi(x) - a_t)^2 \mu_t(\dd x)\right) \left(\int \langle \theta, x - a_t\rangle^2 \mu_t(\dd x)\right) \dd t\\
+      = \left\langle \theta, \int \left(\phi(x) - \int \phi \dd \mu_t\right)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t\\
+    & = \left(\int \left(\phi(x) - \int \phi \dd \mu_t\right) \langle \theta, x - a_t\rangle \mu_t(\dd x)\right)^2 \dd t\\
+    & \le \left(\int \left(\phi(x) - \int \phi \dd \mu_t\right)^2 \mu_t(\dd x)\right) \left(\int \langle \theta, x - a_t\rangle^2 \mu_t(\dd x)\right) \dd t\\
     & = \text{Var}_{\mu_t}[\phi] \left(\int \theta^T (x - a_t)^{\otimes 2} \theta \mu_t(\dd x)\right) \dd t
       = \text{Var}_{\mu_t}[\phi] (\theta^T A_t \theta)\dd t\\ 
     & \le \text{Var}_{\mu_t}[\phi] \|A_t\|_{\text{op}} \dd t.

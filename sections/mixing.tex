@@ -1,8 +1,10 @@
 An application of stochastic localizations is used to prove mixing bounds for Markov processes. 
-Expanding on the work of Anari, Liu and Oveis in \cite{Anari_2020}, Chen and Eldan in \cite{Chen_2022} 
-established a framework in which mixing bounds of a special class of Markov processes arises, namely Markov 
-chains associated with stochastic localizations. We will in this section present this 
-framework and describe its application to the Glauber dynamics.\todo{Fix!}
+Focusing on the framework established by Chen and Eldan in \cite{Chen_2022}, we will present a method to 
+compute a bound on the mixing time for a special class of Markov processes; namely the Markov chains 
+associated with stochastic localizations. 
+As a specific example, we will in this section also describe the application of this framework to the 
+Glauber dynamics and as a result, allow us to recover the main theorem on spectral independence as 
+presented by Anari, Liu and Oveis in \cite{Anari_2020}.
 
 \subsection{Mixing bounds}
 
@@ -12,7 +14,7 @@ Markov chain Monte Carlo (MCMC):
 \begin{theorem}\label{thm:markov_conv}
   Given \((X_n)\) an irreducible positively recurrent homogenous Markov process on \(\mathcal{X}\) with
   stationary distribution \(\mu\), for any \(\phi : \mathcal{X} \to \mathbb{R}\) integrable, 
-  \[\lim_{n \to \infty} \frac{1}{n} \sum_{k = 1}^n \phi(X_k) = \int f \dd \mu\]
+  \[\lim_{n \to \infty} \frac{1}{n} \sum_{k = 1}^n \phi(X_k) = \int \phi \dd \mu\]
   almost everywhere.  
 \end{theorem}
 With this theorem in mind, MCMC allows us to sample \(\mu\) by sampling from \((X_n)\) instead. It is in general 
@@ -58,18 +60,18 @@ a general state space.
 We remark that this inequality is only meaningful whenever \(\mu_{\min} > 0\) and thus, this theorem is 
 only meaningful for Markov chains on finite state space (and we can replace \(\inf\) with \(\min\)).
 
-A similar bound can also be established using the modified log-Sobolev inequality (MLSI).
+% A similar bound can also be established using the modified log-Sobolev inequality (MLSI).
 
-\begin{definition}[Entropy, \cite{Liu_2020}]
-  Given \(\phi : \mathcal{X} \to \mathbb{R}_{\ge 0}\) and a measure \(\mu\), we define the entropy of \(\phi\) 
-  with respect to \(\mu\) to be 
-  \[\text{Ent}_\mu[\phi] := \mathbb{E}_\mu\left[\phi \log\left(\frac{1}{\mathbb{E}_\mu[\phi]} \phi\right)\right]
-   = \int \phi \log \phi \dd \mu - \int \phi \dd \mu \log\left(\int \phi \dd \mu\right).\]
-\end{definition}
+% \begin{definition}[Entropy, \cite{Liu_2020}]
+%   Given \(\phi : \mathcal{X} \to \mathbb{R}_{\ge 0}\) and a measure \(\mu\), we define the entropy of \(\phi\) 
+%   with respect to \(\mu\) to be 
+%   \[\text{Ent}_\mu[\phi] := \mathbb{E}_\mu\left[\phi \log\left(\frac{1}{\mathbb{E}_\mu[\phi]} \phi\right)\right]
+%    = \int \phi \log \phi \dd \mu - \int \phi \dd \mu \log\left(\int \phi \dd \mu\right).\]
+% \end{definition}
 
-\begin{definition}\todo{TODO}
+% \begin{definition}\todo{TODO}
   
-\end{definition}
+% \end{definition}
 
 \subsubsection{Ising model and Glauber dynamics}
 
@@ -154,7 +156,7 @@ these Markov processes and show that the Glauber dynamics can be constructed usi
   for all \(x \in \mathcal{X}, A \in \Sigma\).
 \end{definition}
 
-As alluded by the notation, rather than a deterministic time \(\tau\), \(\tau\) can be taken to be an 
+As hinted by the notation, rather than a deterministic time \(\tau\), \(\tau\) can also be taken to be an 
 appropriate stopping time. In this case, the theorems below will remain to hold by invoking the optional stopping 
 theorem whenever necessary.
 
@@ -435,3 +437,7 @@ equation~\eqref{eq:gap_glauber}, we have
 \begin{equation}\label{eq:gap_glauber_final}
   \mathfrak{gap}(K) \ge \prod_{k = 0}^{n - 2}\left(1 - \frac{\eta_k + 1}{n - k}\right).
 \end{equation}
+This bound and theorem~\ref{thm:Anari} are said to be equivalent as both equations provide polynomial 
+lower bounds for the spectral gap in terms of the spectral independence coefficients.
+
+\subsection{Overview of MLSI}

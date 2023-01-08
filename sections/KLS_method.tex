@@ -11,37 +11,45 @@ also hold for the original measure.
 We recall the goal of theorem~\ref{thm:KLS_to_TS} is to control \(\text{Var}_\mu[\phi]\) by 
 a logarithmic factor of \(\text{Var}_\mu[\|\cdot\|]\). As translating the barycenter of \(\mu\)
 does not affect its variance, we may assume \(\mu\) has its barycenter \(\overline{\mu}\) at the origin.
-Furthermore, \todo{explain} we may assume \(\mu\) is supported on \(B_n(0) \subseteq \mathbb{R}^n\) with 
-\(B_n(0)\) the ball at the origin of radius \(n\). Thus, we also have 
+Furthermore, we will assume \(\mu\) is supported on \(B_n(0) \subseteq \mathbb{R}^n\) with 
+\(B_n(0)\) the ball at the origin of radius \(n\). The reason for this is due to a concentration 
+bound for log-concave measures where one may show most of their densities lie within a compact support.
+As a result, the region outside said compact set only contributes a bounded amount (in fact, it decreases 
+in \(n\)) to the variance, and does not affect our computation (c.f. \cite{Klartag_2006}). 
+Thus, we also have 
 \[\text{supp}\ \mu_t = \text{supp}\ F_t\mu \subseteq \text{supp}\ \mu \subseteq B_n(0)\] 
 for all \(t > 0\).
  
-Fix \(\phi : \mathbb{R}^n \to \mathbb{R}\) some 1-Lipschitz function and let \((M_t)\) be the 
-martingale as described above and in particular, by recalling corollary~\ref{cor:lim_dis}, 
-\(\text{Var}_\mu[\phi] = \text{Var}[M_\infty]\) where \(M_t \xrightarrow{\text{a.e.}} M_\infty\).
-Hence, for all \(t > 0\), by the martingale property we have
+Let us fix \(\phi : \mathbb{R}^n \to \mathbb{R}\) some 1-Lipschitz function and let \((M_t)\) be the 
+martingale as described in corollary~\ref{cor:lim_dis}, we have \(\text{Var}_\mu[\phi] = \text{Var}[\phi(a_\infty)]\) 
+where \(a_\infty \sim \mu\).
+Then, for all \(t > 0\), by the law of total variance and the martingale property we have
 \begin{align*}
-  \text{Var}[M_t] + \mathbb{E}[\text{Var}[M_\infty \mid \mathscr{F}_t]] 
-    & = (\mathbb{E}[M_t^2] - \mathbb{E}[M_t]^2) 
-      + \mathbb{E}\left[\mathbb{E}[M_\infty^2 \mid \mathscr{F}_t] - \mathbb{E}[M_\infty \mid \mathscr{F}_t]^2\right]\\
-    & = \mathbb{E}[M_t^2] + (\mathbb{E}[\mathbb{E}[M_\infty^2 \mid \mathscr{F}_t]] - \mathbb{E}[M_t^2])\\
-    & = \mathbb{E}[M_\infty^2] = \text{Var}[M_\infty],
+  \text{Var}_\mu[\phi] = \text{Var}[M_\infty] & = \text{Var}[\mathbb{E}[M_\infty \mid \mu_t]] + \mathbb{E}[\text{Var}[M_\infty \mid \mu_t]]\\
+  & = \text{Var}[M_t] + \mathbb{E}[\text{Var}[M_\infty \mid \mu_t]]
 \end{align*}
-where the second equality follows as \(\mathbb{E}[M_t] = \mathbb{E}[M_\infty] = \mathbb{E}_\mu[\phi] = 0\).
+where we introduce the notation \(\text{Var}[X \mid \mathcal{G}] := \mathbb{E}[(X - \mathbb{E}[X \mid \mathcal{G}])^2 \mid \mathcal{G}]\)
+for some random variable \(X\) and sub-\(\sigma\)-algebra \(\mathcal{G}\). Furthermore, by replacing 
+\(\phi\) in corollary~\ref{cor:lim_dis} with \(\phi^2\) and denoting the resulting martingale 
+\(N_t := \int \phi^2 \dd \mu_t\), we obtain \(N_t \to \phi(a_\infty)^2\) and hence,
+\begin{align*}
+  \text{Var}[M_\infty \mid \mu_t] & = \mathbb{E}[\phi(a_\infty)^2 \mid \mu_t] - M_t^2 = N_t - M_t^2\\ 
+    & = \int \phi^2 \dd \mu_t - \left(\int \phi \dd \mu_t\right)^2 = \text{Var}_{\mu_t}[\phi]
+\end{align*}
 
 On the other hand, as \((M_t)\) is a martingale, \(M_t^2 - [M]_t\) is also a martingale implying
-\(\mathbb{E}[M_t^2] = \mathbb{E}[M]_t\) and so \(\text{Var}[M_t] = \mathbb{E}[M_t^2] - \mathbb{E}[M_t]^2 
-  = \mathbb{E}[M]_t - \overline{\mu}^2 = \mathbb{E}[M]_t\). Hence, combining this with the above, we obtain 
-the bound
+\(\mathbb{E}[M_t^2] = \mathbb{E}[M]_t\). Thus, \(\text{Var}[M_t] = \mathbb{E}[M_t^2] - \mathbb{E}[M_t]^2 
+  = \mathbb{E}[M]_t - \overline{\mu}^2 = \mathbb{E}[M]_t\) and combining this with the above, we obtain 
 \begin{equation}\label{eq:bound}
-  \text{Var}_\mu[\phi] = \text{Var}[M_\infty] = \text{Var}[M_t] + \mathbb{E}[\text{Var}[M_\infty \mid \mathscr{F}_t]] 
+  \text{Var}_\mu[\phi] = \text{Var}[M_t] + \mathbb{E}[\text{Var}[M_\infty \mid \mu_t]] 
     = \mathbb{E}[M]_t + \mathbb{E}[\text{Var}_{\mu_t}[\phi]].
 \end{equation}
-Now, observing that \(\phi\) is 1-Lipschitz implies \(\|\nabla \phi\|^2 \le 1\), we have by lemma~\ref{lem:brascamp-lieb} 
-the bound \(\text{Var}_{\mu_t}[\phi] \le t^{-1}\) (in fact \(\text{Var}_{\mu_t}[\phi] \le t^{-1} \wedge n^2\) as 
-we have assumed \(\text{supp}\ \mu_t \subseteq B_n(0)\)). Thus, the second term \(\mathbb{E}[\text{Var}_{\mu_t}[\phi]]\) 
-is bounded by \(t^{-1}\). With this in mind, by choosing an appropriate random time \(\tau\) to stop the process such that 
-\(\mathbb{E}[M]_\tau\) is nicely bounded, the result follow by bounding \(\mathbb{E}[\tau^{-1}]\). We dedicate 
+At this point, by recalling by lemma~\ref{lem:brascamp-lieb}, we see that the second term can be bounded 
+by \(\mathbb{E}[\text{Var}_{\mu_\tau}[\phi]] \le \mathbb{E}[\tau^{-1}]\) for any stopping time \(\tau\)
+as \(\phi\) is 1-Lipschitz implies \(\|\nabla \phi\|^2 \le 1\).
+% (in fact \(\text{Var}_{\mu_t}[\phi] \le t^{-1} \wedge n^2\) as we have assumed \(\text{supp}\ \mu_t \subseteq B_n(0)\)).
+Thus, the idea now is to choose such an appropriate random time \(\tau\) to stop the process such that 
+\(\mathbb{E}[M]_\tau\) is nicely bounded. Then, the result follow by bounding \(\mathbb{E}[\tau^{-1}]\). We dedicate 
 the remainder of this section to describe said procedure in detail.
 
 \subsubsection{Differential of the quadratic variation}

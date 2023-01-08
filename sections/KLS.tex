@@ -1,6 +1,11 @@
-As an application of stochastic localizations, we will in this section introduce the KLS and thin-shell 
-conjectures and by leveraging the linear-tilt localization, reduce the KLS conjecture (up to a 
-logarithmic factor) into the thin-shell conjecture, i.e. we will describe a proof of theorem~\ref{thm:KLS_to_TS}.
+In this section, we will present the original context and motivation for the construction of stochastic 
+localizations: the KLS conjecture. The KLS conjecture is a conjecture which roughly states that all 
+log-concave measures on \(\mathbb{R}^n\) are concentrated in a way similar to a Gaussian measure. 
+To tackle this problem, Eldan in \cite{Eldan_2013} introduced stochastic localizations and applied to 
+in order to reduce the KLS conjecture to a seemingly weaker conjecture (up to a logarithmic constant): 
+the thin-Shell conjecture. More recently, also using stochastic localization, Chen \cite{Chen_2020} 
+was able to provide an almost constant lower bound on for the KLS conjecture. We will now describe 
+a proof of Eldan's original reduction of the KLS conjecture to the thin-Shell conjecture.
 The method presented in this section is due to Lee and Vempala \cite{Lee_2016} and reformulated in 
 the language of concentration by Eldan \cite{Eldan_notes}.
 
@@ -231,8 +236,8 @@ equivalences.
 \end{theorem}
 
 With this theorem and proposition \ref{thm:equiv} in mind, it is clear that the KLS conjecture can be 
-instead formulated with any of these inequalities instead. Thus, the KLS conjecture can also be phrased 
-using the constant provided by the Poincaré inequality. 
+instead formulated with any of these inequalities instead. We showcase one of these formulations here 
+using the Poincaré inequality:
 
 \begin{conjecture}[KLS, \cite{Eldan_2013}]
   Denoting \(\mathscr{M}^n_{\text{iso}}\) as above, there exist a \textit{universal} constant \(D\) 

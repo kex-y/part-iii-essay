@@ -225,7 +225,7 @@ decreasing in \(t\) for all \(x \neq 0\), implying
 \[\sup_{t > 0} \max_{k = 1, \cdots, n} \int \|\nabla \pi_k\|^2 \dd \mu_t = 
 \sup_{t > 0} \max_{k = 1, \cdots, n} \int x_k^2 \dd \mu_t < \infty.\] 
 Thus, by taking \(t \to \infty\) we have \((A_t)_{ij} \to 0\) for all \(i, j \in \{1, \cdots, n\}\) as claimed 
-and we have \((\mu_t)\) satisfying \ref{L3}.
+and we have \((\mu_t)\) satisfying \ref{L3} and hence, is a stochastic localization of \(\mu\).
 
 \begin{corollary}
   \((\mu_t)\) converges set-wise to some Dirac measure almost everywhere. We denote this 
@@ -233,23 +233,23 @@ and we have \((\mu_t)\) satisfying \ref{L3}.
   \(\mathbb{R}^n\)-valued random variable.
 \end{corollary}
 
-As a result of \ref{prop:stoch_loc}, we have the following useful corollary.
+As a result of proposition~\ref{prop:stoch_loc}, we also have the following corollaries.
 
 \begin{corollary}\label{cor:lim_dis}
   The massive point \(a_\infty\) of the limiting Dirac measure is the limit of \(a_t\) as 
   \(t \to \infty\) and has law \(\mu\).
 \end{corollary}
-\begin{proof}
-  Since convergence implies relatively compact, applying the Dunford-Pettis theorem it follows that 
-  any realizations of \((F_t)\) is uniformly integrable. Thus, the result follows by the Vitali 
-  convergence theorem.
-\end{proof}
+% \begin{proof}
+%   Since convergence implies relatively compact, applying the Dunford-Pettis theorem it follows that 
+%   any realizations of \((F_t)\) is uniformly integrable. Thus, the result follows by the Vitali 
+%   convergence theorem.
+% \end{proof}
 
 \begin{corollary}\label{cor:lim_mart}
-  Similarly, taking \(\phi\) to be any continuous function (not necessarily bounded as we have uniform 
-  integrability), defining \(M_t = \int \phi \dd\mu_t\), \((M_t)_t\) is a martingale and
+  Taking \(\phi\) to be any continuous function, we define \(M_t = \int \phi \dd\mu_t\). Then,
+  \((M_t)_{t \ge 0}\) is a martingale and
   \begin{equation}\label{eq:lim_mart}
-    M_t \xrightarrow{\text{a.e.}} M_\infty \sim \phi_* \mu
+    M_t \xrightarrow{\text{a.e.}} \phi(a_\infty) \sim \phi_* \mu
   \end{equation}
   where \(\phi_*\mu\) denotes the push-forward measure of \(\mu\) along \(\phi\).
 \end{corollary}

@@ -134,8 +134,7 @@ Let \(\mu\) be a probability measure on \(\mathcal{X} \subseteq \mathbb{R}^n\), 
 \end{definition}
 
 It is clear that \((\mu_t(A))_t\) is a martingale for all \(A \in \Sigma\) by observing that 
-equation~\eqref{eq:linear-tilt} has no drift term. Hence, it follows \((\mu_t(\mathcal{X}))\) is a 
-martingale. However, since \(\mu_t(\mathcal{X}) = \int F_t \dd \mu\) is differentiable by 
+equation~\eqref{eq:linear-tilt} has no drift term. Furthermore, since \(\mu_t(\mathcal{X}) = \int F_t \dd \mu\) is differentiable by 
 construction, \((\mu_t(\mathcal{X}))\) has zero quadratic variation and thus is constant in \(t\). 
 With this in mind, as \(\mu_0 = \mu\) is a probability measure, it follows:
 
@@ -273,9 +272,7 @@ Hence, an discrete analog of the linear tilt localization is defined as the foll
   \(k \in \mathbb{N}\).
 \end{definition}
 
-Using the discrete time linear-tilt localization, let us now provide an alternative construction of the 
-coordinate by coordinate localization.
-
+The coordinate by coordinate localization can be formulated as a discrete time linear-tilt localization.
 Given \(\mu\) a probability measure on \(\{-1, 1\}^n\), we recall that the coordinate by coordinate 
 localization is defined by ``pinning'' an additional random coordinate after each time step. To phrase 
 this as a linear-tilt localization, we take the random variables \(Z_k\) to be

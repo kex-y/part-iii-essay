@@ -60,19 +60,6 @@ a general state space.
 We remark that this inequality is only meaningful whenever \(\mu_{\min} > 0\) and thus, this theorem is 
 only meaningful for Markov chains on finite state space (and we can replace \(\inf\) with \(\min\)).
 
-% A similar bound can also be established using the modified log-Sobolev inequality (MLSI).
-
-% \begin{definition}[Entropy, \cite{Liu_2020}]
-%   Given \(\phi : \mathcal{X} \to \mathbb{R}_{\ge 0}\) and a measure \(\mu\), we define the entropy of \(\phi\) 
-%   with respect to \(\mu\) to be 
-%   \[\text{Ent}_\mu[\phi] := \mathbb{E}_\mu\left[\phi \log\left(\frac{1}{\mathbb{E}_\mu[\phi]} \phi\right)\right]
-%    = \int \phi \log \phi \dd \mu - \int \phi \dd \mu \log\left(\int \phi \dd \mu\right).\]
-% \end{definition}
-
-% \begin{definition}\todo{TODO}
-  
-% \end{definition}
-
 \subsubsection{Ising model and Glauber dynamics}
 
 \begin{definition}[Ising model]
@@ -417,7 +404,7 @@ by observing from definition of \(Z_k\) that \((Z_k)_i (Z_k)_j = 0\) for all \(i
   & = \frac{1}{n - k}\frac{1}{1 - (\bar{\mu}_k)_i^2} 
     = \frac{1}{n - k}(\text{Cov}(\mu_k)_{i, i})^{-1}.
 \end{align*}
-Thus, by recalling that the correlation matrix of a measure \(\nu\) is defined with entries 
+Thus, by introducing the correlation matrix \(\text{Cor}(\mu)\) with entries 
 \[\text{Cor}(\mu)_{i, j} = \frac{\text{Cov}(\mu)_{i, j}}{\sqrt{\text{Cov}(\mu)_{i, i}}\sqrt{\text{Cov}(\mu)_{j, j}}},\]
 we have \(C_k^{1 / 2} \text{Cov}(\mu_k) C_k^{1 / 2} = \frac{1}{n - k}\text{Cor}(\mu_k)\) and 
 equation~\eqref{eq:gap_glauber} becomes
@@ -440,4 +427,28 @@ equation~\eqref{eq:gap_glauber}, we have
 This bound and theorem~\ref{thm:Anari} are said to be equivalent as both equations provide polynomial 
 lower bounds for the spectral gap in terms of the spectral independence coefficients.
 
-\subsection{Overview of MLSI}
+% \subsection{Analysis of the MLSI coefficient}
+
+% Similar to that of the spectral gap, the modified log-Sobolev inequality (MLSI) coefficient is a quantity 
+% which arises in the theory of Markov mixing times. Due to the similarity of the two quantities, it is not at 
+% all surprising that the exact same method of stochastic localizations can be applied to analyze the 
+% MLSI coefficient. We will in this short section present a brief overview (without proof) of this 
+% analysis as presented in \cite{Chen_2022}.
+
+% \begin{definition}[Entropy, \cite{Chen_2022}]
+%   Given \(\phi : \mathcal{X} \to \mathbb{R}_{\ge 0}\) and a measure \(\mu\), we define the entropy of \(\phi\) 
+%   with respect to \(\mu\) to be 
+%   \[\text{Ent}_\mu[\phi] := \mathbb{E}_\mu\left[\phi \log\left(\frac{1}{\mathbb{E}_\mu[\phi]} \phi\right)\right]
+%    = \int \phi \log \phi \dd \mu - \int \phi \dd \mu \log\left(\int \phi \dd \mu\right).\]
+% \end{definition}
+
+% \begin{definition}[Modified log-Sobolev inequality (MLSI) coefficient, \cite{Chen_2022}]
+%   The MLSI coefficient of a Markov kernel \(K\) is defined to be 
+%   \[\rho_\text{LS}(K) := \inf_{\phi : \mathcal{X} \to \mathbb{R}_{\ge 0}} 1 - \frac{\text{Ent}_\mu[K\phi]}{\text{Ent}_\mu[\phi]}.\]
+% \end{definition}
+
+
+
+% By noting the similarity of this definition with that of the equivalent form of the spectral gap~\eqref{eq:gap}, 
+% it is not surprising that the MLSI coefficient for linear-tilt localizations can rewritten in a similar 
+% form to that of proposition~\ref{prop:gap_assoc}

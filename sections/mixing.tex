@@ -274,8 +274,10 @@ taking \(\theta\) to be the normalized vector \(C^{1/ 2}U_k / \|C_k^{1 / 2}U_k\|
   \|C_k^{1 / 2} U_k\|^2 & = \langle C_k^{1 / 2} U_k, \theta\rangle^2 
     = \left(\int \phi(x)\langle C_k^{1 / 2}(x - \bar{\mu}_k), \theta \rangle \mu_k(\dd x)\right)^2\\
   & = \left(\int \left(\phi(x) - \int \phi \dd\mu_k\right) \langle C_k^{1 / 2}(x - \bar{\mu}_k), \theta \rangle \mu_k(\dd x)\right)^2\\
-  & \le \text{Var}_{\mu_k}[\phi]\int \langle C_k^{1 / 2}(x - \bar{\mu}_k), \theta \rangle^2 \mu_k(\dd x)
-    \le \text{Var}_{\mu_k}[\phi]\|C_k^{1/ 2}\text{Cov}(\mu_k) C_k^{1 / 2}\|_{\text{op}}
+  & \le \left(\int \left(\phi(x) - \int \phi \dd\mu_k\right)^2 \mu_k(\dd x)\right)\int \langle C_k^{1 / 2}(x - \bar{\mu}_k), \theta \rangle^2 \mu_k(\dd x)\\
+  & = \text{Var}_{\mu_k}[\phi]\int \langle \theta, C_k^{1 / 2}(x - \bar{\mu}_k)^{\otimes 2} C_k^{1 / 2} \theta \rangle \mu_k(\dd x)
+    = \text{Var}_{\mu_k}[\phi]\langle \theta, C_k^{1 / 2}\text{Cov}(\mu_k) C_k^{1 / 2} \theta\rangle\\
+  & \le \text{Var}_{\mu_k}[\phi]\|C_k^{1/ 2}\text{Cov}(\mu_k) C_k^{1 / 2}\|_{\text{op}}
 \end{align*}
 where the inequality is due to Cauchy-Schwarz. Hence, for any discrete linear-tilt 
 localization \((\mu_k)_k\), we have
@@ -288,61 +290,58 @@ where we define \(\eta_k := \|C_k^{1 / 2}\text{Cov}(\mu_k)C_k^{1 / 2}\|_{\text{o
 
 \subsubsection{ACV of linear-tilt localization driven by a Wiener process}
 
-In the setting of the linear-tilt localization driven by a Wiener process, the computation above remains 
-to work with slight modifications. Namely, rather than considering the discrete differences of the 
-variance, we instead compute and attempt to bound the time derivative of the variance from below. 
-This computation turns out to be very useful with regards to the KLS conjecture which will be discussed 
-in section~\ref{sec:KLS}.
+In the setting of the linear-tilt localization driven by a Wiener process, a similar computation 
+leveraging on the Cauchy-Schwarz inequality yields a useful inequality which turns out to be very 
+useful with regards to the KLS conjecture. We will present the computation now while leaving its application to 
+the KLS conjecture to section~\ref{sec:KLS}.
 
-\begin{definition}[Approximate conservation of variance]
-  A prelocalization process \((\mu_t)_{t \ge 0}\) satisfies approximate \((\kappa_t)\)-variance conservation if 
-  for all integrable \(\phi : \mathcal{X} \to \mathbb{R}\) and \(t \ge 0\), 
-  \[\frac{\dd \text{Var}_{\mu_t}[\phi]}{\text{Var}_{\mu_t}[\phi]} \ge -\kappa_t \dd t + N_t,\]
-  for some martingale \((N_t)\).
-\end{definition}
+In the continuous time setting, it no longer made sense to analyze the difference of the variance 
+between subsequent time steps. Instead, we will analyze its time derivative. In particular, recalling 
+the definition of the martingale \((M_t)\) from corollary~\ref{cor:lim_mart}, we may use the same 
+method as the discrete time analysis to compute \(\dd[] \text{Var}[M_t]\).
 
-% \begin{proposition}
-%   Given the linear-tilt localization \((\mu_t)_{t \ge 0}\) of \(\mu\) driven by a Wiener process as defined 
-%   in section~\ref{sec:construct}, \((\mu_t)\) satisfies approximate \(\|A_t\|_{\text{op}}\)-variance 
-%   conservation where \(A_t\) is the covariance matrix of \(\mu_t\).
-% \end{proposition}
+\begin{proposition}\label{prop:linear-tilt_ACV}
+  Given the linear-tilt localization \((\mu_t)_{t \ge 0}\) of \(\mu\) driven by a Wiener process as defined 
+  in section~\ref{sec:construct}, \((\mu_t)\) satisfies 
+  \[\dd \text{Var}[M_t] \le \text{Var}_{\mu_t}[\phi] \|A_t\|_\text{op} \dd t,\]
+  where \(A_t\) is the covariance matrix of \(\mu_t\).
+\end{proposition}
 
-% To prove this proposition, we first recall the following consequence of Itô's formula: if \((X_t)\) 
-% is an Itô process with no drift term, taking \(f(x) := x^2\), we have  
-% \[\dd f(X_t) = 2 X_t \dd X_t + \dd[] [X]_t.\]
-% Hence, taking expectation on both sides, we obtain \(\text{Var}[X_t] = [X]_t\). With this 
-% in mind, by defining the martingale \((M_t)\) as in corollary~\ref{cor:lim_mart} for the given 
-% \(\phi\), we have 
-% \[\text{Var}_{\mu_t}[\phi] = \text{Var}[M_t] = [M]_t,\]
-% and so, it suffices to analyze \(\dd[] [M]_t\).
+To prove this proposition, we first recall the following consequence of Itô's formula: if \((X_t)\) 
+is an Itô process with no drift term, taking \(f(x) := x^2\), we have  
+\[\dd f(X_t) = 2 X_t \dd X_t + \dd[] [X]_t.\]
+Hence, taking expectation on both sides, we obtain \(\text{Var}[X_t] = [X]_t\). With this 
+in mind, by defining the martingale \((M_t)\) as in corollary~\ref{cor:lim_mart} for the given 
+\(\phi\), we have 
+\[\text{Var}_{\mu_t}[\phi] = \text{Var}[M_t] = [M]_t,\]
+and so, it suffices to analyze \(\dd[] [M]_t\).
 
-% \begin{proof}
-%   With the above remarks in mind, we attempt to bound \(\dd[] [M]_t\) by an expression of the form 
-%   \(\eta_t \text{Var}_{\mu_t}[\phi]\dd t\). Observe that
-%   \begin{align*}
-%     \dd M_t & = d \int \phi(x) F_t(x) \mu(\dd x) = \int \phi(x) \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\\
-%     & = \left\langle \int \phi(x)(x - a_t)\mu_t(\dd x), \dd W_t\right\rangle
-%   \end{align*}
-%   so, by considering the component-wise quadratic variation, we have
-%   \begin{equation}\label{eq:diff_qvar}
-%     \dd[] [M]_t = \left\| \int \phi(x)(x - a_t)\mu_t(\dd x) \right\|^2 \dd t.
-%   \end{equation}
-%   The remainder of the calculation is quite similar to the discrete case. Indeed, denoting \(\theta\) the vector 
-%   \(\int \phi(x)(x - a_t)\mu_t(\dd x)\) normalized to have norm 1, we observe,
-%   \begin{equation}\label{eq:red_a}
-%     \begin{split}
-%       \dd[] [M]_t & = \left\langle \theta, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t
-%         = \left\langle \theta, \int \left(\phi(x) - \int \phi \dd \mu_t\right)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t\\
-%       & = \left(\int \left(\phi(x) - \int \phi \dd \mu_t\right) \langle \theta, x - a_t\rangle \mu_t(\dd x)\right)^2 \dd t\\
-%       & \le \left(\int \left(\phi(x) - \int \phi \dd \mu_t\right)^2 \mu_t(\dd x)\right) \left(\int \langle \theta, x - a_t\rangle^2 \mu_t(\dd x)\right) \dd t\\
-%       & = \text{Var}_{\mu_t}[\phi] \left(\int \langle\theta, (x - a_t)^{\otimes 2} \theta\rangle \mu_t(\dd x)\right) \dd t
-%         = \text{Var}_{\mu_t}[\phi] \langle\theta, A_t \theta\rangle\dd t\\ 
-%       & \le \text{Var}_{\mu_t}[\phi] \|A_t\|_{\text{op}} \dd t.
-%     \end{split}
-%   \end{equation}
-%   where again the inequality follows by the Cauchy-Schwarz inequality and \(A_t\) is the covariance 
-%   matrix of \(\mu_t\).
-% \end{proof}
+\begin{proof}
+  With the above remarks in mind, it suffices to bound \(\dd[] [M]_t\) by the required expression. 
+  Observe that
+  \begin{align*}
+    \dd M_t & = d \int \phi(x) F_t(x) \mu(\dd x) = \int \phi(x) \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\\
+    & = \left\langle \int \phi(x)(x - a_t)\mu_t(\dd x), \dd W_t\right\rangle = \langle U_t, \dd \rangle
+  \end{align*}
+  where we denote \(U_t := \int \phi(x)(x - a_t)\mu_t(\dd x)\) as in the discrete time case.
+  Hence, by considering the component-wise quadratic variation, we have
+  \begin{equation}\label{eq:diff_qvar}
+    \dd[] [M]_t = \left\| U_t \right\|^2 \dd t.
+  \end{equation}
+  The remainder of the calculation is quite similar to the discrete case. Indeed, denoting \(\theta\) the vector 
+  \(U_t\) normalized to have norm 1, we observe,
+  \begin{equation}\label{eq:red_a}
+    \begin{split}
+      \dd[] [M]_t & = \left\langle U_t, \theta \right\rangle^2 \dd t
+        = \left\langle \int \left(\phi(x) - \int \phi \dd \mu_t\right)(x - a_t)\mu_t(\dd x), \theta\right\rangle^2 \dd t\\
+      & = \left(\int \left(\phi(x) - \int \phi \dd \mu_t\right) \langle x - a_t, \theta\rangle \mu_t(\dd x)\right)^2 \dd t\\
+      & \le \text{Var}_{\mu_t}[\phi] \left(\int \langle\theta, (x - a_t)^{\otimes 2} \theta\rangle \mu_t(\dd x)\right) \dd t
+        = \text{Var}_{\mu_t}[\phi] \langle\theta, A_t \theta\rangle\dd t\\ 
+      & \le \text{Var}_{\mu_t}[\phi] \|A_t\|_{\text{op}} \dd t.
+    \end{split}
+  \end{equation}
+  where again the first inequality follows by the Cauchy-Schwarz inequality.
+\end{proof}
 
 \subsection{Glauber dynamics as an associated Markov process}\label{sec:Glauber_loc}
 

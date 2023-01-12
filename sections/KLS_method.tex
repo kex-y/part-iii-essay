@@ -24,10 +24,12 @@ Let us fix \(\phi : \mathbb{R}^n \to \mathbb{R}\) some 1-Lipschitz function and 
 martingale as described in corollary~\ref{cor:lim_dis}, we have \(\text{Var}_\mu[\phi] = \text{Var}[\phi(a_\infty)]\) 
 where \(a_\infty \sim \mu\).
 Then, for all \(t > 0\), by the law of total variance and the martingale property we have
-\begin{align*}
-  \text{Var}_\mu[\phi] = \text{Var}[M_\infty] & = \text{Var}[\mathbb{E}[M_\infty \mid \mu_t]] + \mathbb{E}[\text{Var}[M_\infty \mid \mu_t]]\\
-  & = \text{Var}[M_t] + \mathbb{E}[\text{Var}[M_\infty \mid \mu_t]]
-\end{align*}
+\begin{equation}\label{eq:variance}
+  \begin{split}
+    \text{Var}_\mu[\phi] = \text{Var}[M_\infty] & = \text{Var}[\mathbb{E}[M_\infty \mid \mu_t]] + \mathbb{E}[\text{Var}[M_\infty \mid \mu_t]]\\
+    & = \text{Var}[M_t] + \mathbb{E}[\text{Var}[M_\infty \mid \mu_t]]
+  \end{split}
+\end{equation}
 where we introduce the notation \(\text{Var}[X \mid \mathcal{G}] := \mathbb{E}[(X - \mathbb{E}[X \mid \mathcal{G}])^2 \mid \mathcal{G}]\)
 for some random variable \(X\) and sub-\(\sigma\)-algebra \(\mathcal{G}\). Furthermore, by replacing 
 \(\phi\) in corollary~\ref{cor:lim_dis} with \(\phi^2\) and denoting the resulting martingale 
@@ -36,56 +38,67 @@ for some random variable \(X\) and sub-\(\sigma\)-algebra \(\mathcal{G}\). Furth
   \text{Var}[M_\infty \mid \mu_t] & = \mathbb{E}[\phi(a_\infty)^2 \mid \mu_t] - M_t^2 = N_t - M_t^2\\ 
     & = \int \phi^2 \dd \mu_t - \left(\int \phi \dd \mu_t\right)^2 = \text{Var}_{\mu_t}[\phi]
 \end{align*}
-
-On the other hand, as \((M_t)\) is a martingale, \(M_t^2 - [M]_t\) is also a martingale implying
-\(\mathbb{E}[M_t^2] = \mathbb{E}[M]_t\). Thus, \(\text{Var}[M_t] = \mathbb{E}[M_t^2] - \mathbb{E}[M_t]^2 
-  = \mathbb{E}[M]_t - \overline{\mu}^2 = \mathbb{E}[M]_t\) and combining this with the above, we obtain 
+Combining this with equation~\eqref{eq:variance}, we obtain
 \begin{equation}\label{eq:bound}
-  \text{Var}_\mu[\phi] = \text{Var}[M_t] + \mathbb{E}[\text{Var}[M_\infty \mid \mu_t]] 
-    = \mathbb{E}[M]_t + \mathbb{E}[\text{Var}_{\mu_t}[\phi]].
+  \text{Var}_\mu[\phi] = \text{Var}[M_t] + \text{Var}_{\mu_t}[\phi].
 \end{equation}
-At this point, by recalling by lemma~\ref{lem:brascamp-lieb}, we see that the second term can be bounded 
-by \(\mathbb{E}[\text{Var}_{\mu_\tau}[\phi]] \le \mathbb{E}[\tau^{-1}]\) for any stopping time \(\tau\)
-as \(\phi\) is 1-Lipschitz implies \(\|\nabla \phi\|^2 \le 1\).
-% (in fact \(\text{Var}_{\mu_t}[\phi] \le t^{-1} \wedge n^2\) as we have assumed \(\text{supp}\ \mu_t \subseteq B_n(0)\)).
-Thus, the idea now is to choose such an appropriate random time \(\tau\) to stop the process such that 
-\(\mathbb{E}[M]_\tau\) is nicely bounded. Then, the result follow by bounding \(\mathbb{E}[\tau^{-1}]\). We dedicate 
-the remainder of this section to describe said procedure in detail.
+for any \(t \ge 0\). Furthermore, by applying the optional stopping theorem, the same equality holds 
+when we take \(t\) to be a stopping time. 
 
-\subsubsection{Differential of the quadratic variation}
+At this point, by recalling proposition~\ref{prop:linear-tilt_ACV}, we recognize that the first term 
+\(\text{Var}[M_t]\) is controlled by the operator norm of \(A_t\) (the covariance matrix of \(\mu_t\)).
+Thus, to bound the first term, the idea is to choose an appropriate stopping time \(\tau\) to 
+stop the process before \(\|A_t\|_\text{op}\) grows too large. Then, by recalling lemma~\ref{lem:brascamp-lieb},
+the second term \(\text{Var}_{\mu_\tau}[\phi]\) is bounded by \(\mathbb{E}[\tau^{-1}]\) for which 
+we will compute an explicit bound.
 
-To bound the term \(\mathbb{E}[M]_\tau\) we will compute its differential and bound it 
-sufficiently such that we reobtain a bound for \([M]_\tau\) after integration. 
-We will show \(\dd[] [M]_t\) is bounded by a quantity concerning \(A_t\). This should not be at all 
-surprising as both \(\dd[] [M]_t\) and \(A_t\) describes the variation of \(M_t\) in a infinitesimal time 
-neighborhood of \(t\).
+We dedicate the remainder of this section to describe said procedure in detail.
 
-We compute
-\begin{align*}
-  \dd M_t & = d \int \phi(x) F_t(x) \mu(\dd x) = \int \phi(x) \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\\
-  & = \left\langle \int \phi(x)(x - a_t)\mu_t(\dd x), \dd W_t\right\rangle
-\end{align*}
-and so, by considering the component-wise quadratic variation, we have
-\begin{equation}\label{eq:diff_qvar}
-  \dd[] [M]_t = \left\| \int \phi(x)(x - a_t)\mu_t(\dd x) \right\|^2 \dd t.
-\end{equation}
-Then, denoting \(\theta\) the vector \(\int \phi(x)(x - a_t)\mu_t(\dd x)\) normalized to have norm 1, so 
-\[\left\langle \theta, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle = \left\|\int \phi(x)(x - a_t)\mu_t(\dd x)\right\|\]
-we observe,
-\begin{equation}\label{eq:red_a}
-  \begin{split}
-    \dd[] [M]_t & = \left\langle \theta, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t
-      = \left\langle \theta, \int \left(\phi(x) - \int \phi \dd \mu_t\right)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t\\
-    & = \left(\int \left(\phi(x) - \int \phi \dd \mu_t\right) \langle \theta, x - a_t\rangle \mu_t(\dd x)\right)^2 \dd t\\
-    & \le \left(\int \left(\phi(x) - \int \phi \dd \mu_t\right)^2 \mu_t(\dd x)\right) \left(\int \langle \theta, x - a_t\rangle^2 \mu_t(\dd x)\right) \dd t\\
-    & = \text{Var}_{\mu_t}[\phi] \left(\int \theta^T (x - a_t)^{\otimes 2} \theta \mu_t(\dd x)\right) \dd t
-      = \text{Var}_{\mu_t}[\phi] (\theta^T A_t \theta)\dd t\\ 
-    & \le \text{Var}_{\mu_t}[\phi] \|A_t\|_{\text{op}} \dd t.
-  \end{split}
-\end{equation}
-where the inequality follows by the Cauchy-Schwarz inequality and \(\|\cdot\|_{\text{op}}\) denotes the operator norm. 
-Thus, as we know \(\text{Var}_{\mu_t}[\phi] \le t^{-1}\), the problem is now reduced to that of
-bounding \(\|A_t\|_{\text{op}}\).
+% by recalling proposition~\ref{prop:linear-tilt_ACV} and lemma~\ref{lem:brascamp-lieb}, 
+% we may recognize that the first term \(\text{Var}[M_t]\) is controlled by the operator norm of \(A_t\) (the covariance 
+% matrix of \(\mu_t\)) while the second term \(\text{Var}_{\mu_t}[\phi]\) is bounded by \(t^{-1}\). 
+% Thus, with this in mind, the idea now is to choose such an appropriate random time \(\tau\) to stop the process such that 
+% \(\mathbb{E}[M]_\tau\) is nicely bounded. Then, the result follow by bounding \(\mathbb{E}[\tau^{-1}]\). 
+
+% At this point, by recalling by lemma~\ref{lem:brascamp-lieb}, we see that the second term can be bounded 
+% by \(\mathbb{E}[\text{Var}_{\mu_\tau}[\phi]] \le \mathbb{E}[\tau^{-1}]\) for any stopping time \(\tau\)
+% as \(\phi\) is 1-Lipschitz implies \(\|\nabla \phi\|^2 \le 1\).
+% % (in fact \(\text{Var}_{\mu_t}[\phi] \le t^{-1} \wedge n^2\) as we have assumed \(\text{supp}\ \mu_t \subseteq B_n(0)\)).
+
+% \subsubsection{Differential of the quadratic variation}
+
+% To bound the term \(\mathbb{E}[M]_\tau\) we will compute its differential and bound it 
+% sufficiently such that we reobtain a bound for \([M]_\tau\) after integration. 
+% We will show \(\dd[] [M]_t\) is bounded by a quantity concerning \(A_t\). This should not be at all 
+% surprising as both \(\dd[] [M]_t\) and \(A_t\) describes the variation of \(M_t\) in a infinitesimal time 
+% neighborhood of \(t\).
+
+% We compute
+% \begin{align*}
+%   \dd M_t & = d \int \phi(x) F_t(x) \mu(\dd x) = \int \phi(x) \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\\
+%   & = \left\langle \int \phi(x)(x - a_t)\mu_t(\dd x), \dd W_t\right\rangle
+% \end{align*}
+% and so, by considering the component-wise quadratic variation, we have
+% \begin{equation}\label{eq:diff_qvar}
+%   \dd[] [M]_t = \left\| \int \phi(x)(x - a_t)\mu_t(\dd x) \right\|^2 \dd t.
+% \end{equation}
+% Then, denoting \(\theta\) the vector \(\int \phi(x)(x - a_t)\mu_t(\dd x)\) normalized to have norm 1, so 
+% \[\left\langle \theta, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle = \left\|\int \phi(x)(x - a_t)\mu_t(\dd x)\right\|\]
+% we observe,
+% \begin{equation}\label{eq:red_a}
+%   \begin{split}
+%     \dd[] [M]_t & = \left\langle \theta, \int \phi(x)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t
+%       = \left\langle \theta, \int \left(\phi(x) - \int \phi \dd \mu_t\right)(x - a_t)\mu_t(\dd x)\right\rangle^2 \dd t\\
+%     & = \left(\int \left(\phi(x) - \int \phi \dd \mu_t\right) \langle \theta, x - a_t\rangle \mu_t(\dd x)\right)^2 \dd t\\
+%     & \le \left(\int \left(\phi(x) - \int \phi \dd \mu_t\right)^2 \mu_t(\dd x)\right) \left(\int \langle \theta, x - a_t\rangle^2 \mu_t(\dd x)\right) \dd t\\
+%     & = \text{Var}_{\mu_t}[\phi] \left(\int \theta^T (x - a_t)^{\otimes 2} \theta \mu_t(\dd x)\right) \dd t
+%       = \text{Var}_{\mu_t}[\phi] (\theta^T A_t \theta)\dd t\\ 
+%     & \le \text{Var}_{\mu_t}[\phi] \|A_t\|_{\text{op}} \dd t.
+%   \end{split}
+% \end{equation}
+% where the inequality follows by the Cauchy-Schwarz inequality and \(\|\cdot\|_{\text{op}}\) denotes the operator norm. 
+% Thus, as we know \(\text{Var}_{\mu_t}[\phi] \le t^{-1}\), the problem is now reduced to that of
+% bounding \(\|A_t\|_{\text{op}}\).
 
 \subsubsection{Analysis of the covariance matrix}
 

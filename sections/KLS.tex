@@ -137,7 +137,7 @@ measures.
 
 This fact motivate the KLS conjecture which hypothesized that 
 this invariance holds for a larger class of measures known as the log-concave measures. We will 
-for completeness give a brief proof of the above theorem taking \(C = \pi / 2\) 
+for completeness give a brief proof (based on theorem 1.7.1 in \cite{Bogachev_1998}) of the above theorem taking \(C = \pi / 2\) 
 (although one can further show Gaussian measures are 1-concentrated).
 
 To prove this theorem we first observe the following elementary property of the Gaussian measure.
@@ -153,9 +153,10 @@ To prove this theorem we first observe the following elementary property of the 
   \(\mathbb{E}_{f_x^* \gamma^n}[|\cdot |^2] = \text{Var}_{f_x^* \gamma^n}[\text{id}] = \|x\|^2\).
 \end{proof}
 
-With this in mind, fixing a 1-Lipschitz function \(\phi : \mathbb{R}^n \to \mathbb{R}\), we will now attempt 
+With this in mind, fixing a smooth 1-Lipschitz function \(\phi : \mathbb{R}^n \to \mathbb{R}\) (we can assume 
+smoothness since any 1-Lipschitz function can be uniformly approximated by smooth 1-Lipschitz functions), we will now attempt 
 to bound \(\int \int |\phi(x) - \phi(y)|^2 \gamma^n(\dd x) \gamma^n(\dd y)\) by first bounding it by 
-the integral of a inner product. In particular, we observe
+the integral of a inner product. In particular, for all \(x, y \in \mathbb{R}^n\), we observe
 \begin{align*}
   |\phi(x) - \phi(y)| 
   & = \left|\int_0^{\pi / 2}\partial_\theta \phi(x \sin \theta + y \cos \theta) \dd \theta\right|

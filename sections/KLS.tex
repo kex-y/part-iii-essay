@@ -25,7 +25,7 @@ Let us quickly introduce some preliminary definitions required to state the afor
 Heuristically, the concentration measures the relation between \(\mu\) and the Euclidean metric by 
 providing a numerical control for the variance of its norm. This is perhaps best illustrated by the following proposition.
 
-\begin{proposition}
+\begin{proposition}\label{prop:concentration}
   Let \(X\) be a \(\mathbb{R}^n\)-valued random variable. Then for all \(K\)-Lipschitz function 
   \(\phi : \mathbb{R}^n \to \mathbb{R}\),
   \[\text{Var}[\phi(X)] \le K^2 \text{Var}[\|X\|^2].\]
@@ -125,11 +125,82 @@ With this theorem in mind, we establish the following correspondence.
 
 \subsection{Example: concentration of the Gaussian}
 
+Given a class of measures, it is in general \textit{not} true that the concentration coefficient of 
+measures of said class is dimension invariant. However, this turns out to be the case for the Gaussian 
+measures.
+
+\begin{theorem}[Concentration of Gaussian measures]\label{thm:gaussian_conc}
+  Denoting \(\gamma^n\) the standard Gaussian measure on \(\mathbb{R}^n\), \(\gamma^n\) is \(C\)-concentrated 
+  for some constant \(C\) which is independent of \(n\). That is, for all 1-Lipschitz 
+  \(\phi : \mathbb{R}^n \to \mathbb{R}\), \(\text{Var}_{\gamma^n}[\phi] \le C^2\).
+\end{theorem}
+
+This fact motivate the KLS conjecture which hypothesized that 
+this invariance holds for a larger class of measures known as the log-concave measures. We will 
+for completeness give a brief proof of the above theorem taking \(C = \pi / 2\) 
+(although one can further show Gaussian measures are 1-concentrated).
+
+To prove this theorem we first observe the following elementary property of the Gaussian measure.
+
+\begin{lemma}\label{lem:gaussian_inner}
+  For all \(x \in \mathbb{R}^n\), we have 
+  \(\mathbb{E}_{\gamma^n}[|\langle x, \cdot \rangle|^2] = \|x\|^2\).
+\end{lemma}
+\begin{proof}
+  Defining \(f_x := \langle x, \cdot \rangle\), we have 
+  \(\mathbb{E}_{\gamma^n}[|\langle x, \cdot \rangle|^2] = \mathbb{E}_{f_x^* \gamma^n}[|\cdot |^2]\) where 
+  \(f_x^* \gamma^n \sim \mathcal{N}(0, \|x\|^2)\) as \(f_x^*\) is linear. Hence, the result follows as 
+  \(\mathbb{E}_{f_x^* \gamma^n}[|\cdot |^2] = \text{Var}_{f_x^* \gamma^n}[\text{id}] = \|x\|^2\).
+\end{proof}
+
+With this in mind, fixing a 1-Lipschitz function \(\phi : \mathbb{R}^n \to \mathbb{R}\), we will now attempt 
+to bound \(\int \int |\phi(x) - \phi(y)|^2 \gamma^n(\dd x) \gamma^n(\dd y)\) by first bounding it by 
+the integral of a inner product. In particular, we observe
+\begin{align*}
+  |\phi(x) - \phi(y)| 
+  & = \left|\int_0^{\pi / 2}\partial_\theta \phi(x \sin \theta + y \cos \theta) \dd \theta\right|
+    \le \int_0^{\pi / 2}|\partial_\theta \phi(x \sin \theta + y \cos \theta)| \dd\theta\\
+  & = \int_0^{\pi / 2} |\langle \nabla \phi(x \sin \theta + y \cos \theta), x \cos \theta - y \sin\theta\rangle| \dd \theta.
+\end{align*}
+Then, by rescaling \(\dd \theta\), we may apply Jensen's inequality resulting in
+\begin{align*}
+  |\phi(x) - \phi(y)|^2 
+  & \le \left(\int_0^{\pi / 2} |\langle \nabla \phi(x \sin \theta + y \cos \theta), x \cos \theta - y \sin\theta\rangle| \dd \theta\right)^2\\
+  & \le \frac{\pi}{2}\int_0^{\pi / 2} |\langle \nabla \phi(x \sin \theta + y \cos \theta), x \cos \theta - y \sin\theta\rangle|^2 \dd \theta
+\end{align*}
+Thus, we have 
+\begin{align*}
+  & \int \int |\phi(x) - \phi(y)|^2 \gamma^n(\dd x) \gamma^n(\dd y) \\
+  & \le \frac{\pi}{2} \int_0^{\pi / 2} \dd \theta \int \int 
+    |\langle \nabla \phi(x \sin \theta + y \cos \theta), x \cos \theta - y \sin\theta\rangle|^2
+    \gamma^n(\dd x) \gamma^n(\dd y).
+\end{align*}
+Now, by substituting \(u = x \sin \theta + y\cos \theta, v = x \cos \theta - y \sin \theta\) (which Jacobian 
+has determinant 1), we have
+\begin{align*}
+  \int \int |\phi(x) - \phi(y)|^2 \gamma^n(\dd x) \gamma^n(\dd y) 
+  & \le \frac{\pi}{2} \int_0^{\pi / 2} \dd \theta \int \int |\langle \nabla \phi(u), v \rangle|^2 \gamma^n(\dd u) \gamma^n(\dd v)\\
+  & \le \frac{\pi}{2}\int_0^{\pi / 2} \dd \theta \int \|\nabla \phi(u)\|^2 \gamma^n(\dd u)
+\end{align*}
+where the second inequality is due to lemma \ref{lem:gaussian_inner}. Hence, as \(\phi\) is 1-Lipschitz, 
+\(\|\nabla \phi(u)\| \le 1\) for all \(u\) and thus, 
+\[\int \int |\phi(x) - \phi(y)|^2 \gamma^n(\dd x) \gamma^n(\dd y) 
+  \le \frac{\pi}{2}\int_0^{\pi / 2} \dd \theta \int \dd \gamma^n
+  = \frac{\pi}{2} \cdot \frac{\pi}{2} = \frac{\pi^2}{4}.\]
+The immediate consequence of this bound is that there exists some \(z \in \mathbb{R}^n\) such that 
+\(\int |\phi(x) - z|^2 \gamma^n(\dd x) \le \pi^2 / 4\). Indeed, if no such \(z\) exists, 
+then \(\int |\phi(x) - \phi(y)|^2 \gamma^n(\dd x) > \pi^2 / 4\) for all \(y\), implying
+\(\int \int |\phi(x) - \phi(y)|^2 \gamma^n(\dd x) \gamma^n(\dd y) > \pi^2 / 4\) which 
+contradicts the above bound. Hence, choosing such a \(z\), we conclude the proof of 
+theorem~\ref{thm:gaussian_conc} since
+\[\text{Var}_{\gamma^n}[\phi] = \min_{w \in \mathbb{R}^n} \int |\phi(x) - w|^2 \gamma^n(\dd x)
+  \le \int |\phi(x) - z|^2 \gamma^n(\dd x) \le \left(\frac{\pi}{2}\right)^2\]
+as required.
 
 \subsection{The KLS and thin-shell conjecture}
 
-Informally, the KLS conjecture suggests that any log-concave measure on \(\mathbb{R}^n\) admits 
-the same concentration as that of the Gaussian measure. However, unlike the Gaussian, as the 
+As alluded to in the previous section, the KLS conjecture suggests that any log-concave measure on 
+\(\mathbb{R}^n\) admits the same concentration as that of the Gaussian measure. However, unlike the Gaussian, as the 
 concentration of measures is not invariant under linear functions, it is clear that the KLS 
 conjecture would not hold without a suitable normalization. This leads us to the following formulation 
 of the KLS conjecture.
@@ -150,9 +221,9 @@ particular is independent of the dimension \(n\).
   \[\sqrt{\text{Var}_\mu[\|\cdot\|]} \le C.\]
 \end{conjecture}
 
-As the norm function is 1-Lipschitz, it is \textit{a priori} that the thin-shell conjecture is 
-weaker than that of the KLS conjecture. On the other hand, as we shall describe in the next section, 
-as a consequence of the stochastic localization scheme, Eldan \cite{Eldan_2013} provides a reduction 
+Taking \(X \sim \mu\) in proposition~\ref{prop:concentration}, it is a priori that the thin-shell conjecture is 
+weaker than that of the KLS conjecture. On the other hand, as we shall describe in the following subsections, 
+as a consequence of the theory of stochastic localization, Eldan \cite{Eldan_2013} provides a reduction 
 of the KLS conjecture to the thin-shell conjecture up to logarithmic factors. 
 
 \begin{theorem}[Eldan, \cite{Eldan_2013}]\label{thm:KLS_to_TS}
@@ -186,7 +257,7 @@ Chen \cite{Chen_2020} improves the bound providing the following theorem.
 
 While we have formulated the KLS conjecture using the language of concentration, the conjecture itself 
 was originally formulated as an isoperimetric problem. For completeness of this exposition, we shall 
-briefly establish the equivalence between the formulations here.  
+briefly present these equivalent formulations here.  
 
 The isoperimetric problem is the problem in finding 
 the set of unit volume with minimum surface area. In the case of the \(\mathbb{R}^n\) equipped with the 
@@ -212,7 +283,7 @@ satisfying \(\mu(A) = 1\) with minimum \(\mu^+(\partial A)\).
   denote it by \(D^\mu_{\text{C}}\).
 \end{definition}
 
-With this, the KLS conjecture can be reformulated as the following.
+With these definitions, the KLS conjecture can be equivalently reformulated as the following.
 
 \begin{conjecture}[KLS, \cite{Eldan_2013}]
   Denoting \(\mathscr{M}^n_{\text{iso}}\) the set of all log-concave and isotropic 
@@ -239,7 +310,7 @@ equivalences.
 \end{theorem}
 
 With this theorem and proposition \ref{thm:equiv} in mind, it is clear that the KLS conjecture can be 
-instead formulated with any of these inequalities instead. We showcase one of these formulations here 
+instead formulated with any of these inequalities instead. We also showcase one of these formulations here 
 using the Poincaré inequality:
 
 \begin{conjecture}[KLS, \cite{Eldan_2013}]
@@ -248,7 +319,7 @@ using the Poincaré inequality:
   with constant \(D\).
 \end{conjecture}
 
-We remark that isotropic measures satisfy the normalization condition in \ref{conj:KLS}. Indeed, if 
+We remark that isotropic measures satisfy the normalization condition in conjecture~\ref{conj:KLS}. Indeed, if 
 \(T : \mathbb{R}^n \to \mathbb{R}\) is a 1-Lipschitz linear function, i.e. is of the form \(v \mapsto w^T v + d\) 
 for some \(w \in S^{n - 1}\) and \(d \in \mathbb{R}\), then we have
 \[\text{Var}_{\mu}[T] = \text{Var}_{X \sim \mu}\left[\sum_{i = 1}^n w_i X_i + d\right] 

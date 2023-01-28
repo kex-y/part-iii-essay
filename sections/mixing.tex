@@ -25,7 +25,7 @@ its law is approximately stationary.
 \begin{definition}[Total variation mixing time]
   Given a probability measure \(\nu \in \mathcal{M}(\mathcal{X})\), a Markov kernel \(K\) with stationary 
   distribution \(\mu\) and some \(\epsilon > 0\), the \(\epsilon\)-total variation mixing time is defined as 
-  \[t_{\text{mix}}(P, \epsilon, \mu) := \inf \{t \ge 0 \mid \|P^t\nu - \mu\|_{\text{TV}} < \epsilon\},\]
+  \[t_{\text{mix}}(P, \epsilon, \mu) := \inf \{t \ge 0 \mid \|K^t\nu - \mu\|_{\text{TV}} < \epsilon\},\]
   Furthermore, we denote 
   \[t_{\text{mix}}(P, \epsilon) = \sup_{x \in \mathcal{X}} t_{\text{mix}}(P, \epsilon, \delta_x)\]
   the worst mixing time starting at a point.

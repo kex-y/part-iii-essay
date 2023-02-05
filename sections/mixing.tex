@@ -2,8 +2,8 @@ An application of stochastic localizations is used to prove mixing bounds for Ma
 Focusing on the framework established by Chen and Eldan in \cite{Chen_2022}, we will present a method to 
 compute a bound on the mixing time for a special class of Markov processes; namely the Markov chains 
 associated with stochastic localizations. 
-As a specific example, we will in this section also describe the application of this framework to the 
-Glauber dynamics and as a result, allow us to recover the main theorem on spectral independence as 
+As a specific example, we will in this section also describe Chen and Eldan's \cite{Chen_2022} application 
+of this framework to the Glauber dynamics and as a result, recovering the main theorem on spectral independence as 
 presented by Anari, Liu and Oveis Gharan in \cite{Anari_2020}.
 
 \subsection{Mixing bounds}
@@ -99,9 +99,9 @@ same or change at one vertex. Furthermore, the probability of this occurring is 
 \(\mu\). One may easily compute that the Glauber dynamics of the Ising model \(\mu_{\beta, h}\) indeed 
 has \(\mu_{\beta, h}\) as its stationary distribution.
 
-Recently, a framework known as spectral independence has been developed by Anari, Liu and Charan in 
-\cite{Anari_2020} which provides a bound for the spectral gap (and consequently a mixing bound by 
-theorem~\ref{thm:levin}) for the Glauber dynamics. 
+Recently, a framework known as spectral independence has been developed by Anari, Liu and Oveis Gharan in 
+\cite{Anari_2020} which provides a bound for the spectral gap and consequently a mixing bound by 
+for the Glauber dynamics (namely, theorem~\ref{thm:Anari}). 
 
 \begin{definition}[Pairwise influence matrix, \cite{Anari_2020}]
   Given a measure \(\mu\) on \(\{-1, 1\}^n\), we define the pairwise influence matrix \(\Psi(\mu)\) 
@@ -126,8 +126,11 @@ theorem~\ref{thm:levin}) for the Glauber dynamics.
   \[\mathfrak{gap}(K) \ge \frac{1}{n} \prod_{k = 0}^{n - 2}\left(1 - \frac{\eta_k}{n - k - 1}\right).\]
 \end{theorem}
 
-As an application of stochastic localizations, we will in section~\ref{sec:Glauber_loc} recover a similar
-bound by using the theories established above.
+As an application of stochastic localizations, we will in section~\ref{sec:Glauber_loc} recover an equivalent 
+bound by using the theories established above. In particular, assuming the same assumptions as theorem~\ref{thm:Anari},
+we show that 
+\[\mathfrak{gap}(K) \ge \prod_{k = 0}^{n - 2}\left(1 - \frac{\eta_k + 1}{n - k}\right).\]
+
 
 \subsection{Dynamics of stochastic localizations}
 
@@ -413,9 +416,12 @@ equation~\eqref{eq:gap_glauber} becomes
 
 This inequality allows us to directly recover a bound for the spectral gap should \(\mu\) be spectrally 
 independent. Indeed, denoting the maximum eigenvalue of a matrix \(A\) by \(\rho(A)\), as \(\text{Cor}(\mu_k)\) is symmetric, we 
-have \(\|\text{Cor}(\mu_k)\|_{\text{op}} = \rho(\text{Cor}(\mu_k))\). Furthermore, by observing 
-\(\Psi(\mu_k) = \text{Cov}(\mu_k) \text{diag}(\text{Cov}(\mu_k))^{-1} - \text{Id}_n\), we have 
-\[\|\text{Cor}(\mu_k)\|_{\text{op}} = \rho(\text{Cor}(\mu_k)) = \rho(\text{Cov}(\mu_k) \text{diag}(\text{Cov}(\mu_k))^{-1})
+have 
+\[\|\text{Cor}(\mu_k)\|_{\text{op}} = \rho(\text{Cor}(\mu_k)).\] 
+Furthermore, by observing 
+\[\Psi(\mu_k) = \text{Cov}(\mu_k) \text{diag}(\text{Cov}(\mu_k))^{-1} - \text{Id}_n,\] 
+we have 
+\[\|\text{Cor}(\mu_k)\|_{\text{op}} = \rho(\text{Cov}(\mu_k) \text{diag}(\text{Cov}(\mu_k))^{-1})
   = \rho(\Psi(\mu_k) + \text{Id}_n) = \rho(\Psi(\mu_k)) + 1.\]
 Thus, if \(\mu\) is a measure on \(\{-1, 1\}^n\) which is \((\eta_0, \cdots, \eta_{n - 2})\)-spectrally 
 independent, we have \(\rho(\Psi(\mu_k)) \le \eta_k\) for all \(k = 0, \cdots, n - 2\) and so, by 

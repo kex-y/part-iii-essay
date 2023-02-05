@@ -23,16 +23,17 @@ Let us quickly introduce some preliminary definitions required to state the afor
   We denote the least possible such \(C\) by \(C^\mu_{\text{con}}\).
 \end{definition}
 
-Heuristically, the concentration measures the relation between \(\mu\) and the Euclidean metric by 
-providing a numerical control for the variance of its norm. This is perhaps best illustrated by the following proposition.
+Heuristically, the concentration is a measure of the variance of \(\mu\) in each direction and 
+in particular equals the variance in the 1-dimensional case. This is illustrated by the following proposition. 
 
 \begin{proposition}\label{prop:concentration}
   Let \(X\) be a \(\mathbb{R}^n\)-valued random variable. Then for all \(K\)-Lipschitz function 
   \(\phi : \mathbb{R}^n \to \mathbb{R}\),
-  \[\text{Var}[\phi(X)] \le K^2 \text{Var}[\|X\|^2].\]
+  \[\text{Var}[\phi(X)] \le K^2 \text{Var}[X].\]
 \end{proposition}
 \begin{proof}
-  WLOG. by subtracting its expectation from \(X\), we may assume \(\mathbb{E}[X] = 0\).
+  We first prove the proposition in the case that \(\mathbb{E}[X] = 0\). 
+
   Let \(X'\) be a i.i.d. copy of \(X\) on the same probability space. Then for all \(K\)-Lipschitz 
   function \(\phi\), we have 
   \begin{align*}
@@ -41,18 +42,22 @@ providing a numerical control for the variance of its norm. This is perhaps best
       & = \mathbb{E}[(\phi(X) - \phi(X'))^2] & (\text{identically distributed}) \\
       & \le K^2 \mathbb{E}[\|X - X'\|^2] & (\text{as \(\phi\) is \(K\)-Lipschitz}) \\
       & = K^2 \mathbb{E}[X^T X + X'^T X' - X^T X' - X'^T X] & \\
-      & = 2K^2 \text{Var}[\|X\|^2] - 2K^2 \text{Cov}(X, X') = 2K^2 \text{Var}[\|X\|^2]. & (\text{independence})
+      & = 2K^2 \text{Var}[X] - 2K^2 \text{Cov}(X, X') = 2K^2 \text{Var}[X]. & (\text{independence})
   \end{align*}
-  implying \(\text{Var}[\phi(X)] \le K^2 \text{Var}[\|X\|^2]\) as claimed.
+  implying \(\text{Var}[\phi(X)] \le K^2 \text{Var}[X]\) as claimed.
+
+  For general \(X\), by defining \(\phi'(x) := \phi(x + \mathbb{E}[X])\), we can apply the 0 mean 
+  case to \(X - \mathbb{E}X\) and \(\phi'\) to obtain
+  \[\text{Var}[\phi(X)] = \text{Var}[\phi'(X - \mathbb{E}[X])] \le 
+    K^2 \text{Var}[X - \mathbb{E}[X]] = K^2 \text{Var}[X]\]
+  as required.
 \end{proof}
 
 With this proposition in mind, it is clear that for \(\mathbb{R}\)-valued random variables \(X\), 
-its law \(\mu\) has concentration \(C^\mu_{\text{con}} = \text{Var}[X]\). Furthermore, by 
-considering the projection maps, it follows that the standard Gaussian measure on \(\mathbb{R}^n\) 
-is 1-concentrated.
+its law \(\mu\) has concentration \(C^\mu_{\text{con}} = \text{Var}[X]\). 
 
-We note that the definition we are presenting here is slightly non-standard. However, utilising a 
-remarkable result due to Milman, we show that this definition is equivalent to the following 
+We note that the definition we are presenting here is slightly non-standard. However, utilizing the 
+following remarkable result due to Milman, we show that this definition is equivalent to the following 
 definitions in a specific sense.
 
 \begin{definition}[Exponential concentration, \cite{Milman_2018}]
@@ -210,12 +215,22 @@ of the KLS conjecture.
 \begin{conjecture}[Kannan-Lovász-Simonovitz, \cite{Eldan_notes}]\label{conj:KLS}
   Denoting \(\mathscr{M}^n_{\text{con}}\) the set of all log-concave probability measures \(\mu\) on 
   \(\mathbb{R}^n\) satisfying \(\text{Var}_\mu[T] \le 1\) for all 1-Lipschitz linear maps 
-  \(T : \mathbb{R}^n \to \mathbb{R}\), there exists a \textit{universal} constant \(C\) such that for all 
+  \(T : \mathbb{R}^n \to \mathbb{R}\), there exists a \textit{universal} constant \(C\) 
+  (i.e. does not depend on any parameter and in particular is independent of the dimension \(n\)) such that for all 
   \(\mu \in \mathscr{M}^n_{\text{con}}\), \(\mu\) is \(C\)-concentrated.
 \end{conjecture}
 
-We remark that \(C\) is universal in the sense that it does not depend on any parameter and in 
-particular is independent of the dimension \(n\).
+Assuming the normalization condition, we remark a trivial bound on the concentration of \(\mu\):
+Taking \(\pi_i : \mathbb{R}^n \to \mathbb{R}\) to be the projection into the \(i\)-th coordinate, 
+as \(\pi_i\) is linear and 1-Lipschitz for all \(i\), we have \(\text{Var}_{X \sim \mu}[X_i] \le 1\).
+Thus, 
+\begin{align*}
+  \text{Var}_{X \sim \mu}[X] & = \mathbb{E}_{X \sim \mu}[X^T X] - \mathbb{E}_{X \sim \mu}[X]^T \mathbb{E}_{X \sim \mu}[X]\\ 
+    & = \sum_{i = 1}^n (\mathbb{E}_{X \sim \mu}[X_i^2] - (\mathbb{E}_{X \sim \mu}X_i)^2)
+      = \sum_{i = 1}^n \text{Var}_\mu[\pi_i] \le n.
+\end{align*}
+Hence, by proposition~\ref{prop:concentration}, we have that \(\text{Var}_\mu[\phi] \le n\) for all 
+1-Lipschitz \(\phi : \mathbb{R}^n \to \mathbb{R}\) implying \(\mu\) is \(\sqrt{n}\)-concentrated.
 
 \begin{conjecture}[Thin-shell, \cite{Eldan_2013}]
   Taking \(\mathscr{M}^n_{\text{con}}\) as above, there exists a universal constant \(C\) such that 
@@ -223,7 +238,7 @@ particular is independent of the dimension \(n\).
   \[\sqrt{\text{Var}_\mu[\|\cdot\|]} \le C.\]
 \end{conjecture}
 
-Taking \(X \sim \mu\) in proposition~\ref{prop:concentration}, it is a priori that the thin-shell conjecture is 
+Since the norm function is 1-Lipschitz, it is clear that the thin-shell conjecture is 
 weaker than that of the KLS conjecture. On the other hand, as we shall describe in the following subsections, 
 as a consequence of the theory of stochastic localization, Eldan \cite{Eldan_2013} provides a reduction 
 of the KLS conjecture to the thin-shell conjecture up to logarithmic factors. 

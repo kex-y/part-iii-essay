@@ -32,7 +32,7 @@ Then, for all \(t > 0\), by the law of total variance and the martingale propert
 \end{equation}
 where we introduce the notation \(\text{Var}[X \mid \mathcal{G}] := \mathbb{E}[(X - \mathbb{E}[X \mid \mathcal{G}])^2 \mid \mathcal{G}]\)
 for some random variable \(X\) and sub-\(\sigma\)-algebra \(\mathcal{G}\). Furthermore, by replacing 
-\(\phi\) in corollary~\ref{cor:lim_dis} with \(\phi^2\) and denoting the resulting martingale 
+\(\phi\) in corollary~\ref{cor:lim_mart} with \(\phi^2\) and denoting the resulting martingale 
 \(N_t := \int \phi^2 \dd \mu_t\), we obtain \(N_t \to \phi(a_\infty)^2\) and hence,
 \begin{align*}
   \text{Var}[M_\infty \mid \mu_t] & = \mathbb{E}[\phi(a_\infty)^2 \mid \mu_t] - M_t^2 = N_t - M_t^2\\ 
@@ -40,7 +40,7 @@ for some random variable \(X\) and sub-\(\sigma\)-algebra \(\mathcal{G}\). Furth
 \end{align*}
 Combining this with equation~\eqref{eq:variance}, we obtain
 \begin{equation}\label{eq:bound}
-  \text{Var}_\mu[\phi] = \text{Var}[M_t] + \text{Var}_{\mu_t}[\phi].
+  \text{Var}_\mu[\phi] = \text{Var}[M_t] + \mathbb{E}[\text{Var}_{\mu_t}[\phi]].
 \end{equation}
 for any \(t \ge 0\). Furthermore, by applying the optional stopping theorem, the same equality holds 
 when we take \(t\) to be a stopping time. 
@@ -48,9 +48,9 @@ when we take \(t\) to be a stopping time.
 At this point, by recalling proposition~\ref{prop:linear-tilt_ACV}, we recognize that the first term 
 \(\text{Var}[M_t]\) is controlled by the operator norm of \(A_t\) (the covariance matrix of \(\mu_t\)).
 Thus, to bound the first term, the idea is to choose an appropriate stopping time \(\tau\) to 
-stop the process before \(\|A_t\|_\text{op}\) grows too large. Then, by recalling lemma~\ref{lem:brascamp-lieb},
-the second term \(\text{Var}_{\mu_\tau}[\phi]\) is bounded by \(\mathbb{E}[\tau^{-1}]\) for which 
-we will compute an explicit bound.
+stop the process before \(\|A_t\|_\text{op}\) grows too large. By recalling lemma~\ref{lem:brascamp-lieb},
+the second term \(\text{Var}_{\mu_\tau}[\phi]\) is then bounded by \(\tau^{-1}\) for which the
+expectation can be bounded explicitly.
 
 We dedicate the remainder of this section to describe said procedure in detail.
 

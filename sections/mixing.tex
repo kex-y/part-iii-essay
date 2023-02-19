@@ -301,30 +301,38 @@ the KLS conjecture to section~\ref{sec:KLS}.
 In the continuous time setting, it no longer made sense to analyze the difference of the variance 
 between subsequent time steps. Instead, we will analyze its time derivative. In particular, recalling 
 the definition of the martingale \((M_t)\) from corollary~\ref{cor:lim_mart}, we may use the same 
-method as the discrete time analysis to compute \(\dd[] \text{Var}[M_t]\).
+method as the discrete time analysis to compute a bound for \(\dd[] \text{Var}[M_t]\).
 
 \begin{proposition}\label{prop:linear-tilt_ACV}
   Given the linear-tilt localization \((\mu_t)_{t \ge 0}\) of \(\mu\) driven by a Wiener process as defined 
-  in section~\ref{sec:construct}, \((\mu_t)\) satisfies 
+  in section~\ref{sec:construct}, for all isotropic \(\phi : \mathbb{R}^n \to \mathbb{R}\), we have 
   \[\dd \text{Var}[M_t] \le \text{Var}_{\mu_t}[\phi] \|A_t\|_\text{op} \dd t,\]
-  where \(A_t\) is the covariance matrix of \(\mu_t\).
+  where \(A_t\) is the covariance matrix of \(\mu_t\) and \(M_t := \int \phi \dd \mu_t\).
 \end{proposition}
 
-To prove this proposition, we first recall the following consequence of Itô's formula: if \((X_t)\) 
-is an Itô process with no drift term, taking \(f(x) := x^2\), we have  
-\[\dd f(X_t) = 2 X_t \dd X_t + \dd[] [X]_t.\]
-Hence, taking expectation on both sides, we obtain \(\text{Var}[X_t] = [X]_t\). With this 
-in mind, by defining the martingale \((M_t)\) as in corollary~\ref{cor:lim_mart} for the given 
-\(\phi\), we have 
-\[\text{Var}_{\mu_t}[\phi] = \text{Var}[M_t] = [M]_t,\]
-and so, it suffices to analyze \(\dd[] [M]_t\).
+To prove this proposition, we first recall that for a martingale \((X_t)_t\), its quadratic variation 
+\([X]_t\) is the unique adapted, continuous and non-decreasing process such that \((X_t^2 - [X]_t)_t\) 
+is a martingale. In particular, if \(X_0 = 0\), we observe 
+\[\mathbb{E}[X_t^2] - \mathbb{E}[X]_t = \mathbb{E}[X_0^2] = 0\]
+for all \(t\). Thus, 
+\[\text{Var}[X_t] = \mathbb{E}[X_t^2] - \mathbb{E}[X_t]^2 = \mathbb{E}[X]_t - \mathbb{E}[X_0]^2 = \mathbb{E}[X]_t.\]
+Now, as \(\phi\) is isotropic, \(M_0 = \int \phi \dd \mu = 0\) and so,
+\[\text{Var}_{\mu_t}[\phi] = \text{Var}[M_t] = [M]_t.\]
+As a result of this, it suffices to analyze \(\dd[] [M]_t\).
+
+% To prove this proposition, we first recall the following consequence of Itô's formula: if \((X_t)\) 
+% is an Itô process with no drift term, taking \(f(x) := x^2\), we have  
+% \[\dd f(X_t) = 2 X_t \dd X_t + \dd[] [X]_t.\]
+% Hence, taking expectation on both sides, we obtain \(\text{Var}[X_t] = [X]_t\). With this 
+% in mind, by defining the martingale \((M_t)\) as in corollary~\ref{cor:lim_mart} for the given 
+% \(\phi\), we have 
 
 \begin{proof}
   With the above remarks in mind, it suffices to bound \(\dd[] [M]_t\) by the required expression. 
   Observe that
   \begin{align*}
     \dd M_t & = d \int \phi(x) F_t(x) \mu(\dd x) = \int \phi(x) \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\\
-    & = \left\langle \int \phi(x)(x - a_t)\mu_t(\dd x), \dd W_t\right\rangle = \langle U_t, \dd \rangle
+    & = \left\langle \int \phi(x)(x - a_t)\mu_t(\dd x), \dd W_t\right\rangle = \langle U_t, \dd W_t\rangle
   \end{align*}
   where we denote \(U_t := \int \phi(x)(x - a_t)\mu_t(\dd x)\) as in the discrete time case.
   Hence, by considering the component-wise quadratic variation, we have

@@ -209,10 +209,10 @@ where \(\otimes\) denotes the Kronecker product. In particular, we will show \((
   Given \(V : \mathbb{R}^n \to \mathbb{R}\) convex and \(K > 0\), if \(\nu\) is an isotropic 
   (i.e. \(\mathbb{E}_{X \sim \nu}[X] = 0\) and \(\text{Cov}_{X \sim \nu}(X) = \text{id}_n\)) probability 
   measure on \(\mathbb{R}^n\) of the form 
-  \[\dd \nu = Ze^{-V(x) - \frac{1}{2K}\|x\|^2}\dd \text{Leb}^n\]
-  with \(Z\) being the normalization constant, then \(\nu\) satisfy the Poincaré inequality, i.e. 
-  for all differentiable \(\phi\),
-  \[K\text{Var}_\nu[\phi] \le \int \|\nabla\phi\|^2 \dd\nu.\]
+  \[\dd \nu = Ze^{-V(x) - \frac{K}{2}\|x\|^2}\dd \text{Leb}^n(x)\]
+  with \(Z\) being the normalization constant, then \(\nu\) satisfy the Poincaré inequality. In particular,
+  for all smooth \(\phi\),
+  \[\text{Var}_\nu[\phi] \le K^{-1} \mathbb{E}_\nu[\|\nabla\phi\|^2].\]
 \end{lemma}
 
 With this lemma in mind, by taking \(\nu = \mu_t\) using 
@@ -225,7 +225,7 @@ decreasing in \(t\) for all \(x \neq 0\), implying
 \[\sup_{t > 0} \max_{k = 1, \cdots, n} \int \|\nabla \pi_k\|^2 \dd \mu_t = 
 \sup_{t > 0} \max_{k = 1, \cdots, n} \int x_k^2 \dd \mu_t < \infty.\] 
 Thus, by taking \(t \to \infty\) we have \((A_t)_{ij} \to 0\) for all \(i, j \in \{1, \cdots, n\}\) as claimed 
-and we have \((\mu_t)\) satisfying \ref{L3} and hence, is a stochastic localization of \(\mu\).
+and we have \((\mu_t)\) satisfying \ref{L3}. Hence, the linear-tile localization is indeed a stochastic localization of \(\mu\).
 
 \begin{corollary}
   \((\mu_t)\) converges set-wise to some Dirac measure almost everywhere. We denote this 

@@ -318,8 +318,8 @@ equivalences.
     \item \(\mu\) has first-moment concentration with constant \(D^\mu_\text{FM}\).
     \item \(\mu\) satisfy the Cheeger's inequality with constant \(D^\mu_\text{C}\).
     \item \(\mu\) satisfy the Poincaré inequality: there exists some \(D > 0\) such that for all 
-      differentiable \(\phi : \mathbb{R}^n \to \mathbb{R}\) satisfying \(\int \phi \dd\mu = 0\), we have
-      \[D \cdot \text{Var}_\mu[\phi] \le \int \|\nabla \phi\|^2 \dd\mu.\]
+      smooth \(\phi : \mathbb{R}^n \to \mathbb{R}\) satisfying \(\int \phi \dd\mu = 0\), we have
+      \[D \cdot \text{Var}_\mu[\phi] \le \mathbb{E}_\mu[\|\nabla \phi\|^2] = \int \|\nabla \phi\|^2 \dd\mu.\]
       We denote the largest such \(D\) by \(D^\mu_{\text{P}}\).
   \end{itemize}
   Furthermore, \(D^\mu_{\text{exp}} \simeq D^\mu_{\text{FM}} \simeq D^\mu_{\text{P}} \simeq D^\mu_{\text{C}}\).

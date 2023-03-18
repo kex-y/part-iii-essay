@@ -1,4 +1,4 @@
-\subsection{Reduction of KLS to thin-shell}
+\subsection{Reduction of KLS to thin-shell}\label{sec:KLS_to_TS}
 
 We will now present a proof of theorem~\ref{thm:KLS_to_TS}.
 As a high level overview, recall that the linear-tilt localization of a given measure is a measure-valued martingale
@@ -46,9 +46,10 @@ for any \(t \ge 0\). Furthermore, by applying the optional stopping theorem, the
 when we take \(t\) to be a stopping time. 
 
 At this point, by recalling proposition~\ref{prop:linear-tilt_ACV}, we recognize that the first term 
-\(\text{Var}[M_t]\) is controlled by the operator norm of \(A_t\) (the covariance matrix of \(\mu_t\)).
+\(\text{Var}[M_t]\) is controlled by the operator norm of \(A_t\) with \(A_t\) being the covariance matrix of \(\mu_t\).
 Thus, to bound the first term, the idea is to choose an appropriate stopping time \(\tau\) to 
-stop the process before \(\|A_t\|_\text{op}\) grows too large. By recalling lemma~\ref{lem:brascamp-lieb},
+stop the process before \(\|A_t\|_\text{op}\) grows too large. On the other hand, for the given \(\tau\), by plugging in 
+equation~\eqref{eq:stoch_loc_alt} into lemma~\ref{lem:brascamp-lieb},
 the second term \(\text{Var}_{\mu_\tau}[\phi]\) is then bounded by \(\tau^{-1}\) for which the
 expectation can be bounded explicitly.
 
@@ -161,7 +162,7 @@ where \(\lambda_i(t)\) denotes the distinct eigenvalues of \(A_t\). Hence, it su
 for some \(\alpha > 0\). Furthermore, as \(A_t\) is positive 
 semi-definite, \(\lambda_i(t) \ge 0\) for all \(i = 1, \cdots, n\) and thus we have
 \(\Phi^\alpha(t) = \sum_{i = 1}^n \lambda_i(t)^{\alpha}\). Again, to proceed, we will attempt to compute 
-\(\dd \Phi^\alpha(t)\) at some \(t = t_0 > 0\) utilizing the following lemma.
+\(\dd \Phi^\alpha(t)\) at some \(t = t_0 > 0\) utilizing the following simple lemma.
 
 \begin{lemma}\label{lem:diff_eig}
   If \(A = [a_{ij}]\) is a diagonal matrix with distinct eigenvalues \(\lambda_i, \cdots, \lambda_n\), then 
@@ -239,7 +240,7 @@ equation~\eqref{eq:potential_bound}, we have
     & \le 2\alpha^2 \|A_t\|_{\text{op}}^2 \sum_{i = 1}^n \lambda_i(t)^{\alpha - 2} \sum_{j = 1}^n \|\xi_{ij}\|^2 \dd t + \langle v_t, \dd W_t\rangle\\
     & \lesssim 2\alpha^2\sum_{i = 1}^n \lambda_i(t)^\alpha \sum_{j = 1}^n \|\xi_{ij}\|^2 \dd t + \langle v_t, \dd W_t\rangle.
 \end{align*} 
-Thus, defining \(K_t := \sup_i \sum_{j = 1}^n \|\xi_{ij}\|^2\), we have the bound 
+Thus, defining \(K_t := \sup_i \sum_{j = 1}^n \|\xi_{ij}\|^2\), we have the asymptotic bound 
 \begin{equation}\label{eq:potential_bound_2}
   \dd \Phi^\alpha(t) \lesssim 2\alpha^2 K_t \Phi^\alpha(t) \dd t + \langle v_t, \dd W_t\rangle.
 \end{equation}
@@ -261,7 +262,7 @@ Combining this with equation~\eqref{eq:bound}, we obtain
   \text{Var}_\mu[\phi] \le 2 + 4 \log n + \mathbb{E}[\tau^{-1}],
 \end{equation}
 and it remains to find an upper bound for \(\mathbb{E}[\tau^{-1}]\). Observing that \(t < \tau\) whenever 
-\(\Phi^\alpha(t) < 2^\alpha\), we define the \(\sigma\) the first time for which the potential \(\Phi^\alpha(t)\) reaches \(2^\alpha\),
+\(\Phi^\alpha(t) < 2^\alpha\), we define \(\sigma\) the first time for which the potential \(\Phi^\alpha(t)\) reaches \(2^\alpha\),
 namely
 \[\sigma := \inf \{t > 0 \mid \Phi^\alpha(t) = 2^\alpha\},\] 
 we have \(\sigma^{-1} \ge \tau^{-1}\) and so it suffices to bound \(\sigma\) from below. 

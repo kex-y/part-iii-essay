@@ -178,15 +178,20 @@ observe
       \langle x, a_t + W_t \rangle - \frac{t}{2}\|x\|^2.
 \end{align*}
 Thus, taking \(\dd z_t := \langle a_t, \dd W_t\rangle + \frac{1}{2} \|a_t\|^2 \dd t\) and 
-\(v_t := a_t + W_t\), we observe \(F_t(x)\) is of the form
+\(v_t := a_t + W_t\), we observe \(F_t(x)\) is a Gaussian density function of the form
 \begin{equation}\label{eq:stoch_loc_alt}
   F_t(x) = e^{z_t + \langle x, v_t \rangle - \frac{t}{2}\|x\|^2},
 \end{equation}
 for given Itô processes \((z_t), (v_t)\).
 
-With this formulation of \(F_t(x)\) in mind, it follows \(F_t\) is non-negative, and so, 
+With this formulation of \(F_t(x)\) in mind, it follows that \(F_t\) is non-negative, and so, 
 we may define \((\mu_t)_t\) to be the process such that \(\dd \mu_t = F_t \dd \mu\). It is clear that 
-\((\mu_t)_t\) is a linear-tilt localization of \(\mu\) and so, is a prelocalization of \(\mu\).
+\((\mu_t)_t\) is a linear-tilt localization of \(\mu\) and so, is a prelocalization of \(\mu\). 
+Furthermore, we observe that, by definition, \(\mu_t\) has density \(g_t e^{-V}\) with respect 
+to the Lebesgue measure where \(g_t(x) = e^{z_t + \langle x, v_t \rangle - \frac{t}{2}\|x\|^2}\) is the 
+density of a Gaussian measure. Thus, heuristically, as \(t\) increases, \(\mu_t\) becomes gradually more 
+akin to a Gaussian measure and this turns out to be very beneficial for our analysis later.
+
 The remainder of this section is devoted to showing \((\mu_t)_t\) is furthermore a stochastic localization 
 of \(\mu\) if \(\mu\) is log-concave (namely we will show \ref{L3} for this special case), and prove 
 some basic properties about this process useful for our analysis later.
@@ -205,7 +210,7 @@ where \(\otimes\) denotes the Kronecker product. In particular, we will show \((
  \(i, j \in \{1, \cdots, n\}\) as \(t \to \infty\) allowing us to conclude \((\mu_t)\) converges weakly 
  to some Dirac measure. Indeed, this is a direct consequence of the following lemma.
 
-\begin{lemma}[Brascamp-Lieb inequality, \cite{Brascamp_1976}]\label{lem:brascamp-lieb}
+\begin{lemma}[Brascamp-Lieb, \cite{Brascamp_1976}]\label{lem:brascamp-lieb}
   Given \(V : \mathbb{R}^n \to \mathbb{R}\) convex and \(K > 0\), if \(\nu\) is an isotropic 
   (i.e. \(\mathbb{E}_{X \sim \nu}[X] = 0\) and \(\text{Cov}_{X \sim \nu}(X) = \text{id}_n\)) probability 
   measure on \(\mathbb{R}^n\) of the form 

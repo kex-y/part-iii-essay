@@ -26,8 +26,8 @@ The log-Sobolev inequality can be then formulated as the following.
 The log-Sobolev inequality\todo{Motivation and Herbst.}
 % https://faculty.math.illinois.edu/~psdey/math595fa19/lec14.pdf
 
-We will in this section derive a bound for the log-Sobolev constant for all log-concave measures resulting in 
-the following theorem. 
+We will in this section present a bound by Lee and Vempala for the log-Sobolev constant for all log-concave measures. 
+Namely, we consider the following theorem. 
 
 \begin{theorem}[\cite{Lee_2016}]
   For any isotropic log-concave measure \(\mu\) on \(\mathbb{R}^n\) with support on a ball of diameter \(D\), 
@@ -36,9 +36,17 @@ the following theorem.
 
 Before presenting Lee and Vempala's proof of above theorem, let us first remark the similarity of the 
 log-Sobolev inequality with that of the Poincaré inequality. As a result, one might first attempt to analyze 
-the log-Sobolev inequality using the same method as prescribed by section~\ref{sec:KLS_to_TS}. 
+the log-Sobolev inequality using the same method as prescribed by section~\ref{sec:KLS_to_TS}. As it turns out,
+this method quickly runs into issues as one struggles to bound the entropy of the martingale terms resulted 
+from the localization. \todo{Fix.}
 
-Given the smooth function \(\phi : \mathbb{R}^n \to \mathbb{R}\), let us define the martingale 
+Similar to before, for any smooth function \(\phi : \mathbb{R}^n \to \mathbb{R}\), 
+I claim that one can express the entropy of \(\phi^2\) with respect to \(\mu\) as 
+the entropy of the martingale terms, in particular, 
+\begin{equation}\label{eq:entropy_decomp}
+  \text{Ent}_\mu[\phi^2] = \text{Ent}[M_t] + \mathbb{E}[\text{Ent}_{\mu_t}[\phi^2]],
+\end{equation}
+Indeed, given the smooth function \(\phi : \mathbb{R}^n \to \mathbb{R}\), let us define the martingale 
 \(M_t := \int \phi^2 \dd \mu_t\) where \((\mu_t)\) is the linear-tilt localization described in section~\ref{sec:construct}. 
 We observe
 \begin{align*}
@@ -59,24 +67,25 @@ Moreover, defining the martingale \(N_t := \int \phi^2\log \phi^2 \dd \mu_t\), w
   & = \mathbb{E}_{\mu_t}[\phi^2 \log \phi^2] - \mathbb{E}_{\mu_t}[\phi^2] \log \mathbb{E}_{\mu_t}[\phi^2] \\
   & = \text{Ent}_{\mu_t}[\phi^2].
 \end{align*}
-Thus, we can express the entropy of \(\phi^2\) with respect to \(\mu\) as 
-\begin{equation}
-  \text{Ent}_\mu[\phi^2] = \text{Ent}[M_t] + \mathbb{E}[\text{Ent}_{\mu_t}[\phi^2]].
-\end{equation}
-With this expression in mind, we may now attempt to bound each term individually while 
-varying \(t\). Similar to the method in the case of the Poincaré inequality, in which we were able to bound the term 
-\(\text{Var}_{\mu_t}[\phi]\) by using the Brascamp-Lieb inequality, we will bound \(\text{Ent}_{\mu_t}[\phi^2]\) 
-by using an inequality by Bobkov and Ledoux.
+Hence, we recover equation~\eqref{eq:entropy_decomp} by combining the above two equations.
 
-\begin{lemma}[Bobkov-Ledoux, \cite{Bobkov_2000}]
-  Let \(V : \mathbb{R}^n \to \mathbb{R}\) be a twice differentiable strictly convex function such that for all 
-  \(v \in \mathbb{R}^n\), the map \(x \mapsto \langle V''(x) v, v\rangle\) is concave. Then, for all smooth functions
+At this point, we recall that in the Poincaré case, we proceeded to bound the two terms on the 
+right hand side by using proposition~\ref{prop:linear-tilt_ACV} and the Brascamp-Lieb inequality respectively. 
+In this case, the term \(\mathbb{E}[\text{Ent}_{\mu_t}[\phi^2]]\) can be bounded using the following lemma.
+% Unfortunately, we do not have a version of the Brascamp-Lieb inequality for entropy for general log-concave measures.
+% Instead, additional restrictions on the measure is required to obtain a log-Sobolev inequality.
+
+\begin{lemma}[Euqation 2.17, \cite{Ledoux_1999}]
+  Let \(U : \mathbb{R}^n \to \mathbb{R}\) be a twice differentiable function such that
+  there exists some \(c > 0\) so that \(U''(x) \ge c\text{id}_n\) for any \(x \in \mathbb{R}^n\). 
+  Then, for all smooth functions
   \(\phi : \mathbb{R}^n \to \mathbb{R}\), we have 
-  \[\text{Ent}_\nu[\phi^2] \le 3\mathbb{E}_\nu[\langle (V'')^{-1} \nabla\phi, \nabla \phi\rangle]\]
-  where \(\dd \nu = e^{-V(x)} \dd \text{Leb}^n(x)\) and \(V''\) denotes the Hessian of \(V\).
+  \[\text{Ent}_\nu[\phi^2] \le \frac{2}{c}\mathbb{E}_\nu[\|\nabla\phi\|^2]\]
+  where \(\dd \nu = e^{-U} \dd \text{Leb}^n\) and \(U''\) denotes the Hessian of \(U\).
 \end{lemma}
 
-Hence, by substituting \(\mu_t\) for \(\nu\) in the above lemma, where by equation~\eqref{eq:stoch_loc_alt}
-we have that \(V'' = \frac{t}{2} \text{id}_n\), the map \(x \mapsto \langle V''(x) v, v\rangle\) is concave 
-and hence, 
-\[\text{Ent}_{\mu_t}[\phi^2] \le 6t^{-1}\mathbb{E}_{\mu_t}[\|\nabla\phi\|^2].\]
+Recalling equation~\eqref{eq:stoch_loc_alt}, by substituting \(U(x) = - z_t - \langle v_t, x\rangle + \frac{t}{2}\|x\|^2 + V(x)\)
+we observe that \(U''(x) \ge \frac{t}{2}\text{Id}_n + V''(x) \ge \frac{t}{2}\text{Id}_n\) as \(V\) is convex.
+Thus, by the above lemma, as \(\dd \mu_t = e^{-U} \dd \text{Leb}^n\), \(\mu_t\) satisfies the log-Sobolev 
+inequality of the form 
+\[\text{Ent}_{\mu_t}[\phi^2] \le 4t^{-1} \mathbb{E}_{\mu_t}[\|\nabla \phi\|^2].\] 

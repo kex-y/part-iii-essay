@@ -306,18 +306,19 @@ method as the discrete time analysis to compute a bound for \(\dd[] \text{Var}[M
 \begin{proposition}\label{prop:linear-tilt_ACV}
   Given the linear-tilt localization \((\mu_t)_{t \ge 0}\) of \(\mu\) driven by a Wiener process as defined 
   in section~\ref{sec:construct}, for all isotropic \(\phi : \mathbb{R}^n \to \mathbb{R}\), we have 
-  \[\dd \text{Var}[M_t] \le \text{Var}[M_t] \mathbb{E}[\|A_t\|_\text{op}] \dd t,\]
+  \[\dd[] [M]_t \le \text{Var}_{\mu_t}[\phi] \|A_t\|_\text{op} \dd t,\]
   where \(A_t\) is the covariance matrix of \(\mu_t\) and \(M_t := \int \phi \dd \mu_t\).\todo{Unify covariance notation.}
 \end{proposition}
 
-To prove this proposition, we first recall that for a martingale \((X_t)_t\), its quadratic variation 
+Before proving this proposition, we first recall that for a martingale \((X_t)_t\), its quadratic variation 
 \([X]_t\) is the unique adapted, continuous and non-decreasing process such that \((X_t^2 - [X]_t)_t\) 
 is a martingale. In particular, if \(X_0 = 0\), we observe 
 \[\mathbb{E}[X_t^2] - \mathbb{E}[X]_t = \mathbb{E}[X_0^2] = 0\]
 for all \(t\). Thus, 
 \[\text{Var}[X_t] = \mathbb{E}[X_t^2] - \mathbb{E}[X_t]^2 = \mathbb{E}[X]_t - \mathbb{E}[X_0]^2 = \mathbb{E}[X]_t.\]
-Now, as \(\phi\) is isotropic, \(M_0 = \int \phi \dd \mu = 0\) and so,
-\(\text{Var}[M_t] = \mathbb{E}[M]_t\). As a result of this, we will now analyze \(\dd[] [M]_t\).
+Now, since in our case \(\phi\) is isotropic, we have \(M_0 = \int \phi \dd \mu = 0\) and so,
+\(\text{Var}[M_t] = \mathbb{E}[M]_t\). Thus, by taking expectation on both sides, one observes the resemblance 
+of the above equation with that of the discrete time ACV inequality. 
 
 % To prove this proposition, we first recall that for a martingale \((X_t)_t\), its quadratic variation 
 % \([X]_t\) is the unique adapted, continuous and non-decreasing process such that \((X_t^2 - [X]_t)_t\) 
@@ -337,8 +338,7 @@ Now, as \(\phi\) is isotropic, \(M_0 = \int \phi \dd \mu = 0\) and so,
 % \(\phi\), we have 
 
 \begin{proof}
-  With the above remarks in mind, by taking expectation, it is sufficient to bound \(\dd[] [M]_t\) 
-  instead. Observe that
+  We compute
   \begin{align*}
     \dd M_t & = d \int \phi(x) F_t(x) \mu(\dd x) = \int \phi(x) \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\\
     & = \left\langle \int \phi(x)(x - a_t)\mu_t(\dd x), \dd W_t\right\rangle = \langle U_t, \dd W_t\rangle
@@ -349,7 +349,7 @@ Now, as \(\phi\) is isotropic, \(M_0 = \int \phi \dd \mu = 0\) and so,
     \dd[] [M]_t = \left\| U_t \right\|^2 \dd t.
   \end{equation}
   The remainder of the calculation is quite similar to the discrete case. Indeed, denoting \(\theta\) the vector 
-  \(U_t\) normalized to have norm 1, we observe,
+  \(U_t\) normalized to have norm 1, we obtain,
   \begin{equation}\label{eq:red_a}
     \begin{split}
       \dd[] [M]_t & = \left\langle U_t, \theta \right\rangle^2 \dd t
@@ -359,8 +359,7 @@ Now, as \(\phi\) is isotropic, \(M_0 = \int \phi \dd \mu = 0\) and so,
       & = \text{Var}_{\mu_t}[\phi] \langle\theta, A_t \theta\rangle\dd t \le \text{Var}_{\mu_t}[\phi] \|A_t\|_{\text{op}} \dd t.
     \end{split}
   \end{equation}
-  where again, the inequality follows by the Cauchy-Schwarz inequality. Thus, by taking expectation on both sides of the inequality, 
-  we obtain the required inequality.
+  where again, the inequality follows by the Cauchy-Schwarz inequality.
 \end{proof}
 
 \subsection{Glauber dynamics as an associated Markov process}\label{sec:Glauber_loc}

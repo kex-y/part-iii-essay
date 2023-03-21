@@ -282,22 +282,26 @@ Lebesgue measure, we have known since the ancient Greeks \cite{iso_hist} that th
 With this in mind, it is natural for us to generalize the problem for arbitrary measures. 
 
 \begin{definition}[Minkowski's boundary measure]
-  Given a measure \(\mu\) on \(\mathbb{R}^n\) and a Borel set \(A \subseteq <\mathbb{R}^n\), the Minkowski's 
+  Given a measure \(\mu\) on \(\mathbb{R}^n\) and a Borel set \(A \subseteq \mathbb{R}^n\), the Minkowski's 
   boundary measure of \(A\), 
-  \[\mu^+(\partial A) := \liminf_{\epsilon \downarrow 0} \frac{\mu(A_\epsilon) - \mu(A)}{\epsilon}.\]
+  \[\mu^+(\partial A) := \limsup_{\epsilon \downarrow 0} \frac{\mu(A_\epsilon) - \mu(A)}{\epsilon}.\]
   where \(A_\epsilon := \{x \in \mathbb{R}^n \mid \text{dist}(x, A) \le \epsilon\}\) is the 
-  \(\epsilon\)-thickening of some Borel set \(A\). 
+  \(\epsilon\)-thickening of \(A\). 
+
+  A similar definition for the boundary measure \(\mu^-\) can be given by taking the liminf instead. This 
+  does not matter in our case as any convex subsets of \(\mathbb{R}^n\) are regular and the two definitions 
+  coincide. 
 \end{definition}
 
 The isoperimetric problem for the measure \(\mu\) then becomes the problem of finding the set \(A\) 
-satisfying \(\mu(A) = 1\) with minimum \(\mu^+(\partial A)\). 
+satisfying \(\mu(A) = 1\) with minimum boundary measure. 
 
 \begin{definition}[Cheeger's inequality, \cite{Milman_2008}]
-  Given a measure \(\mu\) on \(\mathbb{R}^n\), we say \(\mu\) satisfy Cheeger's inequality 
-  if there exists some \(D\) such that for all \(A\),
-  \[\mu(A) \wedge \mu(A^c) \le D\mu^+(A).\]
-  We call the largest such \(D\) the inverse Cheeger's constant (or the inverse isoperimetric constant) and 
-  denote it by \(D^\mu_{\text{C}}\).
+  Given a probability measure \(\mu\) on \(\mathbb{R}^n\), we say \(\mu\) satisfy Cheeger's inequality 
+  if there exists some \(D\) such that for all \(A\) with \(\mu(A) \le 1 / 2\),
+  \[\mu(A) \le D\mu^+(A).\]
+  We call the largest such \(D\) the inverse Cheeger's constant\todo{Uninvert the constants} and 
+  denote it by \(C_\mu\).
 \end{definition}
 
 With these definitions, the KLS conjecture can be equivalently reformulated as the following.
@@ -319,10 +323,10 @@ equivalences.
     \item \(\mu\) satisfy the Cheeger's inequality with constant \(D^\mu_\text{C}\).
     \item \(\mu\) satisfy the Poincaré inequality: there exists some \(D > 0\) such that for all 
       smooth \(\phi : \mathbb{R}^n \to \mathbb{R}\) satisfying \(\int \phi \dd\mu = 0\), we have
-      \[D \cdot \text{Var}_\mu[\phi] \le \mathbb{E}_\mu[\|\nabla \phi\|^2] = \int \|\nabla \phi\|^2 \dd\mu.\]
+      \[D \text{Var}_\mu[\phi] \le \mathbb{E}_\mu[\|\nabla \phi\|^2] = \int \|\nabla \phi\|^2 \dd\mu.\]
       We denote the largest such \(D\) by \(D^\mu_{\text{P}}\).
   \end{itemize}
-  Furthermore, \(D^\mu_{\text{exp}} \simeq D^\mu_{\text{FM}} \simeq D^\mu_{\text{P}} \simeq D^\mu_{\text{C}}\).
+  Furthermore, \(D^\mu_{\text{exp}} \simeq D^\mu_{\text{FM}} \simeq D^\mu_{\text{P}} \simeq (D^\mu_{\text{C}})^2\).
 \end{theorem}
 
 With this theorem and proposition \ref{thm:equiv} in mind, it is clear that the KLS conjecture can be 

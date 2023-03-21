@@ -46,7 +46,7 @@ for any \(t \ge 0\). Furthermore, by applying the optional stopping theorem, the
 when we take \(t\) to be a stopping time. 
 
 At this point, by recalling proposition~\ref{prop:linear-tilt_ACV}, we recognize that the first term 
-\(\text{Var}[M_t]\) is controlled by the operator norm of \(A_t\) with \(A_t\) being the covariance matrix of \(\mu_t\).
+\(\text{Var}[M_t] = \mathbb{E}[M]_t\) is controlled by the operator norm of \(A_t\) with \(A_t\) being the covariance matrix of \(\mu_t\).
 Thus, to bound the first term, the idea is to choose an appropriate stopping time \(\tau\) to 
 stop the process before \(\|A_t\|_\text{op}\) grows too large. On the other hand, for the given \(\tau\), by plugging in 
 equation~\eqref{eq:stoch_loc_alt} into lemma~\ref{lem:brascamp-lieb},
@@ -251,13 +251,14 @@ As outlined in the beginning of this section, we will stop the process early in 
 bound for the right hand side of equation~\eqref{eq:bound}. By observing equation~\eqref{eq:red_a}, we hypothesize that
 we should stop the process once \(\|A_t\|_{\text{op}}\) grows too large. As a result we define the stopping time 
 \[\tau := \inf\{t > 0 \mid \|A_t\|_{\text{op}} > 2\} \wedge 1.\]
-By the optional stopping theorem we have
+By the optional stopping theorem, proposition~\ref{prop:linear-tilt_ACV} and the fact that we had assumed 
+\(\mu\) is supported in a ball of radius \(n\), we have
 \begin{align*}
   [M]_\tau & = \int_0^\tau \dd[] [M]_t 
-      \le \int_0^\tau \overbrace{\text{Var}_\mu[\phi]}^{\le t^{-1} \wedge n^2} \overbrace{\|A_t\|_{\text{op}}}^{\le 2} \dd t\\
+      \le \int_0^\tau \overbrace{\text{Var}_{\mu_t}[\phi]}^{\le t^{-1} \wedge n^2} \overbrace{\|A_t\|_{\text{op}}}^{\le 2} \dd t\\
     & \le 2 \int_0^\tau t^{-1} \wedge n^2 \dd t \le 2 \int_0^1 t^{-1} \wedge n^2 \dd t = 2 + 4 \log n.
 \end{align*}
-Combining this with equation~\eqref{eq:bound}, we obtain
+Combining this with equation~\eqref{eq:bound} (where we recall that \(\text{Var}[M_t] = \mathbb{E}[M]_t\)),  we obtain
 \begin{equation}\label{eq:tau_bd}
   \text{Var}_\mu[\phi] \le 2 + 4 \log n + \mathbb{E}[\tau^{-1}],
 \end{equation}

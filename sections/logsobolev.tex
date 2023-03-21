@@ -26,7 +26,27 @@ The log-Sobolev inequality can be then formulated as the following.
 The log-Sobolev inequality\todo{Motivation and Herbst.}
 % https://faculty.math.illinois.edu/~psdey/math595fa19/lec14.pdf
 
-We will in this section present a bound by Lee and Vempala for the log-Sobolev constant for all log-concave measures. 
+
+We observe the similarity of the log-Sobolev inequality with that of the Poincaré inequality. Remarkably, 
+a similar inequality to the Cheeger's inequality can be defined and a correspondence similar to the correspondence 
+between the Poincaré constant and the Cheeger's constant can be made for the log-Sobolev constant and the 
+log-Cheeger's constant.
+
+\begin{definition}[Log-Cheeger's inequality]
+  Given a probability measure \(\mu\) on \(\mbox{R}^n\), we say \(\mu\) satisfies the log-Cheeger's inequality 
+  if there exists some \(C\) such that for all \(A\) with \(\mu(A) \le 1 / 2\),
+  \[C\mu(A)\sqrt{-\log(\mu(A))} \le \mu^+(A).\]
+  We call the least such \(C\) the log-Cheeger's constant and denote it by \(C_\mu\).
+\end{definition}
+
+In general, one can show that \(\rho_\mu \simeq C_\mu\). However, in contrast to the Poincaré inequality where 
+the KLS conjecture suggests that the Poincaré constant is bounded below by a universal constant, it is known 
+that the log-Sobolev constant cannot be bounded below by a universal constant. 
+
+\subsection{Log-Sobolev inequality via stochastic localization}
+
+Inspired by the proof of the reduction of the KLS conjecture to the thin-shell conjecture, we will in this section 
+present a modified proof of a bound by Lee and Vempala for the log-Sobolev constant for all log-concave measures. 
 Namely, we consider the following theorem. 
 
 \begin{theorem}[\cite{Lee_2016}]
@@ -34,15 +54,15 @@ Namely, we consider the following theorem.
   \(\mu\) has log-Sobolev constant \(\rho_\mu \gtrsim D^{-1}\).
 \end{theorem}
 
-Before presenting Lee and Vempala's proof of above theorem, let us first remark the similarity of the 
-log-Sobolev inequality with that of the Poincaré inequality. As a result, one might first attempt to analyze 
-the log-Sobolev inequality using the same method as prescribed by section~\ref{sec:KLS_to_TS}. As it turns out,
-this method quickly runs into issues as one struggles to bound the entropy of the martingale terms resulted 
-from the localization. \todo{Fix.}
+We attempt to analyze the log-Sobolev inequality using the same method as prescribed by section~\ref{sec:KLS_to_TS}. 
+As it turns out, while the initial steps can be follow verbatim, this method runs into issues when trying to 
+bound the entropy of the martingale term resulted from the localization. As a result, instead of attempting 
+bound the entropy using the operator norm of the covariance matrix as we had done so previously, we will 
+to this end utilize the correspondence between the log-Sobolev constant and the log-Chegger's constant.
 
-Similar to before, for any smooth function \(\phi : \mathbb{R}^n \to \mathbb{R}\), 
-I claim that one can express the entropy of \(\phi^2\) with respect to \(\mu\) as 
-the entropy of the martingale terms, in particular, 
+Let \(\phi : \mathbb{R}^n \to \mathbb{R}\) be smooth.  
+Similar to before, we express the entropy of \(\phi^2\) with respect to \(\mu\) as 
+the entropy of the martingale terms, in particular, we will show that
 \begin{equation}\label{eq:entropy_decomp}
   \text{Ent}_\mu[\phi^2] = \text{Ent}[M_t] + \mathbb{E}[\text{Ent}_{\mu_t}[\phi^2]],
 \end{equation}
@@ -69,7 +89,7 @@ Moreover, defining the martingale \(N_t := \int \phi^2\log \phi^2 \dd \mu_t\), w
 \end{align*}
 Hence, we recover equation~\eqref{eq:entropy_decomp} by combining the above two equations.
 
-At this point, we recall that in the Poincaré case, we proceeded to bound the two terms on the 
+At this point, we recall that in the reduction of the KLS conjecture, we proceeded to bound the two terms on the 
 right hand side by using proposition~\ref{prop:linear-tilt_ACV} and the Brascamp-Lieb inequality respectively. 
 In this case, the term \(\mathbb{E}[\text{Ent}_{\mu_t}[\phi^2]]\) can be bounded using the following lemma.
 % Unfortunately, we do not have a version of the Brascamp-Lieb inequality for entropy for general log-concave measures.
@@ -87,5 +107,11 @@ In this case, the term \(\mathbb{E}[\text{Ent}_{\mu_t}[\phi^2]]\) can be bounded
 Recalling equation~\eqref{eq:stoch_loc_alt}, by substituting \(U(x) = - z_t - \langle v_t, x\rangle + \frac{t}{2}\|x\|^2 + V(x)\)
 we observe that \(U''(x) \ge \frac{t}{2}\text{Id}_n + V''(x) \ge \frac{t}{2}\text{Id}_n\) as \(V\) is convex.
 Thus, by the above lemma, as \(\dd \mu_t = e^{-U} \dd \text{Leb}^n\), \(\mu_t\) satisfies the log-Sobolev 
-inequality of the form 
-\[\text{Ent}_{\mu_t}[\phi^2] \le 4t^{-1} \mathbb{E}_{\mu_t}[\|\nabla \phi\|^2].\] 
+inequality of the form
+\begin{equation}
+  \text{Ent}_{\mu_t}[\phi^2] \le 4t^{-1} \mathbb{E}_{\mu_t}[\|\nabla \phi\|^2].
+\end{equation} 
+On the other hand, it is difficult to bound \(\text{Ent}[M_t]\) by the operator norm of the covariance 
+matrix. In contrast to bounding the variance, we cannot express the entropy as a neat expression of 
+the quadratic variation of \((M_t)\). Instead, we will bound the log-Chegger's constant of \(M_t\).
+

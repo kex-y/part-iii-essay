@@ -114,9 +114,9 @@ inequality of the form
 On the other hand, we cannot use the same approach to bound \(\text{Ent}[M_t]\). Indeed, while for 
 proposition~\ref{prop:linear-tilt_ACV}, we were able to invoke a clever application of the Cauchy-Schwarz inequality 
 in order to bound \([M]_t\) by \(\text{Var}_{\mu_t}[M_t]\) and the operator norm of the covariance matrix, the extra logarithmic term causes problem 
-when we attempt to bound the entropy\footnote{While lemma 2.7 of \cite{Lee_2017} claims to bound \(\dd[] [M]_t\) by 
-a term involving the entropy via. a similar method invoking Hölder's inequality rather than the Cauchy-Schwarz inequality, 
-the authors had omitted to check that their choice of the exponent is greater than 1 which is required for Hölder's inequality.}. 
+when we attempt to bound the entropy\footnote{Lemma 2.7 in \cite{Lee_2017} claims to bound \(\dd[] [M]_t\) by 
+a term involving the entropy via. a similar method invoking Hölder's inequality rather than the Cauchy-Schwarz inequality. However,
+in this case the authors had omitted to check that their choice of the exponent is greater than 1 which is required for Hölder's inequality.}. 
 Instead, we shall bound \(\text{Ent}[M_t]\) by an application of the Burkholder-Davis-Gundy inequality. 
 
 \begin{lemma}[Burkholder-Davis-Gundy]
@@ -161,7 +161,12 @@ Combining this with equation~\eqref{eq:entropy_bound}, we obtain
 \[\text{Ent}[M_t] \lesssim \mathbb{E}\left[\int_0^t \dd[] [N]_s^{1 / 2}\right]
   \le \mathbb{E}\left[\int_0^t D \text{Ent}_{\mu_s}[\phi^2] \dd s\right].\]
 At this point, as \(\mu_t\) is only supported in a ball of diameter \(D\), we have by 
-lemma~\ref{lem:entropy_BL} that \(\text{Ent}_{\mu_t}[\phi^2] \lesssim t^{-1} \wedge D^2\). Thus, 
-\[\text{Ent}[M_t] \lesssim \mathbb{E}\left[D \int_0^t s^{-1} \wedge D^2\right]
-  = D(\log t + 2\log D)\]
+lemma~\ref{lem:entropy_BL} that \(\text{Ent}_{\mu_t}[\phi^2] \lesssim t^{-1}\mathbb{E}_{\mu_t}[\|\nabla \phi\|^2] \wedge D^2\). Thus, 
+by Fubini's theorem, we have
+\begin{align*}
+  \text{Ent}[M_t] & \lesssim \mathbb{E}\left[D \int_0^t s^{-1}\mathbb{E}_{\mu_s}[\|\nabla \phi\|^2] \wedge D^2 \dd t\right]\\
+    & = D \int_0^t s^{-1}\mathbb{E}_\mu[\|\nabla \phi\|^2] \wedge D^2 \dd t\\
+    & = D \mathbb{E}_\mu[\|\nabla \phi\|^2] \int_{D^{-2}}^t s^{-1}\dd t\\
+    & = D \mathbb{E}_\mu[\|\nabla \phi\|^2] (\log t + 2\log D)
+\end{align*}
 for all \(t > D^{-2}\).

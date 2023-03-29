@@ -95,7 +95,7 @@ In this case, the term \(\mathbb{E}[\text{Ent}_{\mu_t}[\phi^2]]\) can be bounded
 % Unfortunately, we do not have a version of the Brascamp-Lieb inequality for entropy for general log-concave measures.
 % Instead, additional restrictions on the measure is required to obtain a log-Sobolev inequality.
 
-\begin{lemma}[Euqation 2.17, \cite{Ledoux_1999}]
+\begin{lemma}[Equation 2.17, \cite{Ledoux_1999}]\label{lem:entropy_BL}
   Let \(U : \mathbb{R}^n \to \mathbb{R}\) be a twice differentiable function such that
   there exists some \(c > 0\) so that \(U''(x) \ge c\text{id}_n\) for any \(x \in \mathbb{R}^n\). 
   Then, for all smooth functions
@@ -111,7 +111,57 @@ inequality of the form
 \begin{equation}
   \text{Ent}_{\mu_t}[\phi^2] \le 4t^{-1} \mathbb{E}_{\mu_t}[\|\nabla \phi\|^2].
 \end{equation} 
-On the other hand, it is difficult to bound \(\text{Ent}[M_t]\) by the operator norm of the covariance 
-matrix. In contrast to bounding the variance, we cannot express the entropy as a neat expression of 
-the quadratic variation of \((M_t)\). Instead, we will bound the log-Chegger's constant of \(M_t\).
+On the other hand, we cannot use the same approach to bound \(\text{Ent}[M_t]\). Indeed, while for 
+proposition~\ref{prop:linear-tilt_ACV}, we were able to invoke a clever application of the Cauchy-Schwarz inequality 
+in order to bound \([M]_t\) by \(\text{Var}_{\mu_t}[M_t]\) and the operator norm of the covariance matrix, the extra logarithmic term causes problem 
+when we attempt to bound the entropy\footnote{While lemma 2.7 of \cite{Lee_2017} claims to bound \(\dd[] [M]_t\) by 
+a term involving the entropy via. a similar method invoking Hölder's inequality rather than the Cauchy-Schwarz inequality, 
+the authors had omitted to check that their choice of the exponent is greater than 1 which is required for Hölder's inequality.}. 
+Instead, we shall bound \(\text{Ent}[M_t]\) by an application of the Burkholder-Davis-Gundy inequality. 
 
+\begin{lemma}[Burkholder-Davis-Gundy]
+  For all \(1 \le p < \infty\), there exists some constant \(C_p\) such that for any martingale \((X_t)_{t \ge 0}\),
+  we have 
+  \[\mathbb{E}\left[\left(\sup_{s \le t} X_t\right)^p\right] \le C_p \mathbb{E}\left[[X]_t^{p / 2}\right]\]
+  for all \(t \ge 0\).
+\end{lemma}
+
+With the above lemma in mind, denoting \(\psi = \phi^2 \log \phi^2\) and the martingale \(N_t = \int \psi \dd \mu_t\),
+we have 
+\begin{equation}\label{eq:entropy_bound}
+  \begin{split}
+    \text{Ent}[M_t] & = \mathbb{E}[M_t\log M_t] - \mathbb{E}[M_t]\overbrace{\log\mathbb{E}[M_t]}^{= 0}\\ 
+      & = \mathbb{E}[M_t\log M_t] = \mathbb{E}[\mathbb{E}_{\mu_t}[\phi^2] \log\mathbb{E}_{\mu_t}[\phi^2]]\\
+      & \le \mathbb{E}[\mathbb{E}_{\mu_t}[\phi^2 \log \phi^2]] = \mathbb{E}[N_t]\\ 
+      & \le C_1 \mathbb{E}\left[[N]_t^{1 / 2}\right].
+  \end{split}
+\end{equation}
+where the first inequality follows by Jensen's inequality. Now, similar to the variance case, we focus on 
+bounding \([N]_t\). Similar to the proof of proposition~\ref{prop:linear-tilt_ACV}, introducing the notation  
+\(U_t := \int \psi(x)(x - a_t)\mu_t(\dd x)\), we obtain
+\begin{align*}
+  \dd N_t & = d \int \psi(x) F_t(x) \mu(\dd x) = \int \psi(x) \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\\
+  & = \left\langle \int \psi(x)(x - a_t)\mu_t(\dd x), \dd W_t\right\rangle = \langle U_t, \dd W_t\rangle.
+\end{align*}
+Hence, as \(\int (x - a_t) \mu_t(\dd x) = 0\), we have
+\begin{align*}
+  \dd[] [N]_t & = \|U_t\|^2 \dd t = \left\|\int \psi(x)(x - a_t)\mu_t(\dd x)\right\|^2 \dd t\\
+  & = \left\|\int (\psi(x) - M_t \log M_t)(x - a_t)\mu_t(\dd x)\right\|^2 \dd t.
+\end{align*}
+Now, by recalling that any linear tilt localization satisfies \(\mu_t \ll \mu\) and moreover 
+\(\mu\) support in a ball of diameter \(D\), \(\mu_t\) also has support in a ball of diameter \(D\). 
+Thus, \(\|x - a_t\|_{L^\infty(\mu_t)} \le D\) for any \(t \ge 0\). Then, we have  
+\begin{align*}
+  \dd[] [N]_t & = \left\|\int (\psi(x) - M_t \log M_t)(x - a_t)\mu_t(\dd x)\right\|^2 \dd t\\
+  & \le D^2 \left\|\int (\psi(x) - M_t \log M_t)\mu_t(\dd x)\right\|^2 \dd t\\
+  & = D^2 \left|\mathbb{E}_{\mu_t}[\phi^2 \log \phi^2] - \mathbb{E}_{\mu_t}[\phi^2] \log\mathbb{E}_{\mu_t}[\phi^2]\right|^2 \dd t\\
+  & = D^2 \text{Ent}_{\mu_t}[\phi^2]^2 \dd t.
+\end{align*}
+Combining this with equation~\eqref{eq:entropy_bound}, we obtain 
+\[\text{Ent}[M_t] \lesssim \mathbb{E}\left[\int_0^t \dd[] [N]_s^{1 / 2}\right]
+  \le \mathbb{E}\left[\int_0^t D \text{Ent}_{\mu_s}[\phi^2] \dd s\right].\]
+At this point, as \(\mu_t\) is only supported in a ball of diameter \(D\), we have by 
+lemma~\ref{lem:entropy_BL} that \(\text{Ent}_{\mu_t}[\phi^2] \lesssim t^{-1} \wedge D^2\). Thus, 
+\[\text{Ent}[M_t] \lesssim \mathbb{E}\left[D \int_0^t s^{-1} \wedge D^2\right]
+  = D(\log t + 2\log D)\]
+for all \(t > D^{-2}\).

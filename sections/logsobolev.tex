@@ -202,13 +202,12 @@ implying \(\rho_h \gtrsim D^{-2}\) recovering the result of theorem~\ref{thm:Lee
 
 We remark that in contrast to the variance case where the variance of a measure with compact 
 support is trivially bounded by the radius squared of said support, the bound for the entropy is less 
-clear. As a result, we will provide a proof for lemma~\ref{lem:entropy_supp} in this section.
-As it turns out, this result holds for a larger class of measures known as sub-Gaussian measures 
-and we will specialize this to measures of finite support by using Hoeffding's lemma.
+clear. As a result, we will in this section provide a proof for lemma~\ref{lem:entropy_supp}
+using properties of sub-Gaussian measures and Hoeffding's lemma.
 
 \begin{definition}[Sub-Gaussian measures in \(\mathbb{R}\)]
   A measure \(\mu\) on \(\mathbb{R}\) is said to be sub-Gaussian with parameter \(\nu > 0\) if 
-  \[\psi_\mu(\lambda) := \log \mathbb{E}_{X \sim \mu}[e^{\lambda X}] \le \frac{\lambda^2\nu}{2}\]
+  \[\psi_\mu(\lambda) = \log m_{\mu}(\lambda) = \log \mathbb{E}_{X \sim \mu}[e^{\lambda X}] \le \frac{\lambda^2\nu}{2}\]
   for all \(\lambda \in \mathbb{R}\). In this case, we denote \(\mu \in \mathcal{G}(\nu)\).
 \end{definition}
 
@@ -230,8 +229,8 @@ For any smooth \(\phi\) with support on \(D\), we know that \(\phi^2\) has Lipsc
 at most \(2D \text{Lip}(\phi)\). Thus, for our measure \(\mu\) on \(\mathbb{R}^n\) which has support on a ball of diameter \(D\) 
 and any smooth 1-Lipschitz \(\phi\), we have that the push-forward measure of \(\mu\) along \(\phi^2\), 
 \((\phi^2)_* \mu\) is a measure on \(\mathbb{R}\) with support 
-with diameter at most \(2D^2\). Hence, Hoeffding's lemma tells us that \((\phi^2)_* \mu \in \mathcal{G}(D^4)\). 
-With this in mind, it is clear that lemma~\ref{lem:entropy_supp} follows by the following.
+with diameter at most \(2D^2\). Consequently, Hoeffding's lemma tells us that \((\phi^2)_* \mu \in \mathcal{G}(D^4)\).  
+With this in mind, we can now prove lemma~\ref{lem:entropy_supp}.
 
 % It is clear that for our measure \(\mu\) on \(\mathbb{R}^n\) which has support on a ball of diameter \(D\), 
 % as we had assumed \(\phi\) is 1-Lipschitz, \(\phi^2\) is at most on 
@@ -242,13 +241,13 @@ With this in mind, it is clear that lemma~\ref{lem:entropy_supp} follows by the 
 % With this in mind, we see that it suffices to consider lemma~\ref{lem:entropy_supp} in the 1-dimensional case, 
 % and in particular, we will prove the lemma for all 1-dimensional sub-Gaussian measures.
 
-\begin{lemma}
-  For \(\mu\) a sub-Gaussian measure on \(\mathbb{R}\) with parameter \(\nu > \epsilon\) for some fixed \(\epsilon > 0\), 
-  there exists a constant \(C_\epsilon\) which depends only on \(\epsilon\) such that 
-  \[\text{Ent}_\mu[\phi^2] \le C_\epsilon D^2\]
-  for all smooth 1-Lipschitz functions \(\phi : \mathbb{R} \to \mathbb{R}\).
-\end{lemma}
-\begin{proof}
+% \begin{lemma}
+  % For \(\mu\) a sub-Gaussian measure on \(\mathbb{R}\) with parameter \(\nu > \epsilon\) for some fixed \(\epsilon > 0\), 
+  % there exists a constant \(C_\epsilon\) which depends only on \(\epsilon\) such that 
+  % \[\text{Ent}_\mu[\phi^2] \le C_\epsilon \nu^2\]
+  % for all smooth 1-Lipschitz functions \(\phi : \mathbb{R} \to \mathbb{R}\).
+% \end{lemma}
+\begin{proof}[Proof of lemma~\ref{lem:entropy_supp}]
   For ease of notation, let us denote \(f = \phi^2\). Consider 
   \[\exp(\text{Ent}_\mu[f]) = \exp(\mathbb{E}_\mu[f\log f] - \mathbb{E}_\mu[f]\log\mathbb{E}[f]).\]
   By considering that the function \(x \mapsto -x\log x\) has its maximum at \(e^{-1}\), we have
@@ -257,9 +256,33 @@ With this in mind, it is clear that lemma~\ref{lem:entropy_supp} follows by the 
   we attempt to bound \(\exp(\mathbb{E}_\mu[f\log f])\). By Jensen's inequality, we have 
   \[\exp(\mathbb{E}_\mu[f\log f]) \le \mathbb{E}_\mu[\exp(f\log f)] = \mathbb{E}_\mu[f e^f].\]
   Now, by Taylor expansion,
-  \[\mathbb{E}_\mu[f e^f] = \mathbb{E}_\mu\left[f \sum_{n = 0}^\infty \frac{f^n}{n!}\right]
-    = \sum_{n = 1}^\infty \frac{1}{(n - 1)!} \mathbb{E}[f^n]\]
+  \begin{equation}\label{eq:Taylor}
+    \mathbb{E}_\mu[f e^f] = \mathbb{E}_\mu\left[f \sum_{n = 0}^\infty \frac{f^n}{n!}\right]
+      = \sum_{n = 1}^\infty \frac{1}{(n - 1)!} \mathbb{E}[f^n]
+  \end{equation}
   since the convergence is absolute. 
 
-  On the other hand, by the definition of sub-Gaussian measures, we have a bound on the moments of \(\mu\)
+  On the other hand, by the above remark, \(f_* \mu\) is a sub-Gaussian measure with parameter \(D^4\).
+  Thus, we can obtain a bound on the moments of \(\mu\). Indeed, since
+  \[\psi_{f_*\mu}(\lambda) = \log m_{f_*\mu}(\lambda) \le \frac{\lambda^2 D^4}{2},\]
+  we have \(m_{f_*\mu}(\lambda) \le e^{\lambda^2 D^4 / 2}\) for all \(\lambda \in \mathbb{R}\)
+  where \(m_{f_*\mu}\) is the moment generating function of \(f_* \mu\).  
+
+  Hence, Taylor expanding both sides, we obtain
+  \[\sum_{n = 0}^\infty \frac{\lambda^n}{n!}\partial_\lambda^n m_{f_*\mu}(0) \le \sum_{n = 0}^\infty \frac{\lambda^{2n}}{n!}D^{4n}\]
+  for all \(\lambda \in \mathbb{R}\). Thus, we must have 
+  \[\mathbb{E}_\mu[f^{2n}] = \partial_\lambda^{2n} m_{f_*\mu}(0) \le D^{4n}\]
+  and 
+  \[\mathbb{E}_\mu[f^{2n + 1}] = \partial_\lambda^{2n + 1} m_{f_*\mu}(0) \le 0.\]
+  Substituting the above into equation~\eqref{eq:Taylor}, we obtain
+  \[\mathbb{E}_\mu[fe^f] \le \sum_{n = 1}^\infty \frac{1}{(2n - 1)!}D^{4n}
+      = D^2 \sum_{n = 1}^\infty \frac{1}{(2n - 1)!}(D^2)^{2n - 1}
+      = D^2 \sinh D^2.\]
+  Thus, 
+  \[\text{Ent}_\mu[f] \le \log(e^{e^{-1}}\mathbb{E}_\mu[fe^f])
+    \le e^{-1} + \log(D^2) + \log (\sinh D^2).\]
+  Now, since \(\log x + \log (\sinh x) \le 2x\) and as we had assumed \(D \ge \epsilon\), we have 
+  \(e^{-1} \le e^{-1}\epsilon^{-2} D^2\). Hence,
+  \[\text{Ent}_\mu[f] \le (2 + e^{-1}\epsilon^{-2})D^2 = C_\epsilon D^2\]
+  as desired.
 \end{proof}

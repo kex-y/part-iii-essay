@@ -164,27 +164,33 @@ Thus, \(\|x - a_t\|_{L^\infty(\mu_t)} \le D\) for any \(t \ge 0\). Then, we have
   & = D^2 \left|\mathbb{E}_{\mu_t}[\phi^2 \log \phi^2] - \mathbb{E}_{\mu_t}[\phi^2] \log\mathbb{E}_{\mu_t}[\phi^2]\right|^2 \dd t\\
   & = D^2 \text{Ent}_{\mu_t}[\phi^2]^2 \dd t.
 \end{align*}
-Combining this with equation~\eqref{eq:entropy_bound}, we obtain 
+Combining this with equation~\eqref{eq:entropy_bound}, we obtain\todo{Problematic} 
 \begin{equation}\label{eq:entropy_bound2}
   \text{Ent}[M_t] \lesssim \mathbb{E}\left[\int_0^t \dd[] [N]_s^{1 / 2}\right]
     \le \mathbb{E}\left[\int_0^t D \text{Ent}_{\mu_s}[\phi^2] \dd s\right].
 \end{equation}
 At this point, as \(\mu_t\) is only supported in a ball of diameter \(D\), 
-we will utilize the following lemma which proof will be provided in the subsequent section.
+we will utilize the following known bound for the log-Sobolev constant.
+%  which proof will be provided in the subsequent section.
+% \begin{lemma}\label{lem:entropy_supp}
+%   For \(\mu\) a measure on \(\mathbb{R}^n\) supported in a ball of diameter \(D \ge \epsilon\) for some fixed \(\epsilon > 0\), 
+%   there exists a constant \(C_\epsilon\) (depending only on \(\epsilon\)) such that 
+%   \[\text{Ent}_\mu[\phi^2] \le C_\epsilon D^2\]
+%   for all smooth 1-Lipschitz functions \(\phi : \mathbb{R}^n \to \mathbb{R}\).
+% \end{lemma}
 \begin{lemma}\label{lem:entropy_supp}
-  For \(\mu\) a measure on \(\mathbb{R}^n\) supported in a ball of diameter \(D \ge \epsilon\) for some fixed \(\epsilon > 0\), 
-  there exists a constant \(C_\epsilon\) (depending only on \(\epsilon\)) such that 
-  \[\text{Ent}_\mu[\phi^2] \le C_\epsilon D^2\]
-  for all smooth 1-Lipschitz functions \(\phi : \mathbb{R}^n \to \mathbb{R}\).
+  For \(\nu\) an isotropic log-concave measure on \(\mathbb{R}^n\) supported in a ball of diameter \(D\), 
+  we have
+  \[\text{Ent}_\nu[\phi^2] \lesssim D^2 \mathbb{E}_\nu[\|\nabla \phi\|^2]\]
+  for all smooth functions \(\phi : \mathbb{R}^n \to \mathbb{R}\).
 \end{lemma}
-Hence, by recalling that we had assumed \(\phi\) is 1-Lipschitz by normalizing, 
-assuming \(D \ge \epsilon\) (say \(\epsilon = 1\)), we have by lemma~\ref{lem:entropy_BL} that 
-\(\text{Ent}_{\mu_t}[\phi^2] \lesssim t^{-1}\mathbb{E}_{\mu_t}[\|\nabla \phi\|^2] \wedge D\). Thus, 
+Hence, combining this with lemma~\ref{lem:entropy_BL}, we have that 
+\(\text{Ent}_{\mu_t}[\phi^2] \lesssim (t^{-1} \wedge D) \mathbb{E}_{\mu_t}[\|\nabla \phi\|^2]\). Thus, 
 by Fubini's theorem, equation~\eqref{eq:entropy_bound2} becomes
 \begin{align*}
-  \text{Ent}[M_t] & \lesssim \mathbb{E}\left[D \int_0^t s^{-1}\mathbb{E}_{\mu_s}[\|\nabla \phi\|^2] \wedge D^2 \dd t\right]\\
-    & = D \int_0^t s^{-1}\mathbb{E}_\mu[\|\nabla \phi\|^2] \wedge D^2 \dd t\\
-    & = D \mathbb{E}_\mu[\|\nabla \phi\|^2] \left(1 + \int_{D^{-2}}^t s^{-1}\dd t\right)\\
+  \text{Ent}[M_t] & \lesssim \mathbb{E}\left[D \int_0^t (s^{-1} \wedge D^2)\mathbb{E}_{\mu_s}[\|\nabla \phi\|^2] \dd s\right]\\
+    & = D \int_0^t (s^{-1} \wedge D^2)\mathbb{E}_\mu[\|\nabla \phi\|^2] \dd s\\
+    & = D \mathbb{E}_\mu[\|\nabla \phi\|^2] \left(1 + \int_{D^{-2}}^t s^{-1}\dd s\right)\\
     & = D \mathbb{E}_\mu[\|\nabla \phi\|^2] (1 + \log t + 2\log D)
 \end{align*}
 for all \(t > D^{-2}\).
@@ -194,32 +200,32 @@ Hence, combining this with equation~\eqref{eq:entropy_decomp}, we obtain
   \text{Ent}_\mu[\phi^2] & \le \text{Ent}[M_t] + \mathbb{E}[\text{Ent}_{\mu_t}[\phi^2]]\\
   & \lesssim \mathbb{E}_\mu[\|\nabla \phi\|^2](D (1 + \log t + \log D) + 4t^{-1})
 \end{align*}
-for all \(t > D^{-2}\). Thus, taking \(t \downarrow D^{-2}\), we have 
-\[\text{Ent}_\mu[\phi^2] \lesssim D^2 \mathbb{E}_\mu[\|\nabla \phi\|^2]\]
-implying \(\rho_h \gtrsim D^{-2}\) recovering the result of theorem~\ref{thm:Lee_Vempala}.\todo{No I didn't...}
+for all \(t > D^{-2}\). Minimizing this equation in \(t\), we find that it is minimized when \(t = 4D^{-1}\) resulting in 
+\[\text{Ent}_\mu[\phi^2] \lesssim (2 + \log 4)D\mathbb{E}_\mu[\|\nabla \phi\|^2]\]
+whenever \(4D^{-1} \ge D^{-2}\) which holds if and only if \(D \ge 1 / 4\). Thus, assuming this is the case,  
+\[\text{Ent}_\mu[\phi^2] \lesssim D \mathbb{E}_\mu[\|\nabla \phi\|^2]\]
+namely, we've bounded the log-Sobolev constant \(\rho_h \gtrsim D^{-1}\) recovering the result of theorem~\ref{thm:Lee_Vempala}.
 
-\subsubsection{Proof of lemma~\ref{lem:entropy_supp}}
+\subsubsection{Alternative to lemma~\ref{lem:entropy_supp}}
 
 We remark that in contrast to the variance case where the variance of a measure with compact 
 support is trivially bounded by the radius squared of said support, the bound for the entropy is less 
-clear. As a result, we will in this section provide a proof for lemma~\ref{lem:entropy_supp}
-using properties of sub-Gaussian measures and Hoeffding's lemma.
+clear. Lemma~\ref{lem:entropy_supp} provides such a log-Sobolev bound for log-concave measures. 
+This condition can be relaxed should we forgive the gradient term. Namely, using properties of 
+sub-Gaussian measures and Hoeffding's lemma, we can arrive at the following result.
+
+\begin{lemma}\label{lem:entropy_supp2}
+  For \(\mu\) a measure on \(\mathbb{R}^n\) supported in a ball of diameter \(D \ge \epsilon\) for some fixed \(\epsilon > 0\), 
+  there exists a constant \(C_\epsilon\) (depending only on \(\epsilon\)) such that 
+  \[\text{Ent}_\mu[\phi^2] \le C_\epsilon D^2\]
+  for all smooth 1-Lipschitz functions \(\phi : \mathbb{R}^n \to \mathbb{R}\).
+\end{lemma}
 
 \begin{definition}[Sub-Gaussian measures in \(\mathbb{R}\)]
   A measure \(\mu\) on \(\mathbb{R}\) is said to be sub-Gaussian with parameter \(\nu > 0\) if 
   \[\psi_\mu(\lambda) = \log m_{\mu}(\lambda) = \log \mathbb{E}_{X \sim \mu}[e^{\lambda X}] \le \frac{\lambda^2\nu}{2}\]
   for all \(\lambda \in \mathbb{R}\). In this case, we denote \(\mu \in \mathcal{G}(\nu)\).
 \end{definition}
-
-% \begin{definition}[Sub-Gaussian measures in \(\mathbb{R}^n\)]
-%   A measure \(\mu\) on \(\mathbb{R}^n\) is said to be sub-Gaussian with parameter \(\nu > 0\) if
-%   for all \(\|x\| = 1\), denoting \(\pi_x : \mathbb{R}^n \to \mathbb{R}\) is projection map in the direction
-%   of \(x\), the push-forward measure of \(\mu\) along \(\pi_x\), \((\pi_x)_* \mu\) is sub-Gaussian with 
-%   parameter \(\nu\). 
-
-%   Similar to the 1-dimensional case, we denote \(\mu \in \mathcal{G}(\nu)\) for \(\mu\) sub-Gaussian with 
-%   parameter \(\nu\).
-% \end{definition}
 
 \begin{lemma}[Hoeffding's lemma]
   For a measure \(\mu\) on \(\mathbb{R}\) with support of diameter \(D\), we have \(\mu \in \mathcal{G}(D^2 / 4)\).
@@ -232,22 +238,7 @@ and any smooth 1-Lipschitz \(\phi\), we have that the push-forward measure of \(
 with diameter at most \(2D^2\). Consequently, Hoeffding's lemma tells us that \((\phi^2)_* \mu \in \mathcal{G}(D^4)\).  
 With this in mind, we can now prove lemma~\ref{lem:entropy_supp}.
 
-% It is clear that for our measure \(\mu\) on \(\mathbb{R}^n\) which has support on a ball of diameter \(D\), 
-% as we had assumed \(\phi\) is 1-Lipschitz, \(\phi^2\) is at most on 
-% the push-forward measure of \(\mu\) along a 1-Lipschitz function also has support of diameter at most \(D\).
-% Thusly, Hoeffding's lemma implies that \(\phi_* \mu \in \mathcal{G}(D^2 / 4)\) 
-% the projection of \(\mu\) onto any \(x \in \mathbb{S}^1 = \{x \in \mathbb{R}^n \mid \|x\| = 1\}\) is a 1-dimensional 
-% measure with support of diameter at most \(D\). Thus, by Hoeffding's lemma, we have \(\mu \in \mathcal{G}(D^2 / 4)\).
-% With this in mind, we see that it suffices to consider lemma~\ref{lem:entropy_supp} in the 1-dimensional case, 
-% and in particular, we will prove the lemma for all 1-dimensional sub-Gaussian measures.
-
-% \begin{lemma}
-  % For \(\mu\) a sub-Gaussian measure on \(\mathbb{R}\) with parameter \(\nu > \epsilon\) for some fixed \(\epsilon > 0\), 
-  % there exists a constant \(C_\epsilon\) which depends only on \(\epsilon\) such that 
-  % \[\text{Ent}_\mu[\phi^2] \le C_\epsilon \nu^2\]
-  % for all smooth 1-Lipschitz functions \(\phi : \mathbb{R} \to \mathbb{R}\).
-% \end{lemma}
-\begin{proof}[Proof of lemma~\ref{lem:entropy_supp}]
+\begin{proof}[Proof of lemma~\ref{lem:entropy_supp2}]
   For ease of notation, let us denote \(f = \phi^2\). Consider 
   \[\exp(\text{Ent}_\mu[f]) = \exp(\mathbb{E}_\mu[f\log f] - \mathbb{E}_\mu[f]\log\mathbb{E}[f]).\]
   By considering that the function \(x \mapsto -x\log x\) has its maximum at \(e^{-1}\), we have

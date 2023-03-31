@@ -60,14 +60,15 @@ bound the entropy of the martingale term resulted from the localization. In part
 inequality no longer provides the desired integral as it had done for the variance case. Instead, we will consider 
 a different martingale \(N_t := \int \phi^2 \log \phi^2 \dd \mu_t\) and utilize the Burkholder-Davis-Gundy inequality.
 
-Let \(\phi : \mathbb{R}^n \to \mathbb{R}\) be smooth and by normalizing, we can also assume it has Lipschitz constant 1.  
-Indeed, if the log-Sobolev inequality holds with constant \(\rho\) for 1-Lipschitz functions, denoting \(\text{Lip}(\phi)\)
-it Lipschitz constant of \(\phi\), we have 
-\[\frac{\rho}{2\text{Lip}(\phi)^2}\text{Ent}_\mu[\phi^2] = 
-  \frac{\rho}{2}\text{Ent}_\mu\left[\left(\frac{\phi}{\text{Lip}(\phi)}\right)^2\right]
-  \le \mathbb{E}\left[\left\|\nabla \frac{\phi}{\text{Lip}(\phi)}\right\|^2\right]
-  = \frac{1}{\text{Lip}(\phi)^2} \mathbb{E}[\|\nabla \phi\|^2].\] 
+% and by normalizing, we can also assume it has Lipschitz constant 1.  
+% Indeed, if the log-Sobolev inequality holds with constant \(\rho\) for 1-Lipschitz functions, denoting \(\text{Lip}(\phi)\)
+% it Lipschitz constant of \(\phi\), we have 
+% \[\frac{\rho}{2\text{Lip}(\phi)^2}\text{Ent}_\mu[\phi^2] = 
+%   \frac{\rho}{2}\text{Ent}_\mu\left[\left(\frac{\phi}{\text{Lip}(\phi)}\right)^2\right]
+%   \le \mathbb{E}\left[\left\|\nabla \frac{\phi}{\text{Lip}(\phi)}\right\|^2\right]
+%   = \frac{1}{\text{Lip}(\phi)^2} \mathbb{E}[\|\nabla \phi\|^2].\]   
 
+Let \(\phi : \mathbb{R}^n \to \mathbb{R}\) be smooth. 
 Similar to before, we express the entropy of \(\phi^2\) with respect to \(\mu\) as 
 the entropy of the martingale terms, in particular, we will show that
 \begin{equation}\label{eq:entropy_decomp}
@@ -121,9 +122,9 @@ inequality of the form
 On the other hand, we cannot use the same approach to bound \(\text{Ent}[M_t]\). Indeed, while for 
 proposition~\ref{prop:linear-tilt_ACV}, we were able to invoke a clever application of the Cauchy-Schwarz inequality 
 in order to bound \([M]_t\) by \(\text{Var}_{\mu_t}[M_t]\) and the operator norm of the covariance matrix, the extra logarithmic term causes problem 
-when we attempt to bound the entropy\footnote{Lemma 2.7 in \cite{Lee_2017} claims to bound \(\dd[] [M]_t\) by 
-a term involving the entropy via. a similar method invoking Hölder's inequality rather than the Cauchy-Schwarz inequality. However,
-in this case the authors had omitted to check that their choice of the exponent is greater than 1 which is required for Hölder's inequality.}. 
+when we attempt to bound the entropy%\footnote{Lemma 2.7 in \cite{Lee_2017} claims to bound \(\dd[] [M]_t\) by 
+%a term involving the entropy via. a similar method invoking Hölder's inequality rather than the Cauchy-Schwarz inequality. However,
+%in this case the authors had omitted to check that their choice of the exponent is greater than 1 which is required for Hölder's inequality.}. 
 Instead, we shall bound \(\text{Ent}[M_t]\) by an application of the Burkholder-Davis-Gundy inequality. 
 
 \begin{lemma}[Burkholder-Davis-Gundy]
@@ -164,7 +165,7 @@ Thus, \(\|x - a_t\|_{L^\infty(\mu_t)} \le D\) for any \(t \ge 0\). Then, we have
   & = D^2 \left|\mathbb{E}_{\mu_t}[\phi^2 \log \phi^2] - \mathbb{E}_{\mu_t}[\phi^2] \log\mathbb{E}_{\mu_t}[\phi^2]\right|^2 \dd t\\
   & = D^2 \text{Ent}_{\mu_t}[\phi^2]^2 \dd t.
 \end{align*}
-Combining this with equation~\eqref{eq:entropy_bound}, we obtain\todo{Problematic} 
+Combining this with equation~\eqref{eq:entropy_bound}, we obtain
 \begin{equation}\label{eq:entropy_bound2}
   \text{Ent}[M_t] \lesssim \mathbb{E}\left[\int_0^t \dd[] [N]_s^{1 / 2}\right]
     \le \mathbb{E}\left[\int_0^t D \text{Ent}_{\mu_s}[\phi^2] \dd s\right].
@@ -178,7 +179,7 @@ we will utilize the following known bound for the log-Sobolev constant.
 %   \[\text{Ent}_\mu[\phi^2] \le C_\epsilon D^2\]
 %   for all smooth 1-Lipschitz functions \(\phi : \mathbb{R}^n \to \mathbb{R}\).
 % \end{lemma}
-\begin{lemma}\label{lem:entropy_supp}
+\begin{lemma}[\cite{Lovasz_2007}]\label{lem:entropy_supp}
   For \(\nu\) an isotropic log-concave measure on \(\mathbb{R}^n\) supported in a ball of diameter \(D\), 
   we have
   \[\text{Ent}_\nu[\phi^2] \lesssim D^2 \mathbb{E}_\nu[\|\nabla \phi\|^2]\]
@@ -202,9 +203,10 @@ Hence, combining this with equation~\eqref{eq:entropy_decomp}, we obtain
 \end{align*}
 for all \(t > D^{-2}\). Minimizing this equation in \(t\), we find that it is minimized when \(t = 4D^{-1}\) resulting in 
 \[\text{Ent}_\mu[\phi^2] \lesssim (2 + \log 4)D\mathbb{E}_\mu[\|\nabla \phi\|^2]\]
-whenever \(4D^{-1} \ge D^{-2}\) which holds if and only if \(D \ge 1 / 4\). Thus, assuming this is the case,  
+whenever \(4D^{-1} \ge D^{-2}\) which holds if and only if \(D \ge 1 / 4\). Thus, 
 \[\text{Ent}_\mu[\phi^2] \lesssim D \mathbb{E}_\mu[\|\nabla \phi\|^2]\]
-namely, we've bounded the log-Sobolev constant \(\rho_h \gtrsim D^{-1}\) recovering the result of theorem~\ref{thm:Lee_Vempala}.
+where for \(D \le 1\), \(D^{-2} \ge D^{-1}\) and so the conclusion remains to hold by lemma~\ref{lem:entropy_supp}. 
+Hence, we bounded the log-Sobolev constant \(\rho_{\mu} \gtrsim D^{-1}\) recovering the result of theorem~\ref{thm:Lee_Vempala}.
 
 \subsubsection{Alternative to lemma~\ref{lem:entropy_supp}}
 

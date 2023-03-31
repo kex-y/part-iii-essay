@@ -1,26 +1,43 @@
-Sampling from a given distribution is a fundamental problem arising naturally in many fields 
-such as bandit theory, machine learning, Bayesian statistics, etc. Among these problems, sampling from the class of 
-distributions known as the log-concave distributions are of particular interest.
-These distributions characterizes the uniform distributions on convex bodies and is related to the volumes
-of said bodies. Beyond this, sampling from the log-concave measures is useful for optimization, e.g. 
-minimizing convex functions. 
+The notion of stochastic localization was first introduced in the 2013 paper by Eldan \cite{Eldan_2013}
+in order to make progress regarding an isoperimetric problem known as the 
+\textit{Kannan-Lovász-Simonovitz} (KLS) conjecture. As it turns out, stochastic localization has been also 
+useful in many other adjacent areas, in particular, in sampling and Markov mixing. This essay will 
+provide an introduction to stochastic localization and describe its applications in Markov mixing and 
+the KLS conjecture. Furthermore, using stochastic localization, this essay will also provide an alternative 
+proof of a known bound for the log-Sobolev constant of log-concave measures. 
 
-Sampling from these distributions has been studied for a long time and there are many algorithms 
-devised to do so. 
+Stochastic localization in its most general form describes a sequence of random measures (random variables 
+taking values in the space of measures) which begins at a given measure and converges to dirac 
+measures almost everywhere, namely it ``localizes'', and moreover, satisfy a certain martingale 
+condition. These sequences of random measures are useful in studying specific measures. Namely, 
+by evolving the stochastic localization in time, particular properties of the structure collapses 
+allowing us say something about them. On the other hand, the martingale property allows us to preserve 
+these properties (possibly up to some time). Hence, by balancing the two, i.e. allowing the sequence 
+to evolve so it is close to a dirac measure while not evolve too long such that we lose the properties 
+of the original measure, we are able to obtain results about the original measure.
 
-
-
-
-
+In our case, we will mostly focus on one specific type of stochastic localizations known as the 
+linear-tilt localization. The linear-tilt localization is a special case of stochastic localizations 
+in which at each time step, the measure is ``tilted'' in a random direction. This random direction 
+can be chosen in a variety of ways however one choice of interest is when the random direction is 
+chosen according to a Wiener process. A stochastic localization constructed this way accumulates a 
+Gaussian component which becomes more and more significant as the process evolves. This is particularly 
+helpful as Gaussian measures are well understood and we can use properties of the Gaussian to obtain 
+results about our original measure.
 \subsection{Structure of this essay}
 
-We will in this essay examine three related applications of the stochastic localization scheme. In particular,
-we will consider its application to providing Markov mixing bounds, the relation of the KLS and thin-shell 
-conjectures, and its application to proving a log-Sobolev inequality. 
+This essay consists of four sections. The first section of this essay consists of setting up the 
+theory of stochastic localization while providing some specific examples of stochastic localizations 
+which will be used in subsequent sections. On the other hand, the remaining three sections will focus 
+on applying this theory in different scenarios. These are 
 
-\textit{Markov mixing bounds}: 
+\begin{itemize}
+  \item a framework using stochastic localization to find spectral gaps of specific Markov chains and an 
+    example of its application on the Glauber dynamics;
+  \item a proof of Eldan's original 2013 result reducing the KLS conjecture to another conjecture known 
+    as the thin-shell conjecture;
+  \item and finally, as mentioned previously, bounding the log-Sobolev constant of log-concave measures.
+\end{itemize}
 
-\textit{KLS and thin-shell conjectures}:
-
-\textit{Log-Sobolev inequality}: The log-Sobolev inequality is a class of inequalities fundamental in the 
-theory of concentration of measures. 
+Throughout this essay, we will also provide ample motivation when describing each application so 
+no knowledge beyond stochastic calculus should be assumed.

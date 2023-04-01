@@ -1,6 +1,5 @@
-In this section we introduce the notion of stochastic localization. 
-To gain intuition for these objects, we also present some examples which are studied further in 
-subsequent sections. 
+In this section we introduce the notion of stochastic localization and provide some useful examples of 
+them for which which are studied further in subsequent sections. 
 
 We work in general Borel spaces \((\mathcal{X}, \Sigma)\) for this section while restricting our 
 focus to either the Euclidean space \(\mathbb{R}^n\) or the Boolean hypercube \(\{-1, 1\}^n\) 
@@ -11,7 +10,7 @@ and we introduce the notation \(\mathcal{M}(\mathcal{X})\) for the space of prob
 \begin{definition}[Prelocalization process]
   Given \(\mu \in \mathcal{M}(\mathcal{X})\), a measure-valued stochastic process 
   \((\mu_t)_{t \ge 0}\) is said to be a prelocalization of \(\mu\) if 
-  \begin{enumerate}[label=(L\arabic*), start=0]
+  \begin{enumerate}[label=L\arabic*, start=0]
     \item \label{L0} \(\mu_0 = \mu\).
     \item \label{L1} For all \(t \ge 0\), \(\mu_t\) is a probability measure almost everywhere, i.e. 
       \(\mathbb{P}(\mu_t(\mathcal{X}) = 1) = 1\).
@@ -28,18 +27,18 @@ and we introduce the notation \(\mathcal{M}(\mathcal{X})\) for the space of prob
   Given \(\mu \in \mathcal{M}(\mathcal{X})\), a measure-valued stochastic process 
   \((\mu_t)_{t \ge 0}\) is said to be a stochastic localization of \(\mu\) if in addition to being a 
   prelocalization of \(\mu\), \((\mu_t)_{t \ge 0}\) also satisfies
-  \begin{enumerate}[label=(L\arabic*), start=3]
+  \begin{enumerate}[label=L\arabic*, start=3]
     \item \label{L3} For all \(A \in \Sigma\), \(\mu_t(A)\) converges almost everywhere to \(0\) 
       or \(1\) as \(t \to \infty\).
   \end{enumerate}
 \end{definition}
 
-\begin{definition}[Stochastic localization scheme, \cite{Chen_2022}]
-  Denoting \(\mathcal{L}(\mu)\) the set of all stochastic localization processes of the measure
-  \(\mu\), a stochastic localization scheme is a map 
-  \[\Phi : \mathcal{M}(\mathcal{X}) \to \coprod_{\mu \in \mathcal{M}(\mathcal{X})} \mathcal{L}(\mu)\] 
-  such that \(\Phi(\mu) \in \mathcal{L}(\mu)\) for all \(\mu \in \mathcal{M}(\mathcal{X})\).
-\end{definition}
+% \begin{definition}[Stochastic localization scheme, \cite{Chen_2022}]
+%   Denoting \(\mathcal{L}(\mu)\) the set of all stochastic localization processes of the measure
+%   \(\mu\), a stochastic localization scheme is a map 
+%   \[\Phi : \mathcal{M}(\mathcal{X}) \to \coprod_{\mu \in \mathcal{M}(\mathcal{X})} \mathcal{L}(\mu)\] 
+%   such that \(\Phi(\mu) \in \mathcal{L}(\mu)\) for all \(\mu \in \mathcal{M}(\mathcal{X})\).
+% \end{definition}
 
 We say a stochastic localization is discrete if \(t\) takes value in \(\mathbb{N}\) and continuous 
 if \(t\) takes value in \(\mathbb{R}_{\ge 0}\). For shorthand, we denote \((\mu_k)_k\) for a
@@ -58,7 +57,7 @@ discrete stochastic localization of \(\mu\).
   The first statement is immediate as for all \(A \in \Sigma\), 
   \[\mathbb{E}[\mu_t](A) \triangleq \mathbb{E}[\mu_t(A)] = \mathbb{E}[\mu_0(A)] = \mu(A).\]
   To prove the second statement, let us first parse what the claim is. Fixing a realization \(\omega\) of \(\mu_t\), 
-  we have by \ref{L3} that \(\mu_t\) converges to some Dirac measure based at some \(x_\omega \in \mathcal{X}\). Thus, 
+  we have by \eqref{L3} that \(\mu_t\) converges to some Dirac measure based at some \(x_\omega \in \mathcal{X}\). Thus, 
   defining the random variable \(X : \omega \mapsto x_\omega\), we need to show \(X \sim \mu\). 
   Indeed, by taking \(\phi : \mathcal{X} \to \mathbb{R}\) to be any bounded and continuous function, by the 
   definition of \(X\)
@@ -81,15 +80,15 @@ such that for all \(x \in \{-1, 1\}^n\),
 \[\mu_k(x) = \mathbb{P}(X = x \mid X_{Y_1}, \cdots, X_{Y_{n \wedge k}}).\]
 Namely, \(\mu_k\) is the law of \(X\) conditioned on \(X_{Y_1}, \cdots, X_{Y_i}\).
 
-\((\mu_k)_{k}\) is indeed a stochastic localization of \(\mu\). It is clear that \ref{L0} and \ref{L1} are 
+\((\mu_k)_{k}\) is indeed a stochastic localization of \(\mu\). It is clear that \eqref{L0} and \eqref{L1} are 
 satisfied. By construction of \((\mu_k)_k\), denoting 
 \(\mathscr{F}_k := \sigma(X_{Y_1}, \cdots, X_{Y_{n \wedge k}})\), we have by the tower property
 \[\mathbb{E}[\mu_{k + 1}(x) \mid \mathscr{F}_k] 
   = \mathbb{E}[\mathbb{E}[\mathbb{P}(X = x \mid X) \mid \mathscr{F}_{k + 1}] \mid \mathscr{F}_k]
   = \mathbb{E}[\mathbb{P}(X = x \mid X) \mid \mathscr{F}_k] = \mu_k(x)\]
-implying \((\mu_k(x))\) a martingale as required for \ref{L2}. Finally, it is clear that
+implying \((\mu_k(x))\) a martingale as required for \eqref{L2}. Finally, it is clear that
 \[\lim_{k \to \infty} \mu_k(x) = \mu_n(x) = \mathbb{P}(X = x \mid X) = \mathbf{1}_{\{X = x\}} \in \{0, 1\}\]
-implying \ref{L3}.
+implying \eqref{L3}.
 
 An analogous construction of the coordinate by coordinate stochastic localization scheme in \(\mathbb{R}^n\) 
 is the random subspace localization. Similar to before, for a probability measure \(\mu\) on \(\mathbb{R}^n\),
@@ -146,10 +145,10 @@ With this in mind, as \(\mu_0 = \mu\) is a probability measure, it follows:
   A linear-tilt localization \((\mu_t)_t\) of \(\mu\) is a prelocalization of \(\mu\).
 \end{corollary}
 
-We remark that in general, a linear-tilt localization is not necessarily a stochastic localization as \ref{L3} 
-might not be satisfied. It is possible to impose sufficient conditions on \((Z_t)\) for which \ref{L3} holds,
+We remark that in general, a linear-tilt localization is not necessarily a stochastic localization as \eqref{L3} 
+might not be satisfied. It is possible to impose sufficient conditions on \((Z_t)\) for which \eqref{L3} holds,
 e.g. by requiring \(\|\text{Cov}(Z_t)\|_{\text{op}}\) to decrease sufficiently fast. However, for generality, 
-we will not restrict ourselves to one of these conditions. Instead, we will consider \ref{L3} case by case 
+we will not restrict ourselves to one of these conditions. Instead, we will consider \eqref{L3} case by case 
 in the following examples of linear-tilt schemes. 
 
 \subsubsection{Linear-tilt localization driven by a Wiener process}\label{sec:construct}
@@ -193,7 +192,7 @@ density of a Gaussian measure. Thus, heuristically, as \(t\) increases, \(\mu_t\
 akin to a Gaussian measure and this turns out to be very beneficial for our analysis later.
 
 The remainder of this section is devoted to showing \((\mu_t)_t\) is furthermore a stochastic localization 
-of \(\mu\) if \(\mu\) is log-concave (namely we will show \ref{L3} for this special case), and prove 
+of \(\mu\) if \(\mu\) is log-concave (namely we will show \eqref{L3} for this special case), and prove 
 some basic properties about this process useful for our analysis later.
 
 \begin{definition}[Log-concave measure]
@@ -201,7 +200,7 @@ some basic properties about this process useful for our analysis later.
   \(\dd \mu = \exp(-H)\dd\text{Leb}^n\) for some convex function \(H : \mathbb{R}^n \to \mathbb{R} \cup \{\infty\}\)
 \end{definition}
 
-To show \((\mu_t)\) satisfies \ref{L3} if \(\mu\) is log-concave, we study the limiting behavior of 
+To show \((\mu_t)\) satisfies \eqref{L3} if \(\mu\) is log-concave, we study the limiting behavior of 
 \((\mu_t)\) as \(t \to \infty\) by considering their covariances:
 \begin{equation}
   A_t := \text{Cov}[\mu_t] = \int (x - a_t) \otimes (x - a_t) \mu_t(\dd x),
@@ -230,7 +229,7 @@ decreasing in \(t\) for all \(x \neq 0\), implying
 \[\sup_{t > 0} \max_{k = 1, \cdots, n} \int \|\nabla \pi_k\|^2 \dd \mu_t = 
 \sup_{t > 0} \max_{k = 1, \cdots, n} \int x_k^2 \dd \mu_t < \infty.\] 
 Thus, by taking \(t \to \infty\) we have \((A_t)_{ij} \to 0\) for all \(i, j \in \{1, \cdots, n\}\) as claimed 
-and we have \((\mu_t)\) satisfying \ref{L3}. Hence, the linear-tile localization is indeed a stochastic localization of \(\mu\).
+and we have \((\mu_t)\) satisfying \eqref{L3}. Hence, the linear-tile localization is indeed a stochastic localization of \(\mu\).
 
 \begin{corollary}
   \((\mu_t)\) converges set-wise to some Dirac measure almost everywhere. We denote this 
@@ -264,7 +263,7 @@ As a result of proposition~\ref{prop:stoch_loc}, we also have the following coro
 We may construct an analogous version of the linear-tilt localization for discrete time. By utilizing 
 the little-\(o\) notation, equation~\eqref{eq:linear-tilt} can be rewritten as 
 \[\frac{\dd \mu_{t + h}}{\dd \mu}(x) = 
-  \frac{\dd \mu_t}{\dd \mu}(x) + \langle x - \bar{\mu}_t, h\dd Z_t\rangle \frac{\dd \mu_t}{\dd \mu}(x) 
+  \frac{\dd \mu_t}{\dd \mu}(x) + \langle x - \bar{\mu}(F_t), h\dd Z_t\rangle \frac{\dd \mu_t}{\dd \mu}(x) 
   + o(h).\]
 Hence, an discrete analog of the linear tilt localization is defined as the following.
 

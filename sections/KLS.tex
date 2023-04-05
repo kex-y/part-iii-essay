@@ -8,23 +8,24 @@ to provide an almost constant lower bound for the KLS conjecture. We will now de
 a proof of Eldan's original reduction of the KLS conjecture to the thin-Shell conjecture.
 
 The method presented in this section is due to Lee and Vempala \cite{Lee_2016} and reformulated in 
-the language of concentration by Eldan \cite{Eldan_notes}.
+the language of concentration by Eldan in \cite{Eldan_notes}.
 
 \subsection{Concentration}
 
 Let us quickly introduce some preliminary definitions required to state the aforementioned conjectures. 
 
 \begin{definition}[Concentration, \cite{Eldan_notes}]
-  Let \(\mu\) be a measure on \(\mathbb{R}^n\), then \(\mu\) is said to be \(C\)-(inversely)-concentrated if
+  Let \(\mu\) be a measure on \(\mathbb{R}^n\), then \(\mu\) is said to be \(C\)-concentrated if
   for all \(1\)-Lipschitz function \(\phi : \mathbb{R}^n \to \mathbb{R}\), 
   \begin{equation}
-    \text{Var}_\mu[\phi] = \text{Var}_{X \sim \mu}[\phi(X)] \le C^2.
+    \text{Var}_\mu[\phi] = \text{Var}_{X \sim \mu}[\phi(X)] \le \frac{1}{C^2}.
   \end{equation}
-  We denote the least possible such \(C\) by \(C^\mu_{\text{con}}\).
+  We denote the largest possible such \(C\) by \(C^\mu_{\text{con}}\).
 \end{definition}
 
-Heuristically, the concentration is a measure of the variance of \(\mu\) in each direction and 
-in particular equals the variance in the 1-dimensional case. This is illustrated by the following proposition. 
+Heuristically, the concentration is a quantity which inversely measures how ``spread out'' the density 
+of \(\mu\) is in each direction. In the 1-dimensional case, the concentration of \(\mu\) is therefore 
+simply its variance. This is illustrated by the following proposition. 
 
 \begin{proposition}\label{prop:concentration}
   Let \(X\) be a \(\mathbb{R}^n\)-valued random variable. Then for all \(K\)-Lipschitz function 
@@ -54,11 +55,11 @@ in particular equals the variance in the 1-dimensional case. This is illustrated
 \end{proof}
 
 With this proposition in mind, it is clear that for \(\mathbb{R}\)-valued random variables \(X\), 
-its law \(\mu\) has concentration \(C^\mu_{\text{con}} = \text{Var}[X]\). 
+its law \(\mu\) has concentration \(C^\mu_{\text{con}} = \text{Var}[X]^{-1}\). 
 
 We note that the definition we are presenting here is slightly non-standard. However, utilizing the 
 following remarkable result due to Milman, we show that this definition is equivalent to the following 
-definitions in a specific sense.
+more standard definitions whenever we are working with log-concave measures
 
 \begin{definition}[Exponential concentration, \cite{Milman_2018}]
   Given a measure \(\mu\) on \(\mathbb{R}^n\), we say \(\mu\) has exponential concentration if 
@@ -103,37 +104,36 @@ With this theorem in mind, we establish the following correspondence.
 \begin{proposition}\label{thm:equiv}
   For all measures \(\mu\) on \(\mathbb{R}^n\), we have 
   \[\text{Exponentially concentrated \(\implies\) Concentrated \(\implies\) First-moment concentrated}\]
-  and \(D^\mu_{\text{exp}} \le \sqrt{2} (C^\mu_{\text{con}})^{-1}\) and 
-  \((2C^\mu_{\text{con}})^{-1} \le D^\mu_{\text{FM}}\).
+  and \(D^\mu_{\text{exp}} \le \sqrt{2} C^\mu_{\text{con}}\) and 
+  \(C^\mu_{\text{con}} / 2 \le D^\mu_{\text{FM}}\).
   Hence, if \(\mu\) is log-concave, 
-  \(D^\mu_{\text{exp}} \simeq D^\mu_{\text{FM}} \simeq (C^\mu_{\text{con}})^{-1}\).
+  \(D^\mu_{\text{exp}} \simeq D^\mu_{\text{FM}} \simeq C^\mu_{\text{con}}\).
 \end{proposition}
 \begin{proof}
   Assume first that \(\mu\) is \(C\)-concentrated. Then by the Chebyshev inequality, we have 
   \[\mu(|\phi - \mathbb{E}_\mu[\phi]| \ge t) 
       \le \frac{1}{t^2}\text{Var}_\mu[\phi] 
-      \le \frac{C^2}{t^2},\]
+      \le \frac{1}{C^2t^2},\]
   for all 1-Lipschitz \(\phi\). 
   Thus, by tail probability,
   \begin{align*}\mathbb{E}_\mu[|\phi - \mathbb{E}_\mu[\phi]|] 
     & = \int_0^\infty \mu(|\phi - \mathbb{E}_\mu[\phi]| \ge t) \dd t\\ 
-    & \le \inf_{a > 0} \left\{\int_0^a \mu(|\phi - \mathbb{E}_\mu[\phi]| \ge t) \dd t + C^2 \int_a^\infty \frac{1}{t^2} \dd t\right\}\\ 
-    & \le \inf_{a > 0} \left\{a + \frac{C^2}{a}\right\} = 2C,
+    & \le \inf_{a > 0} \left\{\int_0^a \mu(|\phi - \mathbb{E}_\mu[\phi]| \ge t) \dd t + \frac{1}{C^2} \int_a^\infty \frac{1}{t^2} \dd t\right\}\\ 
+    & \le \inf_{a > 0} \left\{a + \frac{1}{aC^2}\right\} = \frac{2}{C},
   \end{align*}
-  implying \(\mu\) is first-moment concentrated with respect to the constant \((2C)^{-1}\).
+  implying \(\mu\) is first-moment concentrated with respect to the constant \(C / 2\).
 
-  On the other hand, if \(\mu\) is exponential concentration with some constant \(D\), then 
+  On the other hand, if \(\mu\) is exponential concentrated with some constant \(D\), then 
   again by the tail probability, 
   \[\text{Var}_\mu[\phi] = \int_0^\infty \mu((\phi - \mathbb{E}_\mu[\phi])^2 \ge t) \dd t
       \le \int_0^\infty e^{-D \sqrt{t}} \dd t = \frac{2}{D^2}\]
-  implying \(\mu\) is \(\sqrt{2} D^{-1}\)-concentrated.
+  implying \(\mu\) is \(D / \sqrt{2}\)-concentrated.
 \end{proof}
 
 \subsection{Example: concentration of the Gaussian}
 
-Given a class of measures, it is in general \textit{not} true that the concentration coefficient of 
-measures of said class is dimension invariant. However, this turns out to be the case for the Gaussian 
-measures.
+Given a class of measures, e.g. measures of a certain distribution, it is in general \textit{not} true that the concentration coefficient of 
+measures of said class is dimension invariant. However, this turns out to be the case for the class of standard Gaussian measures.
 
 \begin{theorem}[Concentration of Gaussian measures]\label{thm:gaussian_conc}
   Denoting \(\gamma^n\) the standard Gaussian measure on \(\mathbb{R}^n\), \(\gamma^n\) is \(C\)-concentrated 
@@ -154,9 +154,10 @@ To prove this theorem we first observe the following elementary property of the 
 \end{lemma}
 \begin{proof}
   Defining \(f_x := \langle x, \cdot \rangle\), we have 
-  \(\mathbb{E}_{\gamma^n}[|\langle x, \cdot \rangle|^2] = \mathbb{E}_{f_x^* \gamma^n}[|\cdot |^2]\) where 
-  \(f_x^* \gamma^n \sim \mathcal{N}(0, \|x\|^2)\) as \(f_x^*\) is linear. Hence, the result follows as 
-  \(\mathbb{E}_{f_x^* \gamma^n}[|\cdot |^2] = \text{Var}_{f_x^* \gamma^n}[\text{id}] = \|x\|^2\).
+  \(\mathbb{E}_{\gamma^n}[|\langle x, \cdot \rangle|^2] = \mathbb{E}_{(f_x)_* \gamma^n}[|\cdot |^2]\) where 
+  \((f_x)_* \gamma^n\) is the push-forward of \(\gamma^n\) along \(f_x\). Since \(f_x\) is linear, it follows 
+  that \((f_x)_* \gamma^n \sim \mathcal{N}(0, \|x\|^2)\). Hence, the result follows as 
+  \(\mathbb{E}_{(f_x)_* \gamma^n}[|\cdot |^2] = \text{Var}_{(f_x)_* \gamma^n}[\text{id}] = \|x\|^2\).
 \end{proof}
 
 With this in mind, fixing a smooth 1-Lipschitz function \(\phi : \mathbb{R}^n \to \mathbb{R}\) (we can assume 
@@ -206,21 +207,33 @@ as required.
 
 \subsection{The KLS and thin-shell conjecture}
 
-As alluded to in the previous section, the KLS conjecture suggests that any log-concave measure on 
-\(\mathbb{R}^n\) admits concentration roughly similar to that of the Gaussian measure. However, unlike the Gaussian, as the 
-concentration of measures is not invariant under linear functions, it is clear that the KLS 
+Finally, with all the set-up and motivation in mind, we may now state the KLS conjecture.
+As alluded to in the previous section, heuristically, the KLS conjecture suggests that any log-concave measure on 
+\(\mathbb{R}^n\) admits concentration roughly similar to that of the Gaussian measure. Namely, we would like 
+to say suggest something of the form ``all log-concave measures and concentrated by a constant which is 
+invariant of the measure''. However, as currently stated, this statement is obviously false as spreading out 
+the measure increases the concentration. Furthermore, we need to be careful since, unlike the Gaussian, the 
+concentration of general log-concave measures are not invariant under linear functions. Hence, it is clear that the KLS 
 conjecture would not hold without a suitable normalization. This leads us to the following formulation 
 of the KLS conjecture.
 
 \begin{conjecture}[Kannan-Lovász-Simonovitz, \cite{Eldan_notes}]\label{conj:KLS}
-  Denoting \(\mathscr{M}^n_{\text{con}}\) the set of all log-concave probability measures \(\mu\) on 
-  \(\mathbb{R}^n\) satisfying \(\text{Var}_\mu[T] \le 1\) for all 1-Lipschitz linear maps 
-  \(T : \mathbb{R}^n \to \mathbb{R}\), there exists a \textit{universal} constant \(C\) 
+  Denoting \(\mathscr{M}^n_{\text{iso}}\) the set of all isotropic log-concave probability measures \(\mu\) on 
+  \(\mathbb{R}^n\),
+  there exists a \textit{universal} constant \(C\) 
   (i.e. does not depend on any parameter and in particular is independent of the dimension \(n\)) such that for all 
   \(\mu \in \mathscr{M}^n_{\text{con}}\), \(\mu\) is \(C\)-concentrated.
 \end{conjecture}
 
-Assuming the normalization condition, we remark a trivial bound on the concentration of \(\mu\):
+We remark that all isotropic measure \(\mu\) satisfies \(\text{Var}_\mu[T] \le 1\) for all 1-Lipschitz linear maps 
+\(T : \mathbb{R}^n \to \mathbb{R}\). Indeed, if 
+\(T : \mathbb{R}^n \to \mathbb{R}\) is a 1-Lipschitz linear function, i.e. is of the form \(v \mapsto w^T v + d\) 
+for some \(w \in S^{n - 1}\) and \(d \in \mathbb{R}\), then we have
+\[\text{Var}_{\mu}[T] = \text{Var}_{X \sim \mu}\left[\sum_{i = 1}^n w_i X_i + d\right] 
+    = \sum_{i, j = 1}^n w_i w_j \text{Cov}_{X \sim \mu}(X_i, X_j) = \sum_{i = 1}^n w_i^2 = 1,\]
+as \(\text{Cov}_{X \sim \mu}(X) = \text{id}\).
+
+With the above property in mind, we observe a trivial bound on the concentration of \(\mu\):
 Taking \(\pi_i : \mathbb{R}^n \to \mathbb{R}\) to be the projection into the \(i\)-th coordinate, 
 as \(\pi_i\) is linear and 1-Lipschitz for all \(i\), we have \(\text{Var}_{X \sim \mu}[X_i] \le 1\).
 Thus, 
@@ -229,13 +242,13 @@ Thus,
     & = \sum_{i = 1}^n (\mathbb{E}_{X \sim \mu}[X_i^2] - (\mathbb{E}_{X \sim \mu}X_i)^2)
       = \sum_{i = 1}^n \text{Var}_\mu[\pi_i] \le n.
 \end{align*}
-Hence, by proposition~\ref{prop:concentration}, we have that \(\text{Var}_\mu[\phi] \le n\) for all 
+Thus, by proposition~\ref{prop:concentration}, we have that \(\text{Var}_\mu[\phi] \le n\) for all 
 1-Lipschitz \(\phi : \mathbb{R}^n \to \mathbb{R}\) implying \(\mu\) is \(\sqrt{n}\)-concentrated.
 
 \begin{conjecture}[Thin-shell, \cite{Eldan_2013}]
-  Taking \(\mathscr{M}^n_{\text{con}}\) as above, there exists a universal constant \(C\) such that 
+  Taking \(\mathscr{M}^n_{\text{iso}}\) as above, there exists a universal constant \(C\) such that 
   for all \(\mu \in \mathscr{M}^n_{\text{con}}\), we have
-  \[\sqrt{\text{Var}_\mu[\|\cdot\|]} \le C.\]
+  \[\sqrt{\text{Var}_\mu[\|\cdot\|]} \le \frac{1}{C}.\]
 \end{conjecture}
 
 Since the norm function is 1-Lipschitz, it is clear that the thin-shell conjecture is 
@@ -244,15 +257,14 @@ as a consequence of the theory of stochastic localization, Eldan \cite{Eldan_201
 of the KLS conjecture to the thin-shell conjecture up to logarithmic factors. 
 
 \begin{theorem}[Eldan, \cite{Eldan_2013}]\label{thm:KLS_to_TS}
-  Denoting \(\mathscr{M}^n_{\text{con}}\) as above, we define 
-  \[C^n_{\text{con}} := \inf \left\{C \mid \text{\(\forall \mu \in \mathscr{M}^n_{\text{con}},\) 
+  Denoting \(\mathscr{M}^n_{\text{iso}}\) as above, we define 
+  \[C^n_{\text{con}} := \sup \left\{C \mid \text{\(\forall \mu \in \mathscr{M}^n_{\text{con}},\) 
     \(\mu\) is \(C\)-concentrated}\right\},\]
   and 
-  \[C^n_{\text{TS}} := \inf \left\{C \mid \text{\(\forall \mu \in \mathscr{M}^n_{\text{con}},\) 
-      \(\sqrt{\text{Var}_\mu[\|\cdot\|]} \le C\)}\right\}
-      = \sup_{\mu \in \mathscr{M}^n_{\text{con}}} \sqrt{\text{Var}_\mu[\|\cdot\|]},\]
+  \[C^n_{\text{TS}} := \sup \left\{C \mid \text{\(\forall \mu \in \mathscr{M}^n_{\text{con}},\) 
+      \(\sqrt{\text{Var}_\mu[\|\cdot\|]} \le C^{-1}\)}\right\},\]
   we have,
-  \[C^n_{\text{TS}} \le C^n_{\text{con}} \lesssim C^n_{\text{TS}} \log n.\]
+  \[C^n_{\text{con}} \le C^n_{\text{TS}} \le C^n_{\text{con}}\log n.\]
 \end{theorem}
 
 % We remark that while the constants in theorem~\ref{thm:KLS_to_TS} depends on the dimension \(n\), the 
@@ -269,17 +281,21 @@ Chen \cite{Chen_2020} improves the bound providing the following theorem.
   \(\log C_{\text{con}}^n \lesssim \sqrt{\log n \log \log n}\) and so \(C_{\text{con}}^n = n^{-o(1)}\).
 \end{theorem}
 
-
 \subsubsection{Equivalent formulation of the KLS conjecture}
 
-While we have formulated the KLS conjecture using the language of concentration, the conjecture itself 
-was originally formulated as an isoperimetric problem. For completeness of this exposition, we shall 
-briefly present these equivalent formulations here.  
+While we have formulated the KLS conjecture using the language of concentration, the conjecture can be  
+instead formulated in several equivalent ways. As demonstrated by proposition~\ref{thm:equiv}, it is clear 
+that the KLS conjecture can be equivalently formulated using the exponential or first moment concentration. 
+Moreover, two other common formulation of the KLS conjecture involves the Cheeger constant and the Poincaré 
+inequality. For completeness of this exposition, we will now also briefly present the latter two equivalent 
+formulations here. 
 
-The isoperimetric problem is the problem in finding 
-the set of unit volume with minimum surface area. In the case of the \(\mathbb{R}^n\) equipped with the 
-Lebesgue measure, we have known since the ancient Greeks \cite{iso_hist} that the solution is the unit ball. 
-With this in mind, it is natural for us to generalize the problem for arbitrary measures. 
+The Cheeger constant is a quantity relating to the proportion of the volume of a set with its surface area.
+This quantity arises naturally when studying the isoperimetric problem. The isoperimetric problem is the problem 
+in finding the set of unit volume with minimum surface area. In the case of the \(\mathbb{R}^n\) equipped with the 
+Lebesgue measure, we have known since the ancient Greeks that the solution is the unit ball. 
+With this in mind, the KLS conjecture can be viewed geometrically as a natural extension of the isoperimetric problem to 
+general measures on \(\mathbb{R}^n\).
 
 \begin{definition}[Minkowski's boundary measure]
   Given a measure \(\mu\) on \(\mathbb{R}^n\) and a Borel set \(A \subseteq \mathbb{R}^n\), the Minkowski's 
@@ -299,15 +315,14 @@ satisfying \(\mu(A) = 1\) with minimum boundary measure.
 \begin{definition}[Cheeger's inequality, \cite{Milman_2008}]
   Given a probability measure \(\mu\) on \(\mathbb{R}^n\), we say \(\mu\) satisfy Cheeger's inequality 
   if there exists some \(D\) such that for all \(A\) with \(\mu(A) \le 1 / 2\),
-  \[\mu(A) \le D\mu^+(A).\]
-  We call the largest such \(D\) the inverse Cheeger's constant\todo{Uninvert the constants} and 
-  denote it by \(C_\mu\).
+  \[D\mu(A) \le \mu^+(A).\]
+  We call the largest such \(D\) the Cheeger's constant and denote it by \(D^\mu_C\).
 \end{definition}
 
 With these definitions, the KLS conjecture can be equivalently reformulated as the following.
 
 \begin{conjecture}[KLS, \cite{Eldan_2013}]
-  Denoting \(\mathscr{M}^n_{\text{iso}}\) the set of all log-concave and isotropic probability measures \(\mu\) on 
+  Denoting as before \(\mathscr{M}^n_{\text{iso}}\) the set of all log-concave and isotropic probability measures \(\mu\) on 
   \(\mathbb{R}^n\), there exists a \textit{universal} constant \(D\) such that for all 
   \(\mu \in \mathscr{M}^n_{\text{iso}}\), \(\mu\) satisfy the Cheeger's inequality with constant \(D\).
 \end{conjecture}
@@ -330,8 +345,9 @@ equivalences.
 \end{theorem}
 
 With this theorem and proposition \ref{thm:equiv} in mind, it is clear that the KLS conjecture can be 
-instead formulated with any of these inequalities instead. We also showcase one of these formulations here 
-using the Poincaré inequality:
+instead formulated with any of these inequalities instead. It is also worthwhile to pay attention to the 
+formulation using the Poincaré inequality as it is relevant to the subsequent section on the log-Sobolev 
+inequality.
 
 \begin{conjecture}[KLS, \cite{Eldan_2013}]
   Denoting \(\mathscr{M}^n_{\text{iso}}\) as above, there exist a \textit{universal} constant \(D\) 
@@ -339,10 +355,4 @@ using the Poincaré inequality:
   with constant \(D\).
 \end{conjecture}
 
-We remark that isotropic measures satisfy the normalization condition in conjecture~\ref{conj:KLS}. Indeed, if 
-\(T : \mathbb{R}^n \to \mathbb{R}\) is a 1-Lipschitz linear function, i.e. is of the form \(v \mapsto w^T v + d\) 
-for some \(w \in S^{n - 1}\) and \(d \in \mathbb{R}\), then we have
-\[\text{Var}_{\mu}[T] = \text{Var}_{X \sim \mu}\left[\sum_{i = 1}^n w_i X_i + d\right] 
-    = \sum_{i, j = 1}^n w_i w_j \text{Cov}_{X \sim \mu}(X_i, X_j) = \sum_{i = 1}^n w_i^2 = 1,\]
-as \(\text{Cov}_{X \sim \mu}(X) = \text{id}\).
 

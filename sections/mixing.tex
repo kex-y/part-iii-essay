@@ -61,11 +61,11 @@ a general state space. Nonetheless, as the inequality in theorem~\ref{thm:levin}
 
 The Ising model is a well-known measure in mathematical physics and is often used to model magnetism and 
 gasses. While fundamentally, the Ising model is constructed using Bernoulli random variables, as these 
-random variables interact in a specific way, sampling the Ising model directly has exponential computational 
+random variables interacts with one another, sampling the Ising model directly has exponential computational 
 complexity increasing with the number of particles. Hence, to sample from the Ising model, one often instead 
-appeals to MCMC to the Glauber dynamics which is a Markov chain with stationary measure being the Ising model.
-We will in this small section introduce these definitions and provide a result bounding the mixing time 
-of the Glauber dynamics.
+applies MCMC to the Glauber dynamics which is a Markov chain with stationary measure being the Ising model.
+We will in this small section introduce these definitions and recall a known result \cite{Anari_2020} 
+bounding the mixing time of the Glauber dynamics.
 
 Heuristically, the Ising model measures the probability that a graph is in a specific configuration of 
 up and down spins in which neighboring vertices are more likely to have the same spin. This ``likeliness'' 
@@ -134,10 +134,8 @@ for the Glauber dynamics (namely, theorem~\ref{thm:Anari}).
 
 As an application of stochastic localizations, we will in section~\ref{sec:Glauber_loc} recover an equivalent 
 bound by using the theories established above. In particular, assuming the same assumptions as theorem~\ref{thm:Anari},
-we show that 
+we will show that 
 \[\mathfrak{gap}(K) \ge \prod_{k = 0}^{n - 2}\left(1 - \frac{\eta_k + 1}{n - k}\right).\]
-
-
 \subsection{Dynamics of stochastic localizations}
 
 As alluded to in the introduction, one may associate a Markov process at each time step of a stochastic 
@@ -366,7 +364,7 @@ of the above equation with that of the discrete time ACV inequality.
     \end{split}
   \end{equation}
   where the second equality by applying Fubini's theorem and noting that \(\int (x - a_t) \mu_t(\dd x) = 0\). 
-  Moreover, inequality follows again by the Cauchy-Schwarz inequality.
+  Moreover, the first inequality follows again by the Cauchy-Schwarz inequality.
 \end{proof}
 
 \subsection{Glauber dynamics as an associated Markov process}\label{sec:Glauber_loc}

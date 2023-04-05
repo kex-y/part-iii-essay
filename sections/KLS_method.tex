@@ -290,7 +290,7 @@ Finally, to find a bound for \((K_t)\), we employ the following lemma.
   for any log-concave, isotropic probability measure \(\mu\), we have
   \[\sup_{\theta \in S^{n - 1}}\sum_{i, j = 1}^n 
     \mathbb{E}_{X \sim \mu}[\langle X, e_i\rangle \langle X, e_j\rangle \langle X, \theta\rangle]^2 \le 
-    C \sum_{k = 1}^n \frac{(C_{\text{TS}}^n)^2}{k},\]
+    C \sum_{k = 1}^n \frac{1}{k(C_{\text{TS}}^n)^2},\]
   where \(\{e_1, \cdots, e_n\}\) is any orthonormal basis on \(\mathbb{R}^n\).
 \end{lemma}
 
@@ -320,17 +320,17 @@ we have
         \mathbb{E}_{X + a_t \sim \mu}[\langle X, e_i\rangle \langle X, e_j\rangle \langle X, \theta\rangle]^2\\
       & \le \|A_t\|_{\text{op}}^3 \sup_{\theta \in S^{n - 1}}\sum_{i, j = 1}^n 
         \mathbb{E}_{X + a_t \sim \mu}[\langle Y, e_i\rangle \langle Y, e_j\rangle \langle Y, \theta\rangle]^2
-        \le 8 C \sum_{k = 1}^n \frac{(C_{\text{TS}}^n)^2}{k}
+        \le 8 C \sum_{k = 1}^n \frac{1}{k(C_{\text{TS}}^n)^2}
       \end{split}
 \end{equation}
 where the last inequality follows as \(\|A_t\|_{\text{op}} \le 2\) for all \(t < \tau\). 
     
 At last, combining equation~\eqref{eq:K_bd} and~\eqref{eq:tau_bd}, we have
-\[\text{Var}_\mu[\phi] \le 2 + \log n\left(4 + \overbrace{80 C \sum_{k = 1}^n \frac{1}{k}}^{\Theta(\log n)}(C_{\text{TS}}^n)^2\right)
-   = \Theta_n((C_{\text{TS}}^n \log n)^2)\]
+\[\text{Var}_\mu[\phi] \le 2 + \log n\left(4 + \overbrace{80 C \sum_{k = 1}^n \frac{1}{k}}^{\Theta(\log n)}(C_{\text{TS}}^n)^{-2}\right)
+   = \Theta_n(((C_{\text{TS}}^n)^{-1} \log n)^2)\]
 implying there exists a constant \(R > 0\) such that for all 1-Lipschitz \(\phi\), 
-\(\sqrt{\text{Var}_\mu[\phi]} \le R C_{\text{TS}}^n \log n\), i.e. \(\mu\) is 
-\(R C_{\text{TS}}^n \log n\)-concentrated and so, \(C_{\text{con}}^n \le R C_{\text{TS}}^n \log n\)
+\(\sqrt{\text{Var}_\mu[\phi]} \le R (C_{\text{TS}}^n)^{-1} \log n\), i.e. \(\mu\) is 
+\((R\log n)^{-1} C_{\text{TS}}^n\)-concentrated and so, \(C_{\text{TS}}^n \lesssim C_{\text{con}}^n \log n\)
 as required.
 
 % \subsection{Lee-Vempala's bound}

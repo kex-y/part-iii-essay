@@ -1,7 +1,9 @@
 In this section, we will take a look at an application of the stochastic localization technic 
-to prove a version of the log-Sobolev inequality for log-concave measures. The log-Sobolev inequality 
-is a class of inequalities central to the concentration of measures and has applications to bounding 
-Markov mixing times (c.f.\todo{TODO}). We will in particular\dots
+to prove a version of the log-Sobolev inequality for the log-concave measures. The log-Sobolev inequality 
+is a class of inequalities central to the concentration of measures. Using stochastic localization, 
+we will in the subsequent sections bound the log-Sobolev constant for log-concave measures 
+supported in a ball of fixed diameter. We take heavy inspiration from the proof as presented in section~\ref{sec:KLS}
+where we reduced the KLS conjecture to the thin-shell conjecture.
 
 \subsection{Entropy and log-Sobolev inequalities}
 
@@ -23,7 +25,16 @@ The log-Sobolev inequality can be then formulated as the following.
   \[\frac{\rho}{2} \text{Ent}_\mu[\phi^2] \le \mathbb{E}_\mu[\|\nabla \phi\|^2] = \int \|\nabla \phi\|^2 \dd \mu.\]
 \end{definition}
 
-The log-Sobolev inequality\todo{Motivation and Herbst.}
+The log-Sobolev inequality is an incredibly useful inequality while studying the concentration of measures. In 
+particular, should a measure satisfy a log-Sobolev equality, by using a well-known method known as Herbst's argument,
+one can obtain the exponential concentration of said measure via the Chernoff bound. 
+% \begin{theorem}[Herbst's argument]
+%   If \(\mu\) satisfy the log-Sobolev inequality with log-Sobolev constant \(\rho_\mu\), then for all \(\phi\) with 
+%   uniformly bounded gradient \(\|\nabla \phi\| \le K\), we have 
+%   \[\psi_{\phi - \mathbb{E}_\mu \phi}^\mu(\lambda) \le \frac{\rho_\mu K^2 \lambda^2}{2}\]
+%   where \(\psi_{\phi - \mathbb{E}_\mu \phi}^\mu\) is the logarithmic moment generating function of 
+%   \(\phi - \mathbb{E}_\mu \phi\) with respect to \(\mu\).
+% \end{theorem}
 % https://faculty.math.illinois.edu/~psdey/math595fa19/lec14.pdf
 
 
@@ -36,24 +47,115 @@ log-Cheeger's constant.
   Given a probability measure \(\mu\) on \(\mbox{R}^n\), we say \(\mu\) satisfies the log-Cheeger's inequality 
   if there exists some \(C\) such that for all \(A\) with \(\mu(A) \le 1 / 2\),
   \[C\mu(A)\sqrt{-\log(\mu(A))} \le \mu^+(A).\]
-  We call the least such \(C\) the log-Cheeger's constant and denote it by \(C_\mu\).
+  We call the least such \(C\) the log-Cheeger's constant and denote it by \(C_\mu\). It is known that \(\rho_\mu \simeq C_\mu^2\). 
 \end{definition}
-
-In general, one can show that \(\rho_\mu \simeq C_\mu^2\). However, in contrast to the Poincaré inequality where 
+  
+It does not come as a surprise that as with the Poincaré inequality, the standard Gaussian measure 
+\(\gamma^n\) in \(\mathbb{R}^n\) satisfies the log-Sobolev inequality with log-Sobolev constant 
+\(\rho_{\gamma^n} = 1\). However, in contrast to the Poincaré inequality where 
 the KLS conjecture suggests that the Poincaré constant is bounded below by a universal constant, it is known 
-that the log-Sobolev constant cannot be bounded below by a universal constant. 
-\todo{+ Entropy commutes with scalar multiplication}
-\subsection{Log-Sobolev inequality via stochastic localization}
-
-Inspired by the proof of the reduction of the KLS conjecture to the thin-shell conjecture, we will in this section 
-present a modified proof of a bound by Lee and Vempala for the log-Sobolev constant for all log-concave measures. 
-Namely, we consider the following theorem. 
+that the log-Sobolev constant cannot be bounded below by a universal constant. Nonetheless, we are 
+interested in the log-Sobolev constant of log-concave measure. More specifically, we will study the 
+log-Sobolev constant for log-concave measures supported in a ball of fixed diameter to obtain the 
+following result.
 
 \begin{theorem}[\cite{Lee_2016}]\label{thm:Lee_Vempala}
   For any isotropic log-concave measure \(\mu\) on \(\mathbb{R}^n\) with support on a ball of diameter \(D\), 
   \(\mu\) has log-Sobolev constant \(\rho_\mu \gtrsim D^{-1}\).
 \end{theorem}
 
+\subsection{Entropy of bounded support}
+
+Before moving directly to proving theorem~\ref{thm:Lee_Vempala}, let us first attempt to gain some intuition 
+in how the entropy of a general measure with bounded support behaves. In contrast to the variance, 
+where the variance of a measure with bounded support is trivially bounded by the radius squared of 
+said support, the bound for the entropy is less clear. Nonetheless, a similar result can be established 
+for general measures with bounded support.
+
+% Lemma~\ref{lem:entropy_supp} provides such a log-Sobolev bound for log-concave measures. 
+% This condition can be relaxed should we forgive the gradient term. Namely, using properties of 
+% sub-Gaussian measures and Hoeffding's lemma, we can arrive at the following result.
+
+\begin{lemma}\label{lem:entropy_supp2}
+  For \(\mu\) a measure on \(\mathbb{R}^n\) supported in a ball of diameter \(D \ge \epsilon\) for some fixed \(\epsilon > 0\), 
+  there exists a constant \(C_\epsilon\) (depending only on \(\epsilon\)) such that 
+  \[\text{Ent}_\mu[\phi^2] \le C_\epsilon D^2\]
+  for all smooth 1-Lipschitz functions \(\phi : \mathbb{R}^n \to \mathbb{R}\).
+\end{lemma}
+
+\begin{definition}[Sub-Gaussian measures in \(\mathbb{R}\)]
+  A measure \(\mu\) on \(\mathbb{R}\) is said to be sub-Gaussian with parameter \(\nu > 0\) if 
+  \[\psi_\mu(\lambda) = \log m_{\mu}(\lambda) = \log \mathbb{E}_{X \sim \mu}[e^{\lambda X}] \le \frac{\lambda^2\nu}{2}\]
+  for all \(\lambda \in \mathbb{R}\). In this case, we denote \(\mu \in \mathcal{G}(\nu)\).
+\end{definition}
+
+\begin{lemma}[Hoeffding's lemma]
+  For a measure \(\mu\) on \(\mathbb{R}\) with support of diameter \(D\), we have \(\mu \in \mathcal{G}(D^2 / 4)\).
+\end{lemma}
+
+For any smooth \(\phi\) with support on \(D\), we know that \(\phi^2\) has Lipschitz coefficient 
+at most \(2D \text{Lip}(\phi)\). Thus, for our measure \(\mu\) on \(\mathbb{R}^n\) which has support on a ball of diameter \(D\) 
+and any smooth 1-Lipschitz \(\phi\), we have that the push-forward measure of \(\mu\) along \(\phi^2\), 
+\((\phi^2)_* \mu\) is a measure on \(\mathbb{R}\) with support 
+with diameter at most \(2D^2\). Consequently, Hoeffding's lemma tells us that \((\phi^2)_* \mu \in \mathcal{G}(D^4)\).  
+With this in mind, we can now prove lemma~\ref{lem:entropy_supp}.
+
+\begin{proof}[Proof of lemma~\ref{lem:entropy_supp2}]
+  For ease of notation, let us denote \(f = \phi^2\). Consider 
+  \[\exp(\text{Ent}_\mu[f]) = \exp(\mathbb{E}_\mu[f\log f] - \mathbb{E}_\mu[f]\log\mathbb{E}[f]).\]
+  By considering that the function \(x \mapsto -x\log x\) has its maximum at \(e^{-1}\), we have
+  \[- \mathbb{E}_\mu[f]\log\mathbb{E}[f] \le e^{-1}\]
+  and thusly \(\exp(\text{Ent}_\mu[f]) \le e^{e^{-1}}\exp(\mathbb{E}_\mu[f\log f])\) and 
+  we attempt to bound \(\exp(\mathbb{E}_\mu[f\log f])\). By Jensen's inequality, we have 
+  \[\exp(\mathbb{E}_\mu[f\log f]) \le \mathbb{E}_\mu[\exp(f\log f)] = \mathbb{E}_\mu[f e^f].\]
+  Now, by Taylor expansion,
+  \begin{equation}\label{eq:Taylor}
+    \mathbb{E}_\mu[f e^f] = \mathbb{E}_\mu\left[f \sum_{n = 0}^\infty \frac{f^n}{n!}\right]
+      = \sum_{n = 1}^\infty \frac{1}{(n - 1)!} \mathbb{E}[f^n]
+  \end{equation}
+  since the convergence is absolute. 
+
+  On the other hand, by the above remark, \(f_* \mu\) is a sub-Gaussian measure with parameter \(D^4\).
+  Thus, we can obtain a bound on the moments of \(\mu\). Indeed, since
+  \[\psi_{f_*\mu}(\lambda) = \log m_{f_*\mu}(\lambda) \le \frac{\lambda^2 D^4}{2},\]
+  we have \(m_{f_*\mu}(\lambda) \le e^{\lambda^2 D^4 / 2}\) for all \(\lambda \in \mathbb{R}\)
+  where \(m_{f_*\mu}\) is the moment generating function of \(f_* \mu\).  
+
+  Hence, Taylor expanding both sides, we obtain
+  \[\sum_{n = 0}^\infty \frac{\lambda^n}{n!}\partial_\lambda^n m_{f_*\mu}(0) \le \sum_{n = 0}^\infty \frac{\lambda^{2n}}{n!}D^{4n}\]
+  for all \(\lambda \in \mathbb{R}\). Thus, we must have 
+  \[\mathbb{E}_\mu[f^{2n}] = \partial_\lambda^{2n} m_{f_*\mu}(0) \le D^{4n}\]
+  and 
+  \[\mathbb{E}_\mu[f^{2n + 1}] = \partial_\lambda^{2n + 1} m_{f_*\mu}(0) \le 0.\]
+  Substituting the above into equation~\eqref{eq:Taylor}, we obtain
+  \[\mathbb{E}_\mu[fe^f] \le \sum_{n = 1}^\infty \frac{1}{(2n - 1)!}D^{4n}
+      = D^2 \sum_{n = 1}^\infty \frac{1}{(2n - 1)!}(D^2)^{2n - 1}
+      = D^2 \sinh D^2.\]
+  Thus, 
+  \[\text{Ent}_\mu[f] \le \log(e^{e^{-1}}\mathbb{E}_\mu[fe^f])
+    \le e^{-1} + \log(D^2) + \log (\sinh D^2).\]
+  Now, since \(\log x + \log (\sinh x) \le 2x\) and as we had assumed \(D \ge \epsilon\), we have 
+  \(e^{-1} \le e^{-1}\epsilon^{-2} D^2\). Hence,
+  \[\text{Ent}_\mu[f] \le (2 + e^{-1}\epsilon^{-2})D^2 = C_\epsilon D^2\]
+  as desired.
+\end{proof}
+
+Unfortunately, this approach cannot result in a log-Sobolev inequality as the Lipschitz condition on \(\phi\) is 
+too strong. Nonetheless, by restricting to the class of log-concave measures, Kannan, Lovász and Montenegro 
+\cite{Lovasz_2007} were able to provide a bound for the log-Sobolev inequality of the same order.
+
+\begin{lemma}[\cite{Lovasz_2007}]\label{lem:entropy_supp}
+  For \(\nu\) an isotropic log-concave measure on \(\mathbb{R}^n\) supported in a ball of diameter \(D\), 
+  we have
+  \[\text{Ent}_\nu[\phi^2] \lesssim D^2 \mathbb{E}_\nu[\|\nabla \phi\|^2]\]
+  for all smooth functions \(\phi : \mathbb{R}^n \to \mathbb{R}\).
+\end{lemma}
+
+\subsection{Log-Sobolev inequality via stochastic localization}
+
+% a bound by Lee and Vempala for the log-Sobolev constant for all log-concave measures. 
+% Namely, we consider the following theorem. 
+As promised in the introduction, we will in this section present a modified proof of theorem~\ref{thm:Lee_Vempala}.
 We attempt to analyze the log-Sobolev inequality using the same method as prescribed by section~\ref{sec:KLS_to_TS}. 
 As it turns out, while the initial steps can be follow verbatim, this method runs into issues when trying to 
 bound the entropy of the martingale term resulted from the localization. In particular, applying the Cauchy-Schwarz 
@@ -70,38 +172,64 @@ a different martingale \(N_t := \int \phi^2 \log \phi^2 \dd \mu_t\) and utilize 
 
 Let \(\phi : \mathbb{R}^n \to \mathbb{R}\) be smooth. 
 Similar to before, we express the entropy of \(\phi^2\) with respect to \(\mu\) as 
-the entropy of the martingale terms, in particular, we will show that
+the entropy of the martingale terms, in particular, denoting the martingale \(M_t := \int \phi^2 \dd \mu_t\), 
+we will show that
 \begin{equation}\label{eq:entropy_decomp}
   \text{Ent}_\mu[\phi^2] = \text{Ent}[M_t] + \mathbb{E}[\text{Ent}_{\mu_t}[\phi^2]],
 \end{equation}
-Indeed, given the smooth function \(\phi : \mathbb{R}^n \to \mathbb{R}\), let us define the martingale 
-\(M_t := \int \phi^2 \dd \mu_t\) where \((\mu_t)\) is the linear-tilt localization described in section~\ref{sec:construct}. 
-We observe
-\begin{align*}
-  \text{Ent}_\mu[\phi^2] & = \text{Ent}[M_\infty] 
-    = \mathbb{E}[M_\infty \log M_\infty] - \mathbb{E}[M_\infty]\log(\mathbb{E}[M_\infty]) \\
-  & = \mathbb{E}[\mathbb{E}[M_\infty \log M_\infty \mid \mu_t]] 
-      - \mathbb{E}[\mathbb{E}[M_\infty \mid \mu_t]]\log(\mathbb{E}[\mathbb{E}[M_\infty \mid \mu_t]]) \\
-  & = \mathbb{E}[\text{Ent}[M_\infty \mid \mu_t]] + \mathbb{E}[\mathbb{E}[M_\infty \mid \mu_t]\log(\mathbb{E}[M_\infty \mid \mu_t])]\\ 
-  & \hspace{1cm} - \mathbb{E}[\mathbb{E}[M_\infty \mid \mu_t]]\log(\mathbb{E}[\mathbb{E}[M_\infty \mid \mu_t]])\\
-  & = \mathbb{E}[\text{Ent}[M_\infty \mid \mu_t]] + \mathbb{E}[M_t \log M_t] - \mathbb{E}[M_t]\log(\mathbb{E}[M_t])\\
-  & = \mathbb{E}[\text{Ent}[M_\infty \mid \mu_t]] + \text{Ent}[M_t]
-\end{align*}
-Moreover, defining the martingale \(N_t := \int \phi^2\log \phi^2 \dd \mu_t\), we observe
-\begin{align*}
-  \text{Ent}[M_\infty \mid \mu_t] 
-  & = \mathbb{E}[M_\infty \log M_\infty \mid \mu_t] - \mathbb{E}[M_\infty \mid \mu_t]\log(\mathbb{E}[M_\infty \mid \mu_t]) \\
-  & = \mathbb{E}[N_\infty \mid \mu_t] - M_t \log M_t = N_t - M_t \log M_t\\
-  & = \mathbb{E}_{\mu_t}[\phi^2 \log \phi^2] - \mathbb{E}_{\mu_t}[\phi^2] \log \mathbb{E}_{\mu_t}[\phi^2] \\
-  & = \text{Ent}_{\mu_t}[\phi^2].
-\end{align*}
-Hence, we recover equation~\eqref{eq:entropy_decomp} by combining the above two equations.
+In fact, a more general fact is true. Namely, for any real-valued function \(\Psi\), defining 
+the \(\Psi\)-entropy of \(\phi\) with respect to \(\mu\) as
+\[\text{Ent}_\mu^\Psi[\phi] = \mathbb{E}_\mu[\Psi(\phi)] - \Psi(\mathbb{E}_\mu[\phi]),\]
+we have that for \(\phi\) satisfying \(\psi(\mathbb{E}_\mu[\phi]) = 0\),
+\begin{equation}\label{eq:entropy_gen_decomp}
+  \text{Ent}_\mu^\Psi[\phi] = \text{Ent}^\Psi[M_t] + \mathbb{E}[\text{Ent}_{\mu_t}^\Psi[\phi]],
+\end{equation}
+where \(M_t := \int \phi \dd\mu_t\) is a martingale. 
+This generalizes both \eqref{eq:entropy_decomp} and \eqref{eq:bound} by taking \(\Psi(x) = x\log x\) and \(\Psi(x) = x^2\)
+respectively. 
 
-At this point, we recall that in the reduction of the KLS conjecture, we proceeded to bound the two terms on the 
+The derivation is rather simple. By definition
+\[\text{Ent}_{\mu_t}^\Psi[\phi] = \mathbb{E}_{\mu_t}[\Psi(\phi)] - \Psi(\mathbb{E}_{\mu_t}[\phi])
+  = \mathbb{E}_{\mu_t}[\Psi(\phi)] - \Psi(M_t).\]
+Thus, taking expectation on both sides, 
+\begin{equation}\label{eq:entropy_gen_decomp_deriv}
+  \mathbb{E}_\mu[\Psi(\phi)] = \mathbb{E}[\mathbb{E}_{\mu_t}[\Psi(\phi)]] = \mathbb{E}[\Psi(M_t)] + \mathbb{E}[\text{Ent}_{\mu_t}^\Psi(\phi)].
+\end{equation}
+However, since \(\Psi(\mathbb{E}[\phi]) = 0\) by assumption, we have 
+\[\text{Ent}_\mu^\Psi[\phi] = \mathbb{E}_\mu[\Psi(\phi)] - \Psi(\mathbb{E}_\mu[\phi]) = \mathbb{E}_\mu[\Psi(\phi)],\]
+and since \(M_t\) is a martingale, we also have \(\mathbb{E}[M_t] = \mathbb{E}[M_0] = \mathbb{E}_\mu[\phi]\),
+\[\text{Ent}^\Psi[\Psi(M_t)] = \mathbb{E}[\Psi(M_t)] - \Psi(\mathbb{E}[M_t]) = 
+  \mathbb{E}[\Psi(M_t)] - \Psi(\mathbb{E}_\mu[\phi]) = \mathbb{E}[\Psi(M_t)].\]
+Finally, substituting the above two equations into \eqref{eq:entropy_gen_decomp_deriv}, we recover 
+equation~\eqref{eq:entropy_gen_decomp} as required.
+
+% Indeed, given the smooth function \(\phi : \mathbb{R}^n \to \mathbb{R}\), let us define the martingale 
+% \(M_t := \int \phi^2 \dd \mu_t\) where \((\mu_t)\) is the linear-tilt localization described in section~\ref{sec:construct}. 
+% We observe
+% \begin{align*}
+%   \text{Ent}_\mu[\phi^2] & = \text{Ent}[M_\infty] 
+%     = \mathbb{E}[M_\infty \log M_\infty] - \mathbb{E}[M_\infty]\log(\mathbb{E}[M_\infty]) \\
+%   & = \mathbb{E}[\mathbb{E}[M_\infty \log M_\infty \mid \mu_t]] 
+%       - \mathbb{E}[\mathbb{E}[M_\infty \mid \mu_t]]\log(\mathbb{E}[\mathbb{E}[M_\infty \mid \mu_t]]) \\
+%   & = \mathbb{E}[\text{Ent}[M_\infty \mid \mu_t]] + \mathbb{E}[\mathbb{E}[M_\infty \mid \mu_t]\log(\mathbb{E}[M_\infty \mid \mu_t])]\\ 
+%   & \hspace{1cm} - \mathbb{E}[\mathbb{E}[M_\infty \mid \mu_t]]\log(\mathbb{E}[\mathbb{E}[M_\infty \mid \mu_t]])\\
+%   & = \mathbb{E}[\text{Ent}[M_\infty \mid \mu_t]] + \mathbb{E}[M_t \log M_t] - \mathbb{E}[M_t]\log(\mathbb{E}[M_t])\\
+%   & = \mathbb{E}[\text{Ent}[M_\infty \mid \mu_t]] + \text{Ent}[M_t]
+% \end{align*}
+% Moreover, defining the martingale \(N_t := \int \phi^2\log \phi^2 \dd \mu_t\), we observe
+% \begin{align*}
+%   \text{Ent}[M_\infty \mid \mu_t] 
+%   & = \mathbb{E}[M_\infty \log M_\infty \mid \mu_t] - \mathbb{E}[M_\infty \mid \mu_t]\log(\mathbb{E}[M_\infty \mid \mu_t]) \\
+%   & = \mathbb{E}[N_\infty \mid \mu_t] - M_t \log M_t = N_t - M_t \log M_t\\
+%   & = \mathbb{E}_{\mu_t}[\phi^2 \log \phi^2] - \mathbb{E}_{\mu_t}[\phi^2] \log \mathbb{E}_{\mu_t}[\phi^2] \\
+%   & = \text{Ent}_{\mu_t}[\phi^2].
+% \end{align*}
+% Hence, we recover equation~\eqref{eq:entropy_decomp} by combining the above two equations.
+
+With this in mind, we recall that in the reduction of the KLS conjecture, we proceeded to bound the two terms on the 
 right hand side by using proposition~\ref{prop:linear-tilt_ACV} and the Brascamp-Lieb inequality respectively. 
-In this case, the term \(\mathbb{E}[\text{Ent}_{\mu_t}[\phi^2]]\) can be bounded using the following lemma.
-% Unfortunately, we do not have a version of the Brascamp-Lieb inequality for entropy for general log-concave measures.
-% Instead, additional restrictions on the measure is required to obtain a log-Sobolev inequality.
+We cannot do this for general \(\Psi\). However, in the case that \(\Psi(x) = x\log x\), 
+the term \(\mathbb{E}[\text{Ent}_{\mu_t}[\phi^2]]\) can be bounded using the following lemma.
 
 \begin{lemma}[Equation 2.17, \cite{Ledoux_1999}]\label{lem:entropy_BL}
   Let \(U : \mathbb{R}^n \to \mathbb{R}\) be a twice differentiable function such that
@@ -171,7 +299,7 @@ Combining this with equation~\eqref{eq:entropy_bound}, we obtain
     \le \mathbb{E}\left[\int_0^t D \text{Ent}_{\mu_s}[\phi^2] \dd s\right].
 \end{equation}
 At this point, as \(\mu_t\) is only supported in a ball of diameter \(D\), 
-we will utilize the following known bound for the log-Sobolev constant.
+we can utilize lemma~\ref{lem:entropy_supp} for bounding the log-Sobolev constant.
 %  which proof will be provided in the subsequent section.
 % \begin{lemma}\label{lem:entropy_supp}
 %   For \(\mu\) a measure on \(\mathbb{R}^n\) supported in a ball of diameter \(D \ge \epsilon\) for some fixed \(\epsilon > 0\), 
@@ -179,12 +307,6 @@ we will utilize the following known bound for the log-Sobolev constant.
 %   \[\text{Ent}_\mu[\phi^2] \le C_\epsilon D^2\]
 %   for all smooth 1-Lipschitz functions \(\phi : \mathbb{R}^n \to \mathbb{R}\).
 % \end{lemma}
-\begin{lemma}[\cite{Lovasz_2007}]\label{lem:entropy_supp}
-  For \(\nu\) an isotropic log-concave measure on \(\mathbb{R}^n\) supported in a ball of diameter \(D\), 
-  we have
-  \[\text{Ent}_\nu[\phi^2] \lesssim D^2 \mathbb{E}_\nu[\|\nabla \phi\|^2]\]
-  for all smooth functions \(\phi : \mathbb{R}^n \to \mathbb{R}\).
-\end{lemma}
 Hence, combining this with lemma~\ref{lem:entropy_BL}, we have that 
 \(\text{Ent}_{\mu_t}[\phi^2] \lesssim (t^{-1} \wedge D) \mathbb{E}_{\mu_t}[\|\nabla \phi\|^2]\). Thus, 
 by Fubini's theorem, equation~\eqref{eq:entropy_bound2} becomes
@@ -207,75 +329,3 @@ whenever \(4D^{-1} \ge D^{-2}\) which holds if and only if \(D \ge 1 / 4\). Thus
 \[\text{Ent}_\mu[\phi^2] \lesssim D \mathbb{E}_\mu[\|\nabla \phi\|^2]\]
 where for \(D \le 1\), \(D^{-2} \ge D^{-1}\) and so the conclusion remains to hold by lemma~\ref{lem:entropy_supp}. 
 Hence, we bounded the log-Sobolev constant \(\rho_{\mu} \gtrsim D^{-1}\) recovering the result of theorem~\ref{thm:Lee_Vempala}.
-
-\subsubsection{Alternative to lemma~\ref{lem:entropy_supp}}
-
-We remark that in contrast to the variance case where the variance of a measure with compact 
-support is trivially bounded by the radius squared of said support, the bound for the entropy is less 
-clear. Lemma~\ref{lem:entropy_supp} provides such a log-Sobolev bound for log-concave measures. 
-This condition can be relaxed should we forgive the gradient term. Namely, using properties of 
-sub-Gaussian measures and Hoeffding's lemma, we can arrive at the following result.
-
-\begin{lemma}\label{lem:entropy_supp2}
-  For \(\mu\) a measure on \(\mathbb{R}^n\) supported in a ball of diameter \(D \ge \epsilon\) for some fixed \(\epsilon > 0\), 
-  there exists a constant \(C_\epsilon\) (depending only on \(\epsilon\)) such that 
-  \[\text{Ent}_\mu[\phi^2] \le C_\epsilon D^2\]
-  for all smooth 1-Lipschitz functions \(\phi : \mathbb{R}^n \to \mathbb{R}\).
-\end{lemma}
-
-\begin{definition}[Sub-Gaussian measures in \(\mathbb{R}\)]
-  A measure \(\mu\) on \(\mathbb{R}\) is said to be sub-Gaussian with parameter \(\nu > 0\) if 
-  \[\psi_\mu(\lambda) = \log m_{\mu}(\lambda) = \log \mathbb{E}_{X \sim \mu}[e^{\lambda X}] \le \frac{\lambda^2\nu}{2}\]
-  for all \(\lambda \in \mathbb{R}\). In this case, we denote \(\mu \in \mathcal{G}(\nu)\).
-\end{definition}
-
-\begin{lemma}[Hoeffding's lemma]
-  For a measure \(\mu\) on \(\mathbb{R}\) with support of diameter \(D\), we have \(\mu \in \mathcal{G}(D^2 / 4)\).
-\end{lemma}
-
-For any smooth \(\phi\) with support on \(D\), we know that \(\phi^2\) has Lipschitz coefficient 
-at most \(2D \text{Lip}(\phi)\). Thus, for our measure \(\mu\) on \(\mathbb{R}^n\) which has support on a ball of diameter \(D\) 
-and any smooth 1-Lipschitz \(\phi\), we have that the push-forward measure of \(\mu\) along \(\phi^2\), 
-\((\phi^2)_* \mu\) is a measure on \(\mathbb{R}\) with support 
-with diameter at most \(2D^2\). Consequently, Hoeffding's lemma tells us that \((\phi^2)_* \mu \in \mathcal{G}(D^4)\).  
-With this in mind, we can now prove lemma~\ref{lem:entropy_supp}.
-
-\begin{proof}[Proof of lemma~\ref{lem:entropy_supp2}]
-  For ease of notation, let us denote \(f = \phi^2\). Consider 
-  \[\exp(\text{Ent}_\mu[f]) = \exp(\mathbb{E}_\mu[f\log f] - \mathbb{E}_\mu[f]\log\mathbb{E}[f]).\]
-  By considering that the function \(x \mapsto -x\log x\) has its maximum at \(e^{-1}\), we have
-  \[- \mathbb{E}_\mu[f]\log\mathbb{E}[f] \le e^{-1}\]
-  and thusly \(\exp(\text{Ent}_\mu[f]) \le e^{e^{-1}}\exp(\mathbb{E}_\mu[f\log f])\) and 
-  we attempt to bound \(\exp(\mathbb{E}_\mu[f\log f])\). By Jensen's inequality, we have 
-  \[\exp(\mathbb{E}_\mu[f\log f]) \le \mathbb{E}_\mu[\exp(f\log f)] = \mathbb{E}_\mu[f e^f].\]
-  Now, by Taylor expansion,
-  \begin{equation}\label{eq:Taylor}
-    \mathbb{E}_\mu[f e^f] = \mathbb{E}_\mu\left[f \sum_{n = 0}^\infty \frac{f^n}{n!}\right]
-      = \sum_{n = 1}^\infty \frac{1}{(n - 1)!} \mathbb{E}[f^n]
-  \end{equation}
-  since the convergence is absolute. 
-
-  On the other hand, by the above remark, \(f_* \mu\) is a sub-Gaussian measure with parameter \(D^4\).
-  Thus, we can obtain a bound on the moments of \(\mu\). Indeed, since
-  \[\psi_{f_*\mu}(\lambda) = \log m_{f_*\mu}(\lambda) \le \frac{\lambda^2 D^4}{2},\]
-  we have \(m_{f_*\mu}(\lambda) \le e^{\lambda^2 D^4 / 2}\) for all \(\lambda \in \mathbb{R}\)
-  where \(m_{f_*\mu}\) is the moment generating function of \(f_* \mu\).  
-
-  Hence, Taylor expanding both sides, we obtain
-  \[\sum_{n = 0}^\infty \frac{\lambda^n}{n!}\partial_\lambda^n m_{f_*\mu}(0) \le \sum_{n = 0}^\infty \frac{\lambda^{2n}}{n!}D^{4n}\]
-  for all \(\lambda \in \mathbb{R}\). Thus, we must have 
-  \[\mathbb{E}_\mu[f^{2n}] = \partial_\lambda^{2n} m_{f_*\mu}(0) \le D^{4n}\]
-  and 
-  \[\mathbb{E}_\mu[f^{2n + 1}] = \partial_\lambda^{2n + 1} m_{f_*\mu}(0) \le 0.\]
-  Substituting the above into equation~\eqref{eq:Taylor}, we obtain
-  \[\mathbb{E}_\mu[fe^f] \le \sum_{n = 1}^\infty \frac{1}{(2n - 1)!}D^{4n}
-      = D^2 \sum_{n = 1}^\infty \frac{1}{(2n - 1)!}(D^2)^{2n - 1}
-      = D^2 \sinh D^2.\]
-  Thus, 
-  \[\text{Ent}_\mu[f] \le \log(e^{e^{-1}}\mathbb{E}_\mu[fe^f])
-    \le e^{-1} + \log(D^2) + \log (\sinh D^2).\]
-  Now, since \(\log x + \log (\sinh x) \le 2x\) and as we had assumed \(D \ge \epsilon\), we have 
-  \(e^{-1} \le e^{-1}\epsilon^{-2} D^2\). Hence,
-  \[\text{Ent}_\mu[f] \le (2 + e^{-1}\epsilon^{-2})D^2 = C_\epsilon D^2\]
-  as desired.
-\end{proof}

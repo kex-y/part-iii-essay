@@ -1,9 +1,9 @@
 In this section we introduce the notion of stochastic localization and provide some useful examples of 
-them for which which are studied further in subsequent sections. 
+them which are studied further in the subsequent sections. 
 
 We work in general Borel spaces \((\mathcal{X}, \Sigma)\) for this section while restricting our 
 focus to either the Euclidean space \(\mathbb{R}^n\) or the Boolean hypercube \(\{-1, 1\}^n\) 
-in subsequent sections. We take \((\Omega, \mathscr{F}, \mathbb{P})\) our underlying probability space 
+in subsequent sections. We take \((\Omega, \mathscr{F}, \mathbb{P})\) to be our underlying probability space 
 and we introduce the notation \(\mathcal{M}(\mathcal{X})\) for the space of probability measures on 
 \(\mathcal{X}\).
 
@@ -66,8 +66,8 @@ discrete stochastic localization of \(\mu\).
 
 An example of a stochastic localization scheme is the coordinate by coordinate localization scheme 
 on \(\mathcal{X} = \{-1, 1\}^n\). This scheme relates to the Glauber dynamics for which the stochastic 
-localization scheme provides a mixing bound. We shall examine the property in section~\ref{sec:Glauber_loc}, 
-though we will construct the scheme now. 
+localization scheme provides a mixing bound. We will discuss this property further in section~\ref{sec:Glauber_loc} while 
+only considering its construction for now. 
 
 Given a probability measure \(\mu\) on \(\{-1, 1\}^n\), we introduce the random variable \(X \sim \mu\), and 
 \(Y\) a uniform random variable over all permutations of \([n] = \{1, \cdots, n\}\) independent of \(X\). 
@@ -98,7 +98,7 @@ where \(\mu_k\) is the law of \(X\) conditioned on \(\langle X, Y_1\rangle, \cdo
 An important class of stochastic localization schemes are the linear-tilt schemes. Introduced by Eldan 
 in \cite{Eldan_2013}, linear-tilt schemes has been vital in the recent progress regarding the KLS 
 conjecture. More recently, a discrete version of the linear-tilt scheme was introduced in \cite{Chen_2022}
-and is used to provide a mixing bound for Glauber dynamics. We will in this section introduce these family 
+and is used to provide a mixing bound for Glauber dynamics. We will in this section introduce this family 
 of localizations and consider two specific examples of such linear-tilt schemes which are 
 useful for our analysis later.
 
@@ -173,7 +173,7 @@ observe
       \langle x, a_t + W_t \rangle - \frac{t}{2}\|x\|^2.
 \end{align*}
 Thus, taking \(\dd z_t := \langle a_t, \dd W_t\rangle + \frac{1}{2} \|a_t\|^2 \dd t\) and 
-\(v_t := a_t + W_t\), we observe \(F_t(x)\) is a Gaussian density function of the form
+\(v_t := a_t + W_t\), we observe \(F_t(x)\) is a density function with a Gaussian component of the form
 \begin{equation}\label{eq:stoch_loc_alt}
   F_t(x) = e^{z_t + \langle x, v_t \rangle - \frac{t}{2}\|x\|^2},
 \end{equation}
@@ -182,19 +182,19 @@ for given Itô processes \((z_t), (v_t)\).
 With this formulation of \(F_t(x)\) in mind, it follows that \(F_t\) is non-negative, and so, 
 we may define \((\mu_t)_t\) to be the process such that \(\dd \mu_t = F_t \dd \mu\). It is clear that 
 \((\mu_t)_t\) is a linear-tilt localization of \(\mu\) and so, is a prelocalization of \(\mu\). 
-Furthermore, we observe that, by definition, \(\mu_t\) has density \(g_t e^{-V}\) with respect 
-to the Lebesgue measure where \(g_t(x) = e^{z_t + \langle x, v_t \rangle - \frac{t}{2}\|x\|^2}\) is the 
-density of a Gaussian measure. Thus, heuristically, as \(t\) increases, \(\mu_t\) becomes gradually more 
-akin to a Gaussian measure and this turns out to be very beneficial for our analysis later.
 
 The remainder of this section is devoted to showing \((\mu_t)_t\) is furthermore a stochastic localization 
-of \(\mu\) if \(\mu\) is log-concave (namely we will show \eqref{L3} for this special case), and prove 
+of \(\mu\) in the special case that it is log-concave (namely we will show \eqref{L3} for this special case), and prove 
 some basic properties about this process useful for our analysis later.
 
 \begin{definition}[Log-concave measure]
   A measure \(\mu\) on \(\mathbb{R}^n\) is said to log-concave if it is of the form 
-  \(\dd \mu = \exp(-H)\dd\text{Leb}^n\) for some convex function \(H : \mathbb{R}^n \to \mathbb{R} \cup \{\infty\}\)
+  \(\dd \mu = e^{-V}\dd\text{Leb}^n\) for some convex function \(V : \mathbb{R}^n \to \mathbb{R} \cup \{\infty\}\)
 \end{definition}
+
+Straightaway, we observe that if \(\mu\) is log-concave, \(\mu_t\) has density of the form \(F_t e^{-V}\) with respect 
+to the Lebesgue measure. Thus, as \(t\) increases, we observe that \(\mu_t\) becomes gradually more 
+akin to a Gaussian measure. This fact is very beneficial for our analysis later.
 
 To show \((\mu_t)\) satisfies \eqref{L3} if \(\mu\) is log-concave, we study the limiting behavior of 
 \((\mu_t)\) as \(t \to \infty\) by considering their covariances:

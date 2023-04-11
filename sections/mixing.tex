@@ -1,9 +1,9 @@
 An application of stochastic localizations is used to prove mixing bounds for Markov processes. 
 Focusing on the framework established by Chen and Eldan in \cite{Chen_2022}, we will present their prescribed 
-method to bound the mixing time for a special class of Markov processes; namely the Markov chains 
+method to bound the mixing time for a special class of Markov processes: namely the Markov chains 
 associated with stochastic localizations. 
 As a specific example, we will in this section also describe Chen and Eldan's \cite{Chen_2022} application 
-of this framework to the Glauber dynamics and as a result, recovering the main theorem on spectral independence as 
+of this framework to the Glauber dynamics and as a result, recover a version of the main theorem on spectral independence as 
 presented by Anari, Liu and Oveis Gharan in \cite{Anari_2020}.
 
 \subsection{Mixing bounds}
@@ -11,21 +11,21 @@ presented by Anari, Liu and Oveis Gharan in \cite{Anari_2020}.
 The motivation for Markov mixing bounds fundamentally comes from sampling. Suppose we wish to sample 
 from some probability distribution $\mu$. A common method to achieve this to through the use of the 
 Markov chain Monte Carlo (MCMC):
-\begin{theorem}\label{thm:markov_conv}
+\begin{theorem}[MCMC]\label{thm:markov_conv}
   Given \((X_n)\) an irreducible positively recurrent homogenous Markov process on \(\mathcal{X}\) with
   stationary distribution \(\mu\), for any \(\phi : \mathcal{X} \to \mathbb{R}\) integrable, 
   \[\lim_{n \to \infty} \frac{1}{n} \sum_{k = 1}^n \phi(X_k) = \int \phi \dd \mu\]
   almost everywhere.  
 \end{theorem}
-With this theorem in mind, MCMC allows us to sample \(\mu\) by sampling from \((X_n)\) instead. It is in general 
-not difficult to come up with such Markov processes, although it is often difficult to show its rate of convergence. 
+With this theorem in mind, MCMC allows us to sample \(\mu\) by sampling from a Markov chain instead. It is in general 
+not difficult to come up with such Markov processes, although the difficulty often arises when we want to know its rate of convergence. 
 This motivates the notion of mixing bounds which quantifies the time for which the Markov process takes before 
 its law is approximately stationary.
 
 \begin{definition}[Total variation mixing time]
   Given a probability measure \(\nu \in \mathcal{M}(\mathcal{X})\), a Markov kernel \(K\) with stationary 
   distribution \(\mu\) and some \(\epsilon > 0\), the \(\epsilon\)-total variation mixing time is defined as 
-  \[t_{\text{mix}}(P, \epsilon, \mu) := \inf \{t \ge 0 \mid \|K^t\nu - \mu\|_{\text{TV}} < \epsilon\},\]
+  \[t_{\text{mix}}(P, \epsilon, \nu) := \inf \{t \ge 0 \mid \|K^t\nu - \mu\|_{\text{TV}} < \epsilon\},\]
   Furthermore, we denote 
   \[t_{\text{mix}}(P, \epsilon) = \sup_{x \in \mathcal{X}} t_{\text{mix}}(P, \epsilon, \delta_x)\]
   the worst mixing time starting at a point.
@@ -60,19 +60,19 @@ a general state space. Nonetheless, as the inequality in theorem~\ref{thm:levin}
 \subsubsection{Ising model and Glauber dynamics}
 
 The Ising model is a well-known measure in mathematical physics and is often used to model magnetism and 
-gasses. While fundamentally, the Ising model is constructed using Bernoulli random variables, as these 
+gas behavior. While fundamentally, the Ising model is constructed using Bernoulli random variables, as these 
 random variables interacts with one another, sampling the Ising model directly has exponential computational 
 complexity increasing with the number of particles. Hence, to sample from the Ising model, one often instead 
 applies MCMC to the Glauber dynamics which is a Markov chain with stationary measure being the Ising model.
 We will in this small section introduce these definitions and recall a known result \cite{Anari_2020} 
-bounding the mixing time of the Glauber dynamics.
+bounding the spectral gap and consequently the mixing time of the Glauber dynamics.
 
 Heuristically, the Ising model measures the probability that a graph is in a specific configuration of 
 up and down spins in which neighboring vertices are more likely to have the same spin. This ``likeliness'' 
-is controlled by \(\beta\) in which a larger \(\beta\) means that neighboring vertices are more likely to
+is controlled by a parameter \(\beta\) in which a larger \(\beta\) means that neighboring vertices are more likely to
 align. 
 
-\begin{definition}[Ising model]
+\begin{definition}[Ising model, \cite{Chen_2022}]
   Given a graph \(G = (V, E)\), \(\beta > 0\) and \(h \in \mathbb{R}\), the Ising model on \(G\) 
   with inverse temperature \(\beta\) and external field \(h\) is the probability measure \(\mu_{\beta, h}\) on 
   \(\{-1, 1\}^V\) defined such that for all \(\sigma \in \{-1, 1\}^V\),
@@ -89,10 +89,10 @@ To sample from the Ising model, one naive method is by simply starting from an a
 \(\sigma_1 \in \{-1, 1\}^n\), and at each time step, update the configuration according to the description 
 of the Ising model. Namely, the configuration at the next time step either remains the 
 same or change at one vertex. Furthermore, the probability of this occurring is weighted according to 
-\(\mu\). The resulting Markov chain turns out to has the Ising model as its stationary distribution 
-and is known as the Glauber dynamics. More formally, it is defined as the following.
+\(\mu\). This procedure results in a Markov chain which turns out to have the Ising model as its stationary distribution. 
+This Markov chain is known as the Glauber dynamics. Formally, it is defined as the following.
 
-\begin{definition}[Glauber dynamics]
+\begin{definition}[Glauber dynamics, \cite{Chen_2022}]
   Given a measure \(\mu\) of \(\{-1, 1\}^n\), the Glauber dynamics of \(\mu\) is the Markov chain 
   with kernel 
   \begin{equation}\label{eq:glauber_ker}
@@ -105,9 +105,9 @@ and is known as the Glauber dynamics. More formally, it is defined as the follow
   for all \(\sigma^1, \sigma^2 \in \{-1, 1\}^n\).
 \end{definition}
 
-Recently, a framework known as spectral independence has been developed by Anari, Liu and Oveis Gharan in 
-\cite{Anari_2020} which provides a bound for the spectral gap and consequently a mixing bound by 
-for the Glauber dynamics (namely, theorem~\ref{thm:Anari}). 
+Recently, Anari, Liu and Oveis Gharan in \cite{Anari_2020} were able to 
+provide a bound for the spectral gap for a special class of Glauber dynamics satisfying a property known 
+as spectral independence. We quickly recall their results here.
 
 \begin{definition}[Pairwise influence matrix, \cite{Anari_2020}]
   Given a measure \(\mu\) on \(\{-1, 1\}^n\), we define the pairwise influence matrix \(\Psi(\mu)\) 
@@ -154,12 +154,12 @@ As hinted by the notation, rather than a deterministic time \(\tau\), \(\tau\) c
 appropriate stopping time. In this case, the theorems below will remain to hold by invoking the optional stopping 
 theorem whenever necessary.
 
-This is indeed a kernel since for each \(x \in \mathcal{X}\), as \(\mathbb{E}_\mathbb{P}[\mu_\tau] = \mu\) 
+This construction indeed results in a kernel since for each \(x \in \mathcal{X}\), as \(\mathbb{E}_\mathbb{P}[\mu_\tau] = \mu\) 
 by \eqref{L2},
 \[K(x, \Omega) = \mathbb{E}_\mathbb{P}\left[\frac{\dd \mu_\tau}{\dd \mu}(x)\right] 
   = \frac{\dd}{\dd \mu}\mathbb{E}_\mathbb{P}[\mu_\tau](x) = \frac{\dd \mu}{\dd \mu}(x) = 1\]
-where the third equality follows by the uniqueness of the Radon-Nikodym derivative as for all \(A \in \Sigma\), 
-we have
+where the third equality follows by the uniqueness of the Radon-Nikodym derivative. In particular, 
+for all \(A \in \Sigma\), we have
 \[\int_A \mathbb{E}_\mathbb{P}\left[\frac{\dd \mu_\tau}{\dd \mu}\right] \dd \mu = 
   \mathbb{E}_\mathbb{P}\left[\int_A \frac{\dd \mu_\tau}{\dd \mu} \dd \mu \right] = 
   \mathbb{E}_\mathbb{P}[\mu_\tau](A).\]
@@ -245,13 +245,13 @@ which immediately provides an upper bound for the mixing time of \(K\) in light 
 This motivates the following definition.
 
 \begin{definition}[Discrete time approximate conservation of variance (ACV), \cite{Chen_2022}]
-  A prelocalization process \((\mu_k)_k\) is said satisfy conserve \((\kappa_k)\)-variance 
+  A prelocalization process \((\mu_k)_k\) is said to conserve \((\eta_k)\)-variance 
   up to time \(m\) if for any integrable function \(\phi : \mathcal{X} \to \mathbb{R}\), \(0 \le k < m\),
-  \[\mathbb{E}[\text{Var}_{\mu_{k + 1}}[\phi] \mid \mu_t] \ge (1 - \kappa_k)\text{Var}_{\mu_k}[\phi].\]
+  \[\mathbb{E}[\text{Var}_{\mu_{k + 1}}[\phi] \mid \mu_t] \ge (1 - \eta_k)\text{Var}_{\mu_k}[\phi].\]
 \end{definition}
 
-By the same computation above, if \((\mu_k)_k\) conserves \((\kappa_k)\)-variance up to time \(m\), 
-then it associated dynamics at time \(m\) has a spectral gap of at least \(\prod_{k = 0}^{m - 1} (1 - \kappa_k)\).
+By the same computation above, if \((\mu_k)_k\) conserves \((\eta_k)\)-variance up to time \(m\), 
+then it associated dynamics at time \(m\) has a spectral gap of at least \(\prod_{k = 0}^{m - 1} (1 - \eta_k)\).
 
 \subsubsection{ACV of discrete time linear-tilt localization}
 
@@ -369,7 +369,7 @@ of the above equation with that of the discrete time ACV inequality.
 
 \subsection{Glauber dynamics as an associated Markov process}\label{sec:Glauber_loc}
 
-As alluded to in section~\ref{sec:stoch_loc}, Glauber dynamics can be constructed as an associated Markov 
+Glauber dynamics can be constructed as an associated Markov 
 chain of the coordinate by coordinate localization. Namely, taking \(\mu \in \mathcal{M}(\{-1, 1\}^n)\)
 and \(\tau = n - 1\), we will show the associate Markov kernel 
 \[\mathbb{E}\left[\frac{\mu_{n - 1}(\sigma^1)\mu_{n - 1}(\sigma^2)}{\mu(\sigma^1)}\right] = K(\sigma^1, \sigma^2)\]
@@ -390,7 +390,7 @@ Thus, all but the \(m\)-th term in the above sum vanishes and we have the kernel
     \mathbb{E}\left[\frac{\mu_{n - 1}(\sigma^1)\mu_{n - 1}(\sigma^2)}{\mu(\sigma^1)}
     \middle\vert\ Y_n = m, \text{supp}\ \mu_{n - 1} = \{\sigma^1, \sigma^2\}\right]\\
 \end{align*}
-Then, substituting in the following equalities:
+Then, substituting in the equalities,
 \[\mathbb{P}(\text{supp}\ \mu_{n - 1} = \{\sigma^1, \sigma^2\}) = \mu(\sigma^1) + \mu(\sigma^2),\]
 and
 \begin{align*}

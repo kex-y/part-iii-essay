@@ -9,9 +9,8 @@ a martingale, some properties are invariant in time and hence allowing us to con
 also hold for the original measure.
 
 We recall the goal of theorem~\ref{thm:KLS_to_TS} is to control \(\text{Var}_\mu[\phi]\) by 
-a logarithmic factor of \(\text{Var}_\mu[\|\cdot\|]\). As translating the barycenter of \(\mu\)
-does not affect its variance, we may assume \(\mu\) has its barycenter \(\overline{\mu}\) at the origin.
-Furthermore, we will assume \(\mu\) is supported on \(B_n(0) \subseteq \mathbb{R}^n\) with 
+a logarithmic factor of \(\text{Var}_\mu[\|\cdot\|]\). We will assume \(\mu\) is supported on 
+\(B_n(0) \subseteq \mathbb{R}^n\) with 
 \(B_n(0)\) the ball at the origin of radius \(n\). The reason for this is due to a concentration 
 bound for log-concave measures where one may show most of their densities lie within a compact support.
 As a result, the region outside said compact set only contributes a bounded amount (in fact, it decreases 
@@ -268,8 +267,8 @@ namely
 \[\sigma := \inf \{t > 0 \mid \Phi^\alpha(t) = 2^\alpha\},\] 
 we have \(\sigma^{-1} \ge \tau^{-1}\) and so it suffices to bound \(\sigma\) from below. 
 
-For simplicity (the general computation is similar albeit much more technical), let us ignore the stochastic term in 
-equation~\eqref{eq:potential_bound_2} and regard it as an ODE. Then, by Gronwall's inequality, if we can 
+For simplicity, we will ignore the martingale term in equation~\eqref{eq:potential_bound_2} and regard it as an ODE. 
+Then, by Gronwall's inequality, if we can 
 find some constant \(K\) such that \(K_t \le K\) for all \(t \le \tau\), we have the bound
 \[S_t \le n e^{2\alpha^2 K t}.\]
 Thus, substituting \(\sigma\) into the above, we have 
@@ -279,7 +278,7 @@ implying
 Then, taking \(\alpha = 10K\log n\), it is easy to check that 
 \[\frac{1}{10K \log n} \le \frac{\alpha \log 2 - \log n}{2\alpha^2 K}\]
 implying \(\mathbb{E}[\tau^{-1}] \le 10K \log n\). Of course, this deduction only holds while ignoring the stochastic term 
-\(\langle v_t, \dd W_t\rangle\). Nonetheless, this is justified as one can show that \(\|v_t\|_2\) is bounded 
+\(\langle v_t, \dd W_t\rangle\). Nonetheless, this can be justified as one can show that \(\|v_t\|_2\) is bounded 
 \(\alpha \Phi^\alpha(t)\) and so the same analysis holds by applying the stochastic Gronwall's inequality
 (c.f. second part of lemma 34 in \cite{Lee_2018}).
 
@@ -325,7 +324,7 @@ we have
 \end{equation}
 where the last inequality follows as \(\|A_t\|_{\text{op}} \le 2\) for all \(t < \tau\). 
     
-At last, combining equation~\eqref{eq:K_bd} and~\eqref{eq:tau_bd}, we have
+At last, combining equation~\eqref{eq:tau_bd} and~\eqref{eq:K_bd}, we have
 \[\text{Var}_\mu[\phi] \le 2 + \log n\left(4 + \overbrace{80 C \sum_{k = 1}^n \frac{1}{k}}^{\Theta(\log n)}(C_{\text{TS}}^n)^{-2}\right)
    = \Theta_n(((C_{\text{TS}}^n)^{-1} \log n)^2)\]
 implying there exists a constant \(R > 0\) such that for all 1-Lipschitz \(\phi\), 

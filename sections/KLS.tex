@@ -4,9 +4,9 @@ log-concave measures on \(\mathbb{R}^n\) are concentrated in a way similar to a 
 To tackle this problem, Eldan in \cite{Eldan_2013} introduced stochastic localizations  
 in order to reduce the KLS conjecture to a seemingly weaker conjecture (up to a logarithmic constant): 
 the thin-Shell conjecture. More recently, stochastic localization was applied by Chen in \cite{Chen_2020} 
-to provide an almost constant lower bound for the KLS conjecture. We will now describe 
-a proof of Eldan's original reduction of the KLS conjecture to the thin-Shell conjecture.
+to provide an almost constant lower bound for the KLS conjecture. 
 
+We will now describe a proof of Eldan's original reduction of the KLS conjecture to the thin-Shell conjecture.
 The method presented in this section is due to Lee and Vempala \cite{Lee_2016} and reformulated in 
 the language of concentration by Eldan in \cite{Eldan_notes}.
 
@@ -25,7 +25,7 @@ Let us quickly introduce some preliminary definitions required to state the afor
 
 Heuristically, the concentration is a quantity which inversely measures how ``spread out'' the density 
 of \(\mu\) is in each direction. In the 1-dimensional case, the concentration of \(\mu\) is therefore 
-simply its variance. This is illustrated by the following proposition. 
+simply the inverse of its variance. This is illustrated by the following proposition. 
 
 \begin{proposition}\label{prop:concentration}
   Let \(X\) be a \(\mathbb{R}^n\)-valued random variable. Then for all \(K\)-Lipschitz function 
@@ -59,7 +59,7 @@ its law \(\mu\) has concentration \(C^\mu_{\text{con}} = \text{Var}[X]^{-1}\).
 
 We note that the definition we are presenting here is slightly non-standard. However, utilizing the 
 following remarkable result due to Milman, we show that this definition is equivalent to the following 
-more standard definitions whenever we are working with log-concave measures
+more standard definitions whenever we are working with log-concave measures.
 
 \begin{definition}[Exponential concentration, \cite{Milman_2018}]
   Given a measure \(\mu\) on \(\mathbb{R}^n\), we say \(\mu\) has exponential concentration if 
@@ -72,7 +72,7 @@ more standard definitions whenever we are working with log-concave measures
 \end{definition}
 
 \begin{definition}[First-moment concentration, \cite{Milman_2018}]
-  Again, given \(\mu\) a measure on \(\mathbb{R}^n\), we say \(\mu\) has first-moment concentration 
+  Again, taking \(\mu\) a measure on \(\mathbb{R}^n\), we say \(\mu\) has first-moment concentration 
   if there exists some \(D > 0\) such that for all 1-Lipschitz function 
   \(\phi : \mathbb{R}^n \to \mathbb{R}\), we have
   \begin{equation}
@@ -138,12 +138,12 @@ measures of said class is dimension invariant. However, this turns out to be the
 \begin{theorem}[Concentration of Gaussian measures]\label{thm:gaussian_conc}
   Denoting \(\gamma^n\) the standard Gaussian measure on \(\mathbb{R}^n\), \(\gamma^n\) is \(C\)-concentrated 
   for some constant \(C\) which is independent of \(n\). That is, for all 1-Lipschitz 
-  \(\phi : \mathbb{R}^n \to \mathbb{R}\), \(\text{Var}_{\gamma^n}[\phi] \le C^2\).
+  \(\phi : \mathbb{R}^n \to \mathbb{R}\), \(\text{Var}_{\gamma^n}[\phi] \le C^{-2}\).
 \end{theorem}
 
-This fact motivate the KLS conjecture which hypothesized that 
+This fact motivates the KLS conjecture which hypothesized that 
 this invariance holds for a larger class of measures known as the log-concave measures. We will 
-for completeness give a brief proof (based on theorem 1.7.1 in \cite{Bogachev_1998}) of the above theorem taking \(C = \pi / 2\) 
+for completeness give a brief proof (based on theorem 1.7.1 in \cite{Bogachev_1998}) of the above theorem taking \(C = 2 / \pi\) 
 (although one can further show Gaussian measures are 1-concentrated).
 
 To prove this theorem we first observe the following elementary property of the Gaussian measure.
@@ -210,30 +210,31 @@ as required.
 Finally, with all the set-up and motivation in mind, we may now state the KLS conjecture.
 As alluded to in the previous section, heuristically, the KLS conjecture suggests that any log-concave measure on 
 \(\mathbb{R}^n\) admits concentration roughly similar to that of the Gaussian measure. Namely, we would like 
-to say suggest something of the form ``all log-concave measures and concentrated by a constant which is 
-invariant of the measure''. However, as currently stated, this statement is obviously false as spreading out 
-the measure increases the concentration. Furthermore, we need to be careful since, unlike the Gaussian, the 
+to say suggest something of the form ``all log-concave measures are concentrated by a constant which is 
+independent of the measure''. However, as currently stated, this statement is obviously false as spreading out 
+the measure decreases the concentration. Furthermore, we need to be careful since, unlike the Gaussian, the 
 concentration of general log-concave measures are not invariant under linear functions. Hence, it is clear that the KLS 
 conjecture would not hold without a suitable normalization. This leads us to the following formulation 
 of the KLS conjecture.
 
 \begin{conjecture}[Kannan-Lovász-Simonovitz, \cite{Eldan_notes}]\label{conj:KLS}
   Denoting \(\mathscr{M}^n_{\text{iso}}\) the set of all isotropic log-concave probability measures \(\mu\) on 
-  \(\mathbb{R}^n\),
+  \(\mathbb{R}^n\) (recall that \(\mu\) is isotropic if \(\mathbb{E}_{X \sim \mu}[X] = 0\) and \(\text{Cov}_{X \sim \mu}(X) = \text{id}_n\)),
   there exists a \textit{universal} constant \(C\) 
   (i.e. does not depend on any parameter and in particular is independent of the dimension \(n\)) such that for all 
   \(\mu \in \mathscr{M}^n_{\text{con}}\), \(\mu\) is \(C\)-concentrated.
 \end{conjecture}
 
-We remark that all isotropic measure \(\mu\) satisfies \(\text{Var}_\mu[T] \le 1\) for all 1-Lipschitz linear maps 
+To address our concern that in general the concentration of log-concave measures are not invariant under linear maps, 
+we observe that all isotropic measures \(\mu\) satisfies \(\text{Var}_\mu[T] \le 1\) for all 1-Lipschitz linear maps 
 \(T : \mathbb{R}^n \to \mathbb{R}\). Indeed, if 
-\(T : \mathbb{R}^n \to \mathbb{R}\) is a 1-Lipschitz linear function, i.e. is of the form \(v \mapsto w^T v + d\) 
+\(T : \mathbb{R}^n \to \mathbb{R}\) is a 1-Lipschitz linear function, i.e. it is of the form \(v \mapsto w^T v + d\) 
 for some \(w \in S^{n - 1}\) and \(d \in \mathbb{R}\), then we have
 \[\text{Var}_{\mu}[T] = \text{Var}_{X \sim \mu}\left[\sum_{i = 1}^n w_i X_i + d\right] 
     = \sum_{i, j = 1}^n w_i w_j \text{Cov}_{X \sim \mu}(X_i, X_j) = \sum_{i = 1}^n w_i^2 = 1,\]
-as \(\text{Cov}_{X \sim \mu}(X) = \text{id}\).
+as \(\text{Cov}_{X \sim \mu}(X) = \text{id}\). 
 
-With the above property in mind, we observe a trivial bound on the concentration of \(\mu\):
+With the above property, we may observe a trivial bound on the concentration of \(\mu\):
 Taking \(\pi_i : \mathbb{R}^n \to \mathbb{R}\) to be the projection into the \(i\)-th coordinate, 
 as \(\pi_i\) is linear and 1-Lipschitz for all \(i\), we have \(\text{Var}_{X \sim \mu}[X_i] \le 1\).
 Thus, 
@@ -243,7 +244,7 @@ Thus,
       = \sum_{i = 1}^n \text{Var}_\mu[\pi_i] \le n.
 \end{align*}
 Thus, by proposition~\ref{prop:concentration}, we have that \(\text{Var}_\mu[\phi] \le n\) for all 
-1-Lipschitz \(\phi : \mathbb{R}^n \to \mathbb{R}\) implying \(\mu\) is \(\sqrt{n}\)-concentrated.
+1-Lipschitz \(\phi : \mathbb{R}^n \to \mathbb{R}\) implying \(\mu\) is \(n^{-1/2}\)-concentrated.
 
 \begin{conjecture}[Thin-shell, \cite{Eldan_2013}]
   Taking \(\mathscr{M}^n_{\text{iso}}\) as above, there exists a universal constant \(C\) such that 
@@ -253,8 +254,8 @@ Thus, by proposition~\ref{prop:concentration}, we have that \(\text{Var}_\mu[\ph
 
 Since the norm function is 1-Lipschitz, it is clear that the thin-shell conjecture is 
 weaker than that of the KLS conjecture. On the other hand, as we shall describe in the following subsections, 
-as a consequence of the theory of stochastic localization, Eldan \cite{Eldan_2013} provides a reduction 
-of the KLS conjecture to the thin-shell conjecture up to logarithmic factors. 
+as a consequence of the theory of stochastic localization, it is possible to reduce the KLS conjecture to 
+the thin-shell conjecture up to a logarithmic factor. 
 
 \begin{theorem}[Eldan, \cite{Eldan_2013}]\label{thm:KLS_to_TS}
   Denoting \(\mathscr{M}^n_{\text{iso}}\) as above, we define 
@@ -273,9 +274,9 @@ of the KLS conjecture to the thin-shell conjecture up to logarithmic factors.
 % by taking the constant \(C = \sup_n C^n_{\text{con}} \le \sup_n C^n_{\text{TS}} \log n < \infty\).
 
 The stochastic localization scheme has been wildly successful in making progress towards the KLS conjecture. 
-Modifying the original arguments by Eldan, Lee and Vempala \cite{Lee_2016} obtained the bound 
+Modifying the original arguments by Eldan, Lee and Vempala in \cite{Lee_2016} obtained the bound 
 \(C_{\text{con}}^n \lesssim n^{-1 / 4}\). Further modifying their arguments, a recent breakthrough by 
-Chen \cite{Chen_2020} improves the bound providing the following theorem. 
+Chen in \cite{Chen_2020} improves the bound providing the following theorem. 
 
 \begin{theorem}[Chen, \cite{Chen_2020}]
   \(\log C_{\text{con}}^n \lesssim \sqrt{\log n \log \log n}\) and so \(C_{\text{con}}^n = n^{-o(1)}\).
@@ -292,14 +293,14 @@ formulations here.
 
 The Cheeger constant is a quantity relating to the proportion of the volume of a set with its surface area.
 This quantity arises naturally when studying the isoperimetric problem. The isoperimetric problem is the problem 
-in finding the set of unit volume with minimum surface area. In the case of the \(\mathbb{R}^n\) equipped with the 
+in finding the set of unit volume with minimum surface area. In the case of \(\mathbb{R}^n\) equipped with the 
 Lebesgue measure, we have known since the ancient Greeks that the solution is the unit ball. 
-With this in mind, the KLS conjecture can be viewed geometrically as a natural extension of the isoperimetric problem to 
-general measures on \(\mathbb{R}^n\).
+With this in mind, the KLS conjecture can be viewed geometrically as a natural extension of the isoperimetric problem 
+replacing the Lebesgue measure with general log-concave measures on \(\mathbb{R}^n\).
 
 \begin{definition}[Minkowski's boundary measure]
   Given a measure \(\mu\) on \(\mathbb{R}^n\) and a Borel set \(A \subseteq \mathbb{R}^n\), the Minkowski's 
-  boundary measure of \(A\), 
+  boundary measure of \(A\) is defined as
   \[\mu^+(\partial A) := \limsup_{\epsilon \downarrow 0} \frac{\mu(A_\epsilon) - \mu(A)}{\epsilon}.\]
   where \(A_\epsilon := \{x \in \mathbb{R}^n \mid \text{dist}(x, A) \le \epsilon\}\) is the 
   \(\epsilon\)-thickening of \(A\). 
@@ -310,7 +311,7 @@ general measures on \(\mathbb{R}^n\).
 \end{definition}
 
 The isoperimetric problem for the measure \(\mu\) then becomes the problem of finding the set \(A\) 
-satisfying \(\mu(A) = 1\) with minimum boundary measure. 
+of a fixed volume with minimum boundary measure. 
 
 \begin{definition}[Cheeger's inequality, \cite{Milman_2008}]
   Given a probability measure \(\mu\) on \(\mathbb{R}^n\), we say \(\mu\) satisfy Cheeger's inequality 

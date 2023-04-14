@@ -1,7 +1,7 @@
 In this section, we will take a look at an application of the stochastic localization technic 
 to prove a version of the log-Sobolev inequality for the log-concave measures. The log-Sobolev inequality 
 is a class of inequalities central to the concentration of measures. Using stochastic localization, 
-we will in the subsequent sections bound the log-Sobolev constant for log-concave measures 
+we will in this section bound the log-Sobolev constant for log-concave measures 
 supported in a ball of fixed diameter. We take heavy inspiration from the proof as presented in section~\ref{sec:KLS}
 where we reduced the KLS conjecture to the thin-shell conjecture.
 
@@ -27,7 +27,7 @@ The log-Sobolev inequality can be then formulated as the following.
 
 The log-Sobolev inequality is an incredibly useful inequality while studying the concentration of measures. In 
 particular, should a measure satisfy a log-Sobolev equality, by using a well-known method known as Herbst's argument,
-one can obtain the exponential concentration of said measure via the Chernoff bound. 
+one can then obtain the exponential concentration of said measure via the Chernoff bound. 
 % \begin{theorem}[Herbst's argument]
 %   If \(\mu\) satisfy the log-Sobolev inequality with log-Sobolev constant \(\rho_\mu\), then for all \(\phi\) with 
 %   uniformly bounded gradient \(\|\nabla \phi\| \le K\), we have 
@@ -52,7 +52,7 @@ log-Cheeger's constant.
   
 It does not come as a surprise that as with the Poincaré inequality, the standard Gaussian measure 
 \(\gamma^n\) in \(\mathbb{R}^n\) satisfies the log-Sobolev inequality with log-Sobolev constant 
-\(\rho_{\gamma^n} = 1\). However, in contrast to the Poincaré inequality where 
+\(\rho_{\gamma^n} = 1\) (c.f. \cite{Gross_1975}). However, in contrast to the Poincaré inequality where 
 the KLS conjecture suggests that the Poincaré constant is bounded below by a universal constant, it is known 
 that the log-Sobolev constant cannot be bounded below by a universal constant. Nonetheless, we are 
 interested in the log-Sobolev constant of log-concave measure. More specifically, we will study the 
@@ -89,7 +89,7 @@ for general measures with bounded support.
   for all \(\lambda \in \mathbb{R}\). In this case, we denote \(\mu \in \mathcal{G}(\nu)\).
 \end{definition}
 
-\begin{lemma}[Hoeffding's lemma]
+\begin{lemma}[Hoeffding's lemma, \cite{Jog_2023}]
   For a measure \(\mu\) on \(\mathbb{R}\) with support of diameter \(D\), we have \(\mu \in \mathcal{G}(D^2 / 4)\).
 \end{lemma}
 
@@ -98,7 +98,7 @@ at most \(2D \text{Lip}(\phi)\). Thus, for our measure \(\mu\) on \(\mathbb{R}^n
 and any smooth 1-Lipschitz \(\phi\), we have that the push-forward measure of \(\mu\) along \(\phi^2\), 
 \((\phi^2)_* \mu\) is a measure on \(\mathbb{R}\) with support 
 with diameter at most \(2D^2\). Consequently, Hoeffding's lemma tells us that \((\phi^2)_* \mu \in \mathcal{G}(D^4)\).  
-With this in mind, we can now prove lemma~\ref{lem:entropy_supp}.
+With this in mind, we can now prove lemma~\ref{lem:entropy_supp2}.
 
 \begin{proof}[Proof of lemma~\ref{lem:entropy_supp2}]
   For ease of notation, let us denote \(f = \phi^2\). Consider 
@@ -157,7 +157,7 @@ too strong. Nonetheless, by restricting to the class of log-concave measures, Ka
 % Namely, we consider the following theorem. 
 As promised in the introduction, we will in this section present a modified proof of theorem~\ref{thm:Lee_Vempala}.
 We attempt to analyze the log-Sobolev inequality using the same method as prescribed by section~\ref{sec:KLS_to_TS}. 
-As it turns out, while the initial steps can be follow verbatim, this method runs into issues when trying to 
+As it turns out, while the initial steps can be followed verbatim, this method runs into issues when trying to 
 bound the entropy of the martingale term resulted from the localization. In particular, applying the Cauchy-Schwarz 
 inequality no longer provides the desired integral as it had done for the variance case. Instead, we will consider 
 a different martingale \(N_t := \int \phi^2 \log \phi^2 \dd \mu_t\) and utilize the Burkholder-Davis-Gundy inequality.
@@ -180,7 +180,7 @@ we will show that
 In fact, a more general fact is true. Namely, for any real-valued function \(\Psi\), defining 
 the \(\Psi\)-entropy of \(\phi\) with respect to \(\mu\) as
 \[\text{Ent}_\mu^\Psi[\phi] = \mathbb{E}_\mu[\Psi(\phi)] - \Psi(\mathbb{E}_\mu[\phi]),\]
-we have that for \(\phi\) satisfying \(\psi(\mathbb{E}_\mu[\phi]) = 0\),
+we have that for \(\phi\) satisfying \(\Psi(\mathbb{E}_\mu[\phi]) = 0\),
 \begin{equation}\label{eq:entropy_gen_decomp}
   \text{Ent}_\mu^\Psi[\phi] = \text{Ent}^\Psi[M_t] + \mathbb{E}[\text{Ent}_{\mu_t}^\Psi[\phi]],
 \end{equation}
@@ -255,7 +255,7 @@ when we attempt to bound the entropy%\footnote{Lemma 2.7 in \cite{Lee_2017} clai
 %in this case the authors had omitted to check that their choice of the exponent is greater than 1 which is required for Hölder's inequality.}. 
 Instead, we shall bound \(\text{Ent}[M_t]\) by an application of the Burkholder-Davis-Gundy inequality. 
 
-\begin{lemma}[Burkholder-Davis-Gundy]
+\begin{lemma}[Burkholder-Davis-Gundy, \cite{Lowther_2010}]
   For all \(1 \le p < \infty\), there exists some constant \(C_p\) such that for any martingale \((X_t)_{t \ge 0}\),
   we have 
   \[\mathbb{E}\left[\left(\sup_{s \le t} X_t\right)^p\right] \le C_p \mathbb{E}\left[[X]_t^{p / 2}\right]\]
@@ -318,7 +318,7 @@ by Fubini's theorem, equation~\eqref{eq:entropy_bound2} becomes
 \end{align*}
 for all \(t > D^{-2}\).
 
-Hence, combining this with equation~\eqref{eq:entropy_decomp}, we obtain
+Combining this with equation~\eqref{eq:entropy_decomp}, we obtain
 \begin{align*}
   \text{Ent}_\mu[\phi^2] & \le \text{Ent}[M_t] + \mathbb{E}[\text{Ent}_{\mu_t}[\phi^2]]\\
   & \lesssim \mathbb{E}_\mu[\|\nabla \phi\|^2](D (1 + \log t + \log D) + 4t^{-1})
@@ -328,4 +328,4 @@ for all \(t > D^{-2}\). Minimizing this equation in \(t\), we find that it is mi
 whenever \(4D^{-1} \ge D^{-2}\) which holds if and only if \(D \ge 1 / 4\). Thus, 
 \[\text{Ent}_\mu[\phi^2] \lesssim D \mathbb{E}_\mu[\|\nabla \phi\|^2]\]
 where for \(D \le 1\), \(D^{-2} \ge D^{-1}\) and so the conclusion remains to hold by lemma~\ref{lem:entropy_supp}. 
-Hence, we bounded the log-Sobolev constant \(\rho_{\mu} \gtrsim D^{-1}\) recovering the result of theorem~\ref{thm:Lee_Vempala}.
+Hence, we bounded the log-Sobolev constant with \(\rho_{\mu} \gtrsim D^{-1}\) recovering the result of theorem~\ref{thm:Lee_Vempala}.

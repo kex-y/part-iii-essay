@@ -6,60 +6,24 @@ As a specific example, we will in this section also describe Chen and Eldan's \c
 of this framework to the Glauber dynamics and as a result, recover a version of the main theorem on spectral independence as 
 presented by Anari, Liu and Oveis Gharan in \cite{Anari_2020}.
 
-\subsection{Mixing bounds}
+% It is not difficult to see that 
+% \begin{equation}\label{eq:gap}
+%   \mathfrak{gap}(K) = 
+%     \inf_{\substack{\phi : \mathcal{X} \to \mathbb{R}\\ \int \phi \dd \mu = 0}} 1 
+%       - \frac{\int \phi K \phi \dd \mu}{\int \phi^2 \dd \mu}
+%     = \inf_{\phi : \mathcal{X} \to \mathbb{R}} 
+%       \frac{1}{2 \text{Var}_\mu[\phi]} \int (\phi(x) - \phi(y))^2 K(x, \dd y) \mu(\dd x),
+% \end{equation}
+% where \(\mu\) is the stationary measure of \(K\) and \(K\phi = \int \phi(y) K(\cdot, \dd y)\). We will take 
+% equation~\eqref{eq:gap} to be the defining property of the spectral gap in the case \(K\) is defined on 
+% a general state space. Nonetheless, as the inequality in theorem~\ref{thm:levin} is only meaningful whenever 
+% \(\mu_{\min} > 0\), this theorem is only applicable for Markov chains on finite state space 
+% (and we can replace \(\inf\) with \(\min\)).
 
-The motivation for Markov mixing bounds fundamentally comes from sampling. Suppose we wish to sample 
-from some probability distribution $\mu$. A common method to achieve this to through the use of the 
-Markov chain Monte Carlo (MCMC):
-\begin{theorem}[MCMC]\label{thm:markov_conv}
-  Given \((X_n)\) an irreducible positively recurrent homogenous Markov process on \(\mathcal{X}\) with
-  stationary distribution \(\mu\), for any \(\phi : \mathcal{X} \to \mathbb{R}\) integrable, 
-  \[\lim_{n \to \infty} \frac{1}{n} \sum_{k = 1}^n \phi(X_k) = \int \phi \dd \mu\]
-  almost everywhere.  
-\end{theorem}
-With this theorem in mind, MCMC allows us to sample \(\mu\) by sampling from a Markov chain instead. It is in general 
-not difficult to come up with such Markov processes, although the difficulty often arises when we want to know its rate of convergence. 
-This motivates the notion of mixing bounds which quantifies the time for which the Markov process takes before 
-its law is approximately stationary.
+\subsection{Ising model and Glauber dynamics}
 
-\begin{definition}[Total variation mixing time]
-  Given a probability measure \(\nu \in \mathcal{M}(\mathcal{X})\), a Markov kernel \(K\) with stationary 
-  distribution \(\mu\) and some \(\epsilon > 0\), the \(\epsilon\)-total variation mixing time is defined as 
-  \[t_{\text{mix}}(P, \epsilon, \nu) := \inf \{t \ge 0 \mid \|K^t\nu - \mu\|_{\text{TV}} < \epsilon\},\]
-  Furthermore, we denote 
-  \[t_{\text{mix}}(P, \epsilon) = \sup_{x \in \mathcal{X}} t_{\text{mix}}(P, \epsilon, \delta_x)\]
-  the worst mixing time starting at a point.
-\end{definition}
-
-A standard method of analyzing the mixing times of Markov chains is through the use of the spectral gap. 
-
-
-\begin{theorem}[\cite{Levin_2017}]\label{thm:levin}
-  Given a reversible and irreducible Markov chain with kernel \(K\) on the state space \(\mathcal{X}\) 
-  with stationary distribution \(\mu\), denoting \(\mu_{\min} = \inf_{x \in \mathcal{X}} \mu(x)\), we have 
-  \[t_{\text{mix}}(K, \epsilon) \le \left\lceil\frac{1}{\mathfrak{gap}(K)}
-  \left(\frac{1}{2}\log\left(\frac{1}{\mu_{\min}}\right) + \log\left(\frac{1}{2\epsilon}\right)\right)\right\rceil,\]
-  where \(\mathfrak{gap}(K)\) is the spectral gap of \(K\) and is defined as
-  \[\mathfrak{gap}(K) := 1 - \sup\{\lambda \mid \lambda \text{ is an eigenvalue of } K, \lambda \neq 1\}.\]
-\end{theorem}
-
-It is not difficult to see that 
-\begin{equation}\label{eq:gap}
-  \mathfrak{gap}(K) = 
-    \inf_{\substack{\phi : \mathcal{X} \to \mathbb{R}\\ \int \phi \dd \mu = 0}} 1 
-      - \frac{\int \phi K \phi \dd \mu}{\int \phi^2 \dd \mu}
-    = \inf_{\phi : \mathcal{X} \to \mathbb{R}} 
-      \frac{1}{2 \text{Var}_\mu[\phi]} \int (\phi(x) - \phi(y))^2 K(x, \dd y) \mu(\dd x),
-\end{equation}
-where \(\mu\) is the stationary measure of \(K\) and \(K\phi = \int \phi(y) K(\cdot, \dd y)\). We will take 
-equation~\eqref{eq:gap} to be the defining property of the spectral gap in the case \(K\) is defined on 
-a general state space. Nonetheless, as the inequality in theorem~\ref{thm:levin} is only meaningful whenever 
-\(\mu_{\min} > 0\), this theorem is only applicable for Markov chains on finite state space 
-(and we can replace \(\inf\) with \(\min\)).
-
-\subsubsection{Ising model and Glauber dynamics}
-
-The Ising model is a well-known measure in mathematical physics and is often used to model magnetism and 
+Before moving directly to establishing the framework, let us first quickly discuss the Ising model and the 
+main result of this section. The Ising model is a well-known measure in mathematical physics and is often used to model magnetism and 
 gas behavior. While fundamentally, the Ising model is constructed using Bernoulli random variables, as these 
 random variables interacts with one another, sampling the Ising model directly has exponential computational 
 complexity increasing with the number of particles. Hence, to sample from the Ising model, one often instead 
@@ -136,6 +100,7 @@ As an application of stochastic localizations, we will in section~\ref{sec:Glaub
 bound by using the theories established above. In particular, assuming the same assumptions as theorem~\ref{thm:Anari},
 we will show that 
 \[\mathfrak{gap}(K) \ge \prod_{k = 0}^{n - 2}\left(1 - \frac{\eta_k + 1}{n - k}\right).\]
+
 \subsection{Dynamics of stochastic localizations}
 
 As alluded to in the introduction, one may associate a Markov process at each time step of a stochastic 
@@ -199,11 +164,11 @@ for all \(A \in \Sigma\), we have
   \[\mathfrak{gap}(K) = \inf_{\phi : \mathcal{X} \to \mathbb{R}} \frac{\mathbb{E}[\text{Var}_{\mu_\tau}[\phi]]}{\text{Var}_\mu[\phi]}.\]
 \end{proposition}
 \begin{proof}
-  By equation~\eqref{eq:markov_assoc} (where we take \(\phi(x, y) = \phi(x)\phi(y)\)), we have 
+  By equation~\eqref{eq:markov_assoc} (taking \(\phi(x, y) = \phi(x)\phi(y)\)), we have 
   \begin{equation}
     \int_{\mathcal{X}^2} \phi(x)\phi(y) K(x, \dd y) \mu(\dd x) = \mathbb{E}_\mathbb{P}\left[\left(\int_\mathcal{X} \phi \dd\mu_\tau\right)^2\right],
   \end{equation}
-  for any integrable \(\phi : \mathcal{X} \to \mathbb{R}\). On the other hand, we observe 
+  for any integrable \(\phi : \mathcal{X} \to \mathbb{R}\). On the other hand,  
   \[\int_{\mathcal{X}^2} \phi(y)^2 K(x, \dd y) \mu(\dd x) = \int (K \phi^2)(x) \mu(\dd x) = 
       \int \phi(x)^2 (K\mu)(\dd x) = \int \phi(x)^2 \mu(\dd x)\]
   as \(\mu\) is the stationary measure of \(K\). Thus, for any integrable \(\phi : \mathcal{X} \to \mathbb{R}\),
@@ -218,8 +183,13 @@ for all \(A \in \Sigma\), we have
         \mathbb{E}_\mathbb{P}\left[\int\phi^2 \dd \mu_\tau - \left(\int_\mathcal{X} \phi \dd\mu_\tau\right)^2\right]
       = \frac{\mathbb{E}[\text{Var}_{\mu_\tau}[\phi]]}{\text{Var}_\mu[\phi]}.
   \end{align*}
-  Hence, recalling the equivalent form of the spectral gap as described by \eqref{eq:gap}, the result follows 
-  by taking infimum on both sides.
+  Moreover, by observing that 
+  \[\mathfrak{gap}(K) = 
+  \inf_{\substack{\phi : \mathcal{X} \to \mathbb{R}\\ \int \phi \dd \mu = 0}} 1 
+    - \frac{\int \phi K \phi \dd \mu}{\int \phi^2 \dd \mu}
+  = \inf_{\phi : \mathcal{X} \to \mathbb{R}} 
+    \frac{1}{2 \text{Var}_\mu[\phi]} \int (\phi(x) - \phi(y))^2 K(x, \dd y) \mu(\dd x),\]
+  the result follows by taking infimum on both sides.
 \end{proof}
 
 % This proposition has a nice intuitive interpretation. By recalling that the limit of a stochastic 

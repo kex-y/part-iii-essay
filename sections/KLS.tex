@@ -1,27 +1,32 @@
-In this section, we present the original context and motivation for the construction of stochastic 
-localizations: the KLS conjecture. The KLS conjecture is a conjecture which roughly states that all 
-log-concave measures on \(\mathbb{R}^n\) are concentrated in a way similar to a Gaussian measure. 
-To tackle this problem, Eldan in \cite{Eldan_2013} introduced stochastic localizations  
-in order to reduce the KLS conjecture to a seemingly weaker conjecture (up to a logarithmic constant): 
-the thin-Shell conjecture. More recently, stochastic localization was applied by Chen in \cite{Chen_2020} 
-to provide an almost constant lower bound for the KLS conjecture. 
+The stochastic localization scheme has been wildly successful in making progress towards the KLS conjecture. 
+While Eldan introduced stochastic localization to prove theorem~\ref{thm:KLS_to_TS}, 
+modifying the scheme slightly, Lee and Vempala in \cite{Lee_2016} had obtained the bound 
+\(C_{\text{con}}^n \lesssim n^{-1 / 4}\). Further modifying their arguments, a recent breakthrough by 
+Chen in \cite{Chen_2020} improves the bound by showing \(C_{\text{con}}^n = n^{-o(1)}\).
+In this section, we present the original context for the construction of stochastic 
+localizations. To this end, we will describe a proof of Eldan's original reduction of the KLS 
+conjecture to the thin-Shell conjecture.
 
-We will now describe a proof of Eldan's original reduction of the KLS conjecture to the thin-Shell conjecture.
 The method presented in this section is due to Lee and Vempala \cite{Lee_2016} and reformulated in 
 the language of concentration by Eldan in \cite{Eldan_notes}.
 
-\subsection{Concentration}
+% To tackle this problem, Eldan in \cite{Eldan_2013} introduced stochastic localizations  
+% in order to reduce the KLS conjecture to a seemingly weaker conjecture (up to a logarithmic constant): 
+% the thin-Shell conjecture. More recently, stochastic localization was applied by Chen in \cite{Chen_2020} 
+% to provide an almost constant lower bound for the KLS conjecture. 
 
-Let us quickly introduce some preliminary definitions required to state the aforementioned conjectures. 
+\subsection{Some intuition for concentration}
 
-\begin{definition}[Concentration, \cite{Eldan_notes}]
-  Let \(\mu\) be a measure on \(\mathbb{R}^n\), then \(\mu\) is said to be \(C\)-concentrated if
-  for all \(1\)-Lipschitz function \(\phi : \mathbb{R}^n \to \mathbb{R}\), 
-  \begin{equation}
-    \text{Var}_\mu[\phi] = \text{Var}_{X \sim \mu}[\phi(X)] \le \frac{1}{C^2}.
-  \end{equation}
-  We denote the largest possible such \(C\) by \(C^\mu_{\text{con}}\).
-\end{definition}
+% For the readers benefit, we recall the definition of concentration again.
+
+% \begin{definition}[Concentration, \cite{Eldan_notes}]
+%   Let \(\mu\) be a measure on \(\mathbb{R}^n\), then \(\mu\) is said to be \(C\)-concentrated if
+%   for all \(1\)-Lipschitz function \(\phi : \mathbb{R}^n \to \mathbb{R}\), 
+%   \begin{equation}
+%     \text{Var}_\mu[\phi] = \text{Var}_{X \sim \mu}[\phi(X)] \le \frac{1}{C^2}.
+%   \end{equation}
+%   We denote the largest possible such \(C\) by \(C^\mu_{\text{con}}\).
+% \end{definition}
 
 Heuristically, the concentration is a quantity which inversely measures how ``spread out'' the density 
 of \(\mu\) is in each direction. In the 1-dimensional case, the concentration of \(\mu\) is therefore 
@@ -130,21 +135,20 @@ With this theorem in mind, we establish the following correspondence.
   implying \(\mu\) is \(D / \sqrt{2}\)-concentrated.
 \end{proof}
 
-\subsection{Example: concentration of the Gaussian}
+\subsection{Example: concentration of the Gaussian}\label{sec:gaussian_conc}
 
-Given a class of measures, e.g. measures of a certain distribution, it is in general \textit{not} true that the concentration coefficient of 
-measures of said class is dimension invariant. However, this turns out to be the case for the class of standard Gaussian measures.
+As the main motivator for the KLS conjecture, the standard Gaussian measures on \(\mathbb{R}^n\) satisfy 
+a special property where its concentration is dimension invariant.
+This fact motivates the KLS conjecture which hypothesized that 
+this invariance holds for all isotropic log-concave measures. We will 
+for completeness give a brief proof (based on theorem 1.7.1 in \cite{Bogachev_1998}) of the following 
+theorem taking \(C = 2 / \pi\) (although one can in addition show that the standard Gaussian measures are 1-concentrated).
 
 \begin{theorem}[Concentration of Gaussian measures]\label{thm:gaussian_conc}
   Denoting \(\gamma^n\) the standard Gaussian measure on \(\mathbb{R}^n\), \(\gamma^n\) is \(C\)-concentrated 
   for some constant \(C\) which is independent of \(n\). That is, for all 1-Lipschitz 
   \(\phi : \mathbb{R}^n \to \mathbb{R}\), \(\text{Var}_{\gamma^n}[\phi] \le C^{-2}\).
 \end{theorem}
-
-This fact motivates the KLS conjecture which hypothesized that 
-this invariance holds for a larger class of measures known as the log-concave measures. We will 
-for completeness give a brief proof (based on theorem 1.7.1 in \cite{Bogachev_1998}) of the above theorem taking \(C = 2 / \pi\) 
-(although one can further show Gaussian measures are 1-concentrated).
 
 To prove this theorem we first observe the following elementary property of the Gaussian measure.
 
@@ -205,25 +209,27 @@ theorem~\ref{thm:gaussian_conc} since
   \le \int |\phi(x) - z|^2 \gamma^n(\dd x) \le \left(\frac{\pi}{2}\right)^2\]
 as required.
 
-\subsection{The KLS and thin-shell conjecture}
+\subsection{Discussion of the KLS conjecture}
 
-Finally, with all the set-up and motivation in mind, we may now state the KLS conjecture.
-As alluded to in the previous section, heuristically, the KLS conjecture suggests that any log-concave measure on 
-\(\mathbb{R}^n\) admits concentration roughly similar to that of the Gaussian measure. Namely, we would like 
-to say suggest something of the form ``all log-concave measures are concentrated by a constant which is 
-independent of the measure''. However, as currently stated, this statement is obviously false as spreading out 
-the measure decreases the concentration. Furthermore, we need to be careful since, unlike the Gaussian, the 
-concentration of general log-concave measures are not invariant under linear functions. Hence, it is clear that the KLS 
-conjecture would not hold without a suitable normalization. This leads us to the following formulation 
-of the KLS conjecture.
+% Finally, with all the set-up and motivation in mind, we may now state the KLS conjecture.
+% As alluded to in the previous section, heuristically, the KLS conjecture suggests that any log-concave measure on 
+% \(\mathbb{R}^n\) admits concentration roughly similar to that of the Gaussian measure. Namely, we would like 
+% to say suggest something of the form ``all log-concave measures are concentrated by a constant which is 
+% independent of the measure''. However, as currently stated, this statement is obviously false as spreading out 
+% the measure decreases the concentration. Furthermore, we need to be careful since, unlike the Gaussian, the 
+% concentration of general log-concave measures are not invariant under linear functions. Hence, it is clear that the KLS 
+% conjecture would not hold without a suitable normalization. This leads us to the following formulation 
+% of the KLS conjecture.
 
-\begin{conjecture}[Kannan-Lovász-Simonovitz, \cite{Eldan_notes}]\label{conj:KLS}
-  Denoting \(\mathscr{M}^n_{\text{iso}}\) the set of all isotropic log-concave probability measures \(\mu\) on 
-  \(\mathbb{R}^n\) (recall that \(\mu\) is isotropic if \(\mathbb{E}_{X \sim \mu}[X] = 0\) and \(\text{Cov}_{X \sim \mu}(X) = \text{id}_n\)),
-  there exists a \textit{universal} constant \(C\) 
-  (i.e. does not depend on any parameter and in particular is independent of the dimension \(n\)) such that for all 
-  \(\mu \in \mathscr{M}^n_{\text{con}}\), \(\mu\) is \(C\)-concentrated.
-\end{conjecture}
+% \begin{conjecture}[Kannan-Lovász-Simonovitz, \cite{Eldan_notes}]\label{conj:KLS}
+%   Denoting \(\mathscr{M}^n_{\text{iso}}\) the set of all isotropic log-concave probability measures \(\mu\) on 
+%   \(\mathbb{R}^n\) (recall that \(\mu\) is isotropic if \(\mathbb{E}_{X \sim \mu}[X] = 0\) and \(\text{Cov}_{X \sim \mu}(X) = \text{id}_n\)),
+%   there exists a \textit{universal} constant \(C\) 
+%   (i.e. does not depend on any parameter and in particular is independent of the dimension \(n\)) such that for all 
+%   \(\mu \in \mathscr{M}^n_{\text{con}}\), \(\mu\) is \(C\)-concentrated.
+% \end{conjecture}
+
+\subsubsection{Isotropic as a normalization condition}
 
 To address our concern that in general the concentration of log-concave measures are not invariant under linear maps, 
 we observe that all isotropic measures \(\mu\) satisfies \(\text{Var}_\mu[T] \le 1\) for all 1-Lipschitz linear maps 
@@ -234,7 +240,7 @@ for some \(w \in S^{n - 1}\) and \(d \in \mathbb{R}\), then we have
     = \sum_{i, j = 1}^n w_i w_j \text{Cov}_{X \sim \mu}(X_i, X_j) = \sum_{i = 1}^n w_i^2 = 1,\]
 as \(\text{Cov}_{X \sim \mu}(X) = \text{id}\). 
 
-With the above property, we may observe a trivial bound on the concentration of \(\mu\):
+With the above property, we remark a trivial bound on the concentration of \(\mu\):
 Taking \(\pi_i : \mathbb{R}^n \to \mathbb{R}\) to be the projection into the \(i\)-th coordinate, 
 as \(\pi_i\) is linear and 1-Lipschitz for all \(i\), we have \(\text{Var}_{X \sim \mu}[X_i] \le 1\).
 Thus, 
@@ -246,41 +252,10 @@ Thus,
 Thus, by proposition~\ref{prop:concentration}, we have that \(\text{Var}_\mu[\phi] \le n\) for all 
 1-Lipschitz \(\phi : \mathbb{R}^n \to \mathbb{R}\) implying \(\mu\) is \(n^{-1/2}\)-concentrated\footnote{This is also a consequence of theorem 2 in \cite{Lee_2016}.}.
 
-\begin{conjecture}[Thin-shell, \cite{Eldan_2013}]
-  Taking \(\mathscr{M}^n_{\text{iso}}\) as above, there exists a universal constant \(C\) such that 
-  for all \(\mu \in \mathscr{M}^n_{\text{con}}\), we have
-  \[\sqrt{\text{Var}_\mu[\|\cdot\|]} \le \frac{1}{C}.\]
-\end{conjecture}
-
-Since the norm function is 1-Lipschitz, it is clear that the thin-shell conjecture is 
-weaker than that of the KLS conjecture. On the other hand, as we shall describe in the following subsections, 
-as a consequence of the theory of stochastic localization, it is possible to reduce the KLS conjecture to 
-the thin-shell conjecture up to a logarithmic factor. 
-
-\begin{theorem}[Eldan, \cite{Eldan_2013}]\label{thm:KLS_to_TS}
-  Denoting \(\mathscr{M}^n_{\text{iso}}\) as above, we define 
-  \[C^n_{\text{con}} := \sup \left\{C \mid \text{\(\forall \mu \in \mathscr{M}^n_{\text{con}},\) 
-    \(\mu\) is \(C\)-concentrated}\right\},\]
-  and 
-  \[C^n_{\text{TS}} := \sup \left\{C \mid \text{\(\forall \mu \in \mathscr{M}^n_{\text{con}},\) 
-      \(\sqrt{\text{Var}_\mu[\|\cdot\|]} \le C^{-1}\)}\right\},\]
-  we have,
-  \[C^n_{\text{con}} \le C^n_{\text{TS}} \le C^n_{\text{con}}\log n.\]
-\end{theorem}
-
 % We remark that while the constants in theorem~\ref{thm:KLS_to_TS} depends on the dimension \(n\), the 
 % KLS conjecture is reduced to the thin-shell conjecture in the sense that it suffices to show 
 % \(\sup_n C^n_{\text{TS}} \log n < \infty\). Then, the universal bound for the KLS conjecture is obtained 
 % by taking the constant \(C = \sup_n C^n_{\text{con}} \le \sup_n C^n_{\text{TS}} \log n < \infty\).
-
-The stochastic localization scheme has been wildly successful in making progress towards the KLS conjecture. 
-Modifying the original arguments by Eldan, Lee and Vempala in \cite{Lee_2016} obtained the bound 
-\(C_{\text{con}}^n \lesssim n^{-1 / 4}\). Further modifying their arguments, a recent breakthrough by 
-Chen in \cite{Chen_2020} improves the bound providing the following theorem. 
-
-\begin{theorem}[Chen, \cite{Chen_2020}]
-  \(\log C_{\text{con}}^n \lesssim \sqrt{\log n \log \log n}\) and so \(C_{\text{con}}^n = n^{-o(1)}\).
-\end{theorem}
 
 \subsubsection{Equivalent formulation of the KLS conjecture}
 

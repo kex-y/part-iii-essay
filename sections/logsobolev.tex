@@ -5,29 +5,29 @@ we will in this section bound the log-Sobolev constant for log-concave measures
 supported in a ball of fixed diameter. We take heavy inspiration from the proof as presented in section~\ref{sec:KLS}
 where we reduced the KLS conjecture to the thin-shell conjecture.
 
-\subsection{Entropy and log-Sobolev inequalities}
+% \subsection{Entropy and log-Sobolev inequalities}
 
-Heuristically, similar to that of the variance, the entropy of a random variable is a measure of its 
-uncertainty or randomness. Formally, the entropy is defined as the following.
+% Heuristically, similar to that of the variance, the entropy of a random variable is a measure of its 
+% uncertainty or randomness. Formally, the entropy is defined as the following.
 
-\begin{definition}[Entropy]
-  Given \(\phi : \mathcal{X} \to \mathbb{R}_{\ge 0}\) and a measure \(\mu\), we define the entropy of \(\phi\) 
-  with respect to \(\mu\) to be 
-  \[\text{Ent}_\mu[\phi] := \mathbb{E}_\mu\left[\phi \log\left(\frac{1}{\mathbb{E}_\mu[\phi]} \phi\right)\right]
-   = \int \phi \log \phi \dd \mu - \int \phi \dd \mu \log\left(\int \phi \dd \mu\right)\]
-  with the convention that \(0\log 0 = 0\).
-\end{definition}
-The log-Sobolev inequality can be then formulated as the following.
-\begin{definition}[Log-Sobolev inequality, \cite{Lee_2016}]
-  For a given measure \(\mu\) on \(\mathbb{R}^n\), \(\mu\) is said to satisfy the log-Sobolev inequality with log-Sobolev 
-  constant \(\rho_\mu\) if \(\rho_\mu\) is the largest \(\rho\) such that for all smooth 
-  \(\phi : \mathbb{R}^n \to \mathbb{R}\) with \(\int \phi^2 \dd \mu = 1\), we have 
-  \[\frac{\rho}{2} \text{Ent}_\mu[\phi^2] \le \mathbb{E}_\mu[\|\nabla \phi\|^2] = \int \|\nabla \phi\|^2 \dd \mu.\]
-\end{definition}
+% \begin{definition}[Entropy]
+%   Given \(\phi : \mathcal{X} \to \mathbb{R}_{\ge 0}\) and a measure \(\mu\), we define the entropy of \(\phi\) 
+%   with respect to \(\mu\) to be 
+%   \[\text{Ent}_\mu[\phi] := \mathbb{E}_\mu\left[\phi \log\left(\frac{1}{\mathbb{E}_\mu[\phi]} \phi\right)\right]
+%    = \int \phi \log \phi \dd \mu - \int \phi \dd \mu \log\left(\int \phi \dd \mu\right)\]
+%   with the convention that \(0\log 0 = 0\).
+% \end{definition}
+% The log-Sobolev inequality can be then formulated as the following.
+% \begin{definition}[Log-Sobolev inequality, \cite{Lee_2016}]
+%   For a given measure \(\mu\) on \(\mathbb{R}^n\), \(\mu\) is said to satisfy the log-Sobolev inequality with log-Sobolev 
+%   constant \(\rho_\mu\) if \(\rho_\mu\) is the largest \(\rho\) such that for all smooth 
+%   \(\phi : \mathbb{R}^n \to \mathbb{R}\) with \(\int \phi^2 \dd \mu = 1\), we have 
+%   \[\frac{\rho}{2} \text{Ent}_\mu[\phi^2] \le \mathbb{E}_\mu[\|\nabla \phi\|^2] = \int \|\nabla \phi\|^2 \dd \mu.\]
+% \end{definition}
 
-The log-Sobolev inequality is an incredibly useful inequality while studying the concentration of measures. In 
-particular, should a measure satisfy a log-Sobolev equality, by using a well-known method known as Herbst's argument,
-one can then obtain the exponential concentration of said measure via the Chernoff bound. 
+% The log-Sobolev inequality is an incredibly useful inequality while studying the concentration of measures. In 
+% particular, should a measure satisfy a log-Sobolev equality, by using a well-known method known as Herbst's argument,
+% one can then obtain the exponential concentration of said measure via the Chernoff bound. 
 % \begin{theorem}[Herbst's argument]
 %   If \(\mu\) satisfy the log-Sobolev inequality with log-Sobolev constant \(\rho_\mu\), then for all \(\phi\) with 
 %   uniformly bounded gradient \(\|\nabla \phi\| \le K\), we have 
@@ -38,31 +38,31 @@ one can then obtain the exponential concentration of said measure via the Cherno
 % https://faculty.math.illinois.edu/~psdey/math595fa19/lec14.pdf
 
 
-We observe the similarity of the log-Sobolev inequality with that of the Poincaré inequality. Remarkably, 
-a similar inequality to the Cheeger's inequality can be defined and a correspondence similar to the correspondence 
-between the Poincaré constant and the Cheeger's constant can be made for the log-Sobolev constant and the 
-log-Cheeger's constant.
+% We observe the similarity of the log-Sobolev inequality with that of the Poincaré inequality. Remarkably, 
+% a similar inequality to the Cheeger's inequality can be defined and a correspondence similar to the correspondence 
+% between the Poincaré constant and the Cheeger's constant can be made for the log-Sobolev constant and the 
+% log-Cheeger's constant.
 
-\begin{definition}[Log-Cheeger's inequality]
-  Given a probability measure \(\mu\) on \(\mbox{R}^n\), we say \(\mu\) satisfies the log-Cheeger's inequality 
-  if there exists some \(C\) such that for all \(A\) with \(\mu(A) \le 1 / 2\),
-  \[C\mu(A)\sqrt{-\log(\mu(A))} \le \mu^+(A).\]
-  We call the least such \(C\) the log-Cheeger's constant and denote it by \(C_\mu\). It is known that \(\rho_\mu \simeq C_\mu^2\). 
-\end{definition}
+% \begin{definition}[Log-Cheeger's inequality]
+%   Given a probability measure \(\mu\) on \(\mbox{R}^n\), we say \(\mu\) satisfies the log-Cheeger's inequality 
+%   if there exists some \(C\) such that for all \(A\) with \(\mu(A) \le 1 / 2\),
+%   \[C\mu(A)\sqrt{-\log(\mu(A))} \le \mu^+(A).\]
+%   We call the least such \(C\) the log-Cheeger's constant and denote it by \(C_\mu\). It is known that \(\rho_\mu \simeq C_\mu^2\). 
+% \end{definition}
   
-It does not come as a surprise that as with the Poincaré inequality, the standard Gaussian measure 
-\(\gamma^n\) in \(\mathbb{R}^n\) satisfies the log-Sobolev inequality with log-Sobolev constant 
-\(\rho_{\gamma^n} = 1\) (c.f. \cite{Gross_1975}). However, in contrast to the Poincaré inequality where 
-the KLS conjecture suggests that the Poincaré constant is bounded below by a universal constant, it is known 
-that the log-Sobolev constant cannot be bounded below by a universal constant. Nonetheless, we are 
-interested in the log-Sobolev constant of log-concave measure. More specifically, we will study the 
-log-Sobolev constant for log-concave measures supported in a ball of fixed diameter to obtain the 
-following result.
+% It does not come as a surprise that as with the Poincaré inequality, the standard Gaussian measure 
+% \(\gamma^n\) in \(\mathbb{R}^n\) satisfies the log-Sobolev inequality with log-Sobolev constant 
+% \(\rho_{\gamma^n} = 1\) (c.f. \cite{Gross_1975}). However, in contrast to the Poincaré inequality where 
+% the KLS conjecture suggests that the Poincaré constant is bounded below by a universal constant, it is known 
+% that the log-Sobolev constant cannot be bounded below by a universal constant. Nonetheless, we are 
+% interested in the log-Sobolev constant of log-concave measure. More specifically, we will study the 
+% log-Sobolev constant for log-concave measures supported in a ball of fixed diameter to obtain the 
+% following result.
 
-\begin{theorem}[\cite{Lee_2016}]\label{thm:Lee_Vempala}
-  For any isotropic log-concave measure \(\mu\) on \(\mathbb{R}^n\) with support on a ball of diameter \(D\), 
-  \(\mu\) has log-Sobolev constant \(\rho_\mu \gtrsim D^{-1}\).
-\end{theorem}
+% \begin{theorem}[\cite{Lee_2016}]\label{thm:Lee_Vempala}
+%   For any isotropic log-concave measure \(\mu\) on \(\mathbb{R}^n\) with support on a ball of diameter \(D\), 
+%   \(\mu\) has log-Sobolev constant \(\rho_\mu \gtrsim D^{-1}\).
+% \end{theorem}
 
 \subsection{Entropy of bounded support}
 

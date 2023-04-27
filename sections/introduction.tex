@@ -27,42 +27,243 @@ results about our original measure.
 \subsection{Structure of this essay}
 
 This essay consists of an introduction to the theory of stochastic localization and subsequently presents three 
-of it applications. We now give a brief overview of them.
+of it applications. We will now give a brief overview of these applications.
 
-\begin{itemize}
-  \item The first section of this essay consists of setting up the theory of stochastic localization.
-    We also introduce some specific examples of stochastic localizations which will be used in subsequent 
-    sections most importantly the discrete and continuous linear-tilt localization. 
-  \item We then move on to discuss the application of stochastic localization to bounding Markov 
-    mixing time. Motivated by the Markov chain Monte Carlo, the Markov mixing time provides a quantitative 
-    measure on how fast a Markov chain converges to its stationary distribution. It turns out that 
-    the mixing time of Markov chains which kernels can be described using stochastic localizations 
-    is related to how the variance of the stochastic localization evolves. This method is then applied  
-    to the Glauber dynamics on the Boolean hypercube to obtain a mixing time bound to the Ising model. 
-  \item We also discuss a proof of Eldan's original 2013 result reducing the KLS conjecture to another seemingly 
-    weaker conjecture known as the thin-shell conjecture. Roughly speaking, the KLS conjecture asserts 
-    that the class of measures known as the \textit{isotropic log-concave} measures are concentrated in a similar 
-    way to the Gaussian. In a more geometric point of view, the KLS conjecture asserts that the 
-    maximum proportion of volume by surface area of a log-concave measure is bounded by a universal constant. 
-    As a result, the KLS conjecture has many important consequences in convex geometry. 
-    In particular, by noticing that any uniform measure on a convex body of unit volume is log-concave, 
-    the KLS conjecture also implies the Bourgain slicing conjecture which asserts that any convex body 
-    of unit volume in \(\mathbb{R}^n\) has a intersection with some hyperplane with volume bounded below 
-    by a universal constant. Moreover, the KLS conjecture has applications in bounding mixing times for 
-    ball walks from a warm start (c.f. \cite{Lee_2016}), the central limit theorem for convex bodies (c.f. \cite{Giannopoulos}) 
-    and directly implies the aforementioned thin-shell conjecture. 
+\subsubsection{Markov mixing bounds}
 
-    % To achieve Eldan's reduction of the KLS to the thin-shell conjecture, we will utilize the continuous 
-    % linear-tilt localization, 
+% We then move on to discuss the application of stochastic localization to bounding Markov 
+% mixing time. Motivated by the Markov chain Monte Carlo, the Markov mixing time provides a quantitative 
+% measure on how fast a Markov chain converges to its stationary distribution. 
+
+The first application of stochastic localization we will discuss is its application to bounding Markov
+mixing times. The motivation for Markov mixing bounds fundamentally comes from sampling. Suppose we wish to sample 
+from some probability distribution $\mu$. A common method to achieve this to through the use of the 
+Markov chain Monte Carlo (MCMC):
+\begin{theorem}[MCMC]\label{thm:markov_conv}
+  Given \((X_n)\) an irreducible positively recurrent homogenous Markov process on \(\mathcal{X}\) with
+  stationary distribution \(\mu\), for any \(\phi : \mathcal{X} \to \mathbb{R}\) integrable, 
+  \[\lim_{n \to \infty} \frac{1}{n} \sum_{k = 1}^n \phi(X_k) = \int \phi \dd \mu\]
+  almost everywhere.  
+\end{theorem}
+With this theorem in mind, MCMC allows us to sample \(\mu\) by sampling from a Markov chain instead. It is in general 
+not difficult to come up with such Markov processes, although the difficulty often arises when we want to know its rate of convergence. 
+This motivates the notion of mixing bounds which quantifies the time for which the Markov process takes before 
+its law is approximately stationary.
+
+\begin{definition}[Total variation mixing time]
+  Given a probability measure \(\nu \in \mathcal{M}(\mathcal{X})\), a Markov kernel \(K\) with stationary 
+  distribution \(\mu\) and some \(\epsilon > 0\), the \(\epsilon\)-total variation mixing time is defined as 
+  \[t_{\text{mix}}(P, \epsilon, \nu) := \inf \{t \ge 0 \mid \|K^t\nu - \mu\|_{\text{TV}} < \epsilon\},\]
+  Furthermore, we denote 
+  \[t_{\text{mix}}(P, \epsilon) = \sup_{x \in \mathcal{X}} t_{\text{mix}}(P, \epsilon, \delta_x)\]
+  the worst mixing time starting at a point.
+\end{definition}
+
+A standard method of analyzing the mixing times of Markov chains is through the use of the spectral gap. 
+
+\begin{theorem}[\cite{Levin_2017}]\label{thm:levin}
+  Given a reversible and irreducible Markov chain with kernel \(K\) on the state space \(\mathcal{X}\) 
+  with stationary distribution \(\mu\), denoting \(\mu_{\min} = \inf_{x \in \mathcal{X}} \mu(x)\), we have 
+  \[t_{\text{mix}}(K, \epsilon) \le \left\lceil\frac{1}{\mathfrak{gap}(K)}
+  \left(\frac{1}{2}\log\left(\frac{1}{\mu_{\min}}\right) + \log\left(\frac{1}{2\epsilon}\right)\right)\right\rceil,\]
+  where \(\mathfrak{gap}(K)\) is the spectral gap of \(K\) and is defined as
+  \[\mathfrak{gap}(K) := 1 - \sup\{\lambda \mid \lambda \text{ is an eigenvalue of } K, \lambda \neq 1\}.\]
+\end{theorem}
+
+We will see that the spectral gap of Markov chains which kernels can be described using stochastic localizations 
+is related to how the variance of the stochastic localization evolves. Thus, by analyzing the variance of 
+the stochastic localization, in particular when the stochastic localization ``conserves'' variance, we can 
+bound the spectral gap and consequently the mixing time of said kernel. As an example, we will apply this 
+method to the Glauber dynamics on the Boolean hypercube to obtain a mixing time bound to the Ising model. 
+
+\subsubsection{The KLS conjecture}
+
+We then move on to discuss a proof of Eldan's original 2013 result in \cite{Eldan_2013} which reduced 
+the KLS conjecture to another seemingly weaker conjecture known as the thin-shell conjecture (up to an logarithmic factor). 
+
+\begin{definition}[log-concave measure]
+  A measure \(\mu\) on \(\mathbb{R}^n\) is said to log-concave if it is of the form 
+  \[\dd \mu = e^{-V}\dd\text{Leb}^n\] 
+  for some convex function \(V : \mathbb{R}^n \to \mathbb{R} \cup \{\infty\}\).
+\end{definition}
+
+Straightaway, we observe that the standard Gaussian measure on \(\mathbb{R}^n\) is log-concave.
+Thus, as the Gaussian measures are very well understood, we are motivated to ask how similarly do log-concave 
+measures behave when compared to the Gaussian. The KLS conjecture is one such comparison which compares the 
+concentration of log-concave measures with that of the Gaussian.
+
+\begin{definition}[Concentration, \cite{Eldan_notes}]
+  Let \(\mu\) be a measure on \(\mathbb{R}^n\), then \(\mu\) is said to be \(C\)-concentrated if
+  for all \(1\)-Lipschitz function \(\phi : \mathbb{R}^n \to \mathbb{R}\), 
+  \begin{equation}
+    \text{Var}_\mu[\phi] = \text{Var}_{X \sim \mu}[\phi(X)] \le \frac{1}{C^2}.
+  \end{equation}
+  We denote the largest possible such \(C\) by \(C^\mu_{\text{con}}\).
+\end{definition}
+
+As it turns out, the standard Gaussian measure on \(\mathbb{R}^n\) is concentrated by a constant which 
+is independent of the dimension \(n\). Thus, we might make a conjecture of the form 
+``all log-concave probability measures are concentrated by a universal constant''. 
+However, as currently stated, this statement is obviously false as spreading out 
+the measure decreases the concentration. Furthermore, we need to be careful since, unlike the Gaussian, the 
+concentration of general log-concave measures are not invariant under linear functions. Hence, it is clear that the KLS 
+conjecture would not hold without a suitable normalization. This leads us to the following.
+
+\begin{definition}[Isotropic]
+  A measure \(\mu\) on \(\mathbb{R}^n\) is isotropic if 
+  \(\mathbb{E}_{X \sim \nu}[X] = 0\) and \(\text{Cov}_{X \sim \nu}(X) = \text{id}_n\).
+\end{definition}
+
+% The KLS conjecture is one such comparisons which roughly asserts 
+% that the class of isotropic log-concave measures are concentrated in a similar way to the Gaussian. 
+% More precisely, we have the following definitions.
+ 
+\begin{conjecture}[Kannan-Lovász-Simonovitz, \cite{Eldan_notes}]\label{conj:KLS}
+  Denoting \(\mathscr{M}^n_{\text{iso}}\) the set of all isotropic log-concave probability measures \(\mu\) on 
+  \(\mathbb{R}^n\) (recall that \(\mu\) is isotropic if \(\mathbb{E}_{X \sim \mu}[X] = 0\) and \(\text{Cov}_{X \sim \mu}(X) = \text{id}_n\)),
+  there exists a \textit{universal} constant \(C\) 
+  (i.e. does not depend on the dimension \(n\)) such that for all 
+  \(\mu \in \mathscr{M}^n_{\text{con}}\), \(\mu\) is \(C\)-concentrated.
+\end{conjecture}
+
+From a more geometric point of view, the KLS conjecture can be equivalently phrased such that it asserts the 
+maximum proportion of volume by surface area of a log-concave measure is bounded by a universal constant. 
+As a result, the KLS conjecture has many important consequences in convex geometry. 
+In particular, by noticing that any uniform measure on a convex body of unit volume is log-concave, 
+the KLS conjecture directly implies the Bourgain slicing conjecture.
+
+\begin{conjecture}[Bourgain slicing, \cite{Bourgain}]
+  For any convex body \(U \subset \mathbb{R}^n\) of unit volume, there exists a hyperplane \(S\) such 
+  that \(U \cap S\) has boundary measure of at least \(C\) for some universal constant \(C\). 
+\end{conjecture}
+
+Moreover, as we shall see, the KLS conjecture in addition has applications to the Poincaré inequality, 
+first moment concentration, exponential concentration and the aforementioned thin-shell conjecture. 
+We will take a special look at the thin-shell conjecture which relaxes the KLS conjecture by 
+only requiring the variance of the norm function to behave similar to the Gaussian.
+
+\begin{conjecture}[Thin-shell, \cite{Eldan_2013}]
+  Taking \(\mathscr{M}^n_{\text{iso}}\) as above, there exists a universal constant \(C\) such that 
+  for all \(\mu \in \mathscr{M}^n_{\text{con}}\), we have
+  \[\sqrt{\text{Var}_\mu[\|\cdot\|]} \le \frac{1}{C}.\]
+\end{conjecture}
+
+% Since the norm function is 1-Lipschitz, it is clear that the thin-shell conjecture is 
+% weaker than that of the KLS conjecture. On the other hand, as we shall describe in the following subsections, 
+% as a consequence of the theory of stochastic localization, it is possible to reduce the KLS conjecture to 
+% the thin-shell conjecture up to a logarithmic factor. 
+
+As a consequence of stochastic localization, we present a proof of the following theorem.
+
+\begin{theorem}[Eldan, \cite{Eldan_2013}]\label{thm:KLS_to_TS}
+  Denoting \(\mathscr{M}^n_{\text{iso}}\) as above, we define 
+  \[C^n_{\text{con}} := \sup \left\{C \mid \text{\(\forall \mu \in \mathscr{M}^n_{\text{con}},\) 
+    \(\mu\) is \(C\)-concentrated}\right\},\]
+  and 
+  \[C^n_{\text{TS}} := \sup \left\{C \mid \text{\(\forall \mu \in \mathscr{M}^n_{\text{con}},\) 
+      \(\sqrt{\text{Var}_\mu[\|\cdot\|]} \le C^{-1}\)}\right\},\]
+  we have,
+  \[C^n_{\text{con}} \le C^n_{\text{TS}} \le C^n_{\text{con}}\log n.\]
+\end{theorem}
+
+% The thin-shell conjecture on the other hand relaxes the condition required for concentration and only 
+% asserts that the variance of the norm to behave similarly to the Gaussian.
+% \begin{conjecture}[Thin-shell, \cite{Eldan_2013}]
+%   Taking \(\mathscr{M}^n_{\text{iso}}\) as above, there exists a universal constant \(C\) such that 
+%   for all \(\mu \in \mathscr{M}^n_{\text{con}}\), we have
+%   \[\sqrt{\text{Var}_\mu[\|\cdot\|]} \le \frac{1}{C}.\]
+% \end{conjecture}
+
+\subsubsection{Log-Sobolev inequality}
+
+We will in the last section of this essay discuss the application of stochastic localization to the 
+log-Sobolev inequality. Similar to the KLS conjecture, we are interested to compare the log-concave 
+measures to the Gaussian measure. In this case, motivated by the Gaussian log-Sobolev inequality, 
+we establish a similar inequality for log-concave measures bounding the entropy of said measures. 
+Heuristically, similar to that of the variance, the entropy of a random variable is a measure of its 
+uncertainty or randomness. 
+
+\begin{definition}[Entropy]
+  Given \(\phi : \mathcal{X} \to \mathbb{R}_{\ge 0}\) and a measure \(\mu\), we define the entropy of \(\phi\) 
+  with respect to \(\mu\) to be 
+  \[\text{Ent}_\mu[\phi] := \mathbb{E}_\mu\left[\phi \log\left(\frac{1}{\mathbb{E}_\mu[\phi]} \phi\right)\right]
+   = \int \phi \log \phi \dd \mu - \int \phi \dd \mu \log\left(\int \phi \dd \mu\right)\]
+  with the convention that \(0\log 0 = 0\).
+\end{definition}
+
+The log-Sobolev inequality is then formulated as the following.
+\begin{definition}[Log-Sobolev inequality, \cite{Lee_2016}]
+  For a given measure \(\mu\) on \(\mathbb{R}^n\), \(\mu\) is said to satisfy the log-Sobolev inequality with log-Sobolev 
+  constant \(\rho_\mu\) if \(\rho_\mu\) is the largest \(\rho\) such that for all smooth 
+  \(\phi : \mathbb{R}^n \to \mathbb{R}\) with \(\int \phi^2 \dd \mu = 1\), we have 
+  \[\frac{\rho}{2} \text{Ent}_\mu[\phi^2] \le \mathbb{E}_\mu[\|\nabla \phi\|^2] = \int \|\nabla \phi\|^2 \dd \mu.\]
+\end{definition}
+
+The log-Sobolev inequality is an incredibly useful inequality while studying the concentration of measures. In 
+particular, should a measure satisfy a log-Sobolev equality, by using a well-known method commonly known as Herbst's argument,
+one can obtain the exponential concentration of said measure via the Chernoff bound. 
+\begin{theorem}[Herbst's argument]
+  If \(\mu\) satisfy the log-Sobolev inequality with log-Sobolev constant \(\rho_\mu\), then for all \(\phi\) with 
+  uniformly bounded gradient \(\|\nabla \phi\| \le K\), we have 
+  \[\psi_{\phi - \mathbb{E}_\mu[\phi]}^\mu(\lambda) \le \frac{\rho_\mu K^2 \lambda^2}{2}\]
+  where \(\psi_{\phi - \mathbb{E}_\mu \phi}^\mu\) is the logarithmic moment generating function of 
+  \(\phi - \mathbb{E}_\mu[\phi]\) with respect to \(\mu\).
+\end{theorem}
+% https://faculty.math.illinois.edu/~psdey/math595fa19/lec14.pdf
+  
+It does not come as a surprise that as with the setting of the KLS conjecture, the standard Gaussian measure 
+\(\gamma^n\) in \(\mathbb{R}^n\) satisfies the log-Sobolev inequality with log-Sobolev constant 
+\(\rho_{\gamma^n} = 1\) (c.f. \cite{Gross_1975}). However, in contrast to the Poincaré inequality where 
+the KLS conjecture suggests that the Poincaré constant is bounded below by a universal constant, it is known 
+\cite{Lee_2016} that the log-Sobolev constant cannot be bounded below by a universal constant. Nonetheless, we are 
+interested in the log-Sobolev constant of log-concave measure. More specifically, we will study the 
+log-Sobolev constant for log-concave measures supported in a ball of fixed diameter to obtain the 
+following result.
+
+\begin{theorem}[\cite{Lee_2016}]\label{thm:Lee_Vempala}
+  For any isotropic log-concave measure \(\mu\) on \(\mathbb{R}^n\) with support on a ball of diameter \(D\), 
+  \(\mu\) has log-Sobolev constant \(\rho_\mu \gtrsim D^{-1}\).
+\end{theorem}
+
+
+
+
+% Moreover, the KLS conjecture has applications in bounding mixing times for 
+% ball walks from a warm start (c.f. \cite{Lee_2016}), the central limit theorem for convex bodies (c.f. \cite{Giannopoulos}) 
+% and directly implies the aforementioned thin-shell conjecture. 
+
+
+
+% \begin{itemize}
+%   \item The first section of this essay consists of setting up the theory of stochastic localization.
+%     We also introduce some specific examples of stochastic localizations which will be used in subsequent 
+%     sections most importantly the discrete and continuous linear-tilt localization. 
+%   \item We then move on to discuss the application of stochastic localization to bounding Markov 
+%     mixing time. Motivated by the Markov chain Monte Carlo, the Markov mixing time provides a quantitative 
+%     measure on how fast a Markov chain converges to its stationary distribution. It turns out that 
+%     the mixing time of Markov chains which kernels can be described using stochastic localizations 
+%     is related to how the variance of the stochastic localization evolves. This method is then applied  
+%     to the Glauber dynamics on the Boolean hypercube to obtain a mixing time bound to the Ising model. 
+%   \item We also discuss a proof of Eldan's original 2013 result reducing the KLS conjecture to another seemingly 
+%     weaker conjecture known as the thin-shell conjecture. Roughly speaking, the KLS conjecture asserts 
+%     that the class of measures known as the \textit{isotropic log-concave} measures are concentrated in a similar 
+%     way to the Gaussian. In a more geometric point of view, the KLS conjecture asserts that the 
+%     maximum proportion of volume by surface area of a log-concave measure is bounded by a universal constant. 
+%     As a result, the KLS conjecture has many important consequences in convex geometry. 
+%     In particular, by noticing that any uniform measure on a convex body of unit volume is log-concave, 
+%     the KLS conjecture also implies the Bourgain slicing conjecture which asserts that any convex body 
+%     of unit volume in \(\mathbb{R}^n\) has a intersection with some hyperplane with volume bounded below 
+%     by a universal constant. Moreover, the KLS conjecture has applications in bounding mixing times for 
+%     ball walks from a warm start (c.f. \cite{Lee_2016}), the central limit theorem for convex bodies (c.f. \cite{Giannopoulos}) 
+%     and directly implies the aforementioned thin-shell conjecture. 
+  % \item Finally, inspired by the proof from the third section, we will use stochastic localization methods to 
+  %   provide a bound for the log-Sobolev constant of log-concave measures. The log-Sobolev constant is 
+  %   a constant relating to the log-Sobolev inequality -- a concept central to the theory of concentrations. 
+  %   In a similar vain to the KLS conjecture, motivated by the Gaussian log-Sobolev inequality, we also
+  %   attempt to show that the log-concave measures behaves similarly to the Gaussian in the setting of 
+  %   the log-Sobolev inequality. While in general, this turns out not to be the case, by restricting 
+  %   our view to log-concave measures with bounded support, we are able to obtain a bound for the 
+  %   log-Sobolev constant. 
     
-  \item Finally, inspired by the proof from the third section, we will use stochastic localization methods to 
-    provide a bound for the log-Sobolev constant of log-concave measures. The log-Sobolev constant is 
-    a constant relating to the log-Sobolev inequality -- a concept central to the theory of concentrations. 
-    In a similar vain to the KLS conjecture, motivated by the Gaussian log-Sobolev inequality, we also
-    attempt to show that the log-concave measures behaves similarly to the Gaussian in the setting of 
-    the log-Sobolev inequality. While in general, this turns out not to be the case, by restricting 
-    our view to log-concave measures with bounded support, we are able to obtain a bound for the 
-    log-Sobolev constant. 
-    
-\end{itemize}
+% \end{itemize}
 

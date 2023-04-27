@@ -26,13 +26,14 @@ helpful as Gaussian measures are well understood and we can use properties of th
 results about our original measure.
 \subsection{Structure of this essay}
 
-This essay consists of four sections. We now give a brief overview of them.
+This essay consists of an introduction to the theory of stochastic localization and subsequently presents three 
+of it applications. We now give a brief overview of them.
 
 \begin{itemize}
   \item The first section of this essay consists of setting up the theory of stochastic localization.
     We also introduce some specific examples of stochastic localizations which will be used in subsequent 
     sections most importantly the discrete and continuous linear-tilt localization. 
-  \item We then move on to discuss the application of the stochastic localization to bounding Markov 
+  \item We then move on to discuss the application of stochastic localization to bounding Markov 
     mixing time. Motivated by the Markov chain Monte Carlo, the Markov mixing time provides a quantitative 
     measure on how fast a Markov chain converges to its stationary distribution. It turns out that 
     the mixing time of Markov chains which kernels can be described using stochastic localizations 
@@ -40,18 +41,28 @@ This essay consists of four sections. We now give a brief overview of them.
     to the Glauber dynamics on the Boolean hypercube to obtain a mixing time bound to the Ising model. 
   \item We also discuss a proof of Eldan's original 2013 result reducing the KLS conjecture to another seemingly 
     weaker conjecture known as the thin-shell conjecture. Roughly speaking, the KLS conjecture asserts 
-    that the class of measures known as the \textit{isotropic log-concave} measures are concentrated in the similar 
-    way to the Gaussian. While we shall mostly consider the KLS conjecture using the language 
-    of concentrations, it can be equivalently phrased with a more geometric point of view, that the 
+    that the class of measures known as the \textit{isotropic log-concave} measures are concentrated in a similar 
+    way to the Gaussian. In a more geometric point of view, the KLS conjecture asserts that the 
     maximum proportion of volume by surface area of a log-concave measure is bounded by a universal constant. 
     As a result, the KLS conjecture has many important consequences in convex geometry. 
     In particular, by noticing that any uniform measure on a convex body of unit volume is log-concave, 
     the KLS conjecture also implies the Bourgain slicing conjecture which asserts that any convex body 
     of unit volume in \(\mathbb{R}^n\) has a intersection with some hyperplane with volume bounded below 
     by a universal constant. Moreover, the KLS conjecture has applications in bounding mixing times for 
-    ball walks (c.f. \cite{Lee_2016}), the central limit theorem for convex bodies (c.f. \cite{Giannopoulos}) 
-    and directly implies the aforementioned thin-shell conjecture.
+    ball walks from a warm start (c.f. \cite{Lee_2016}), the central limit theorem for convex bodies (c.f. \cite{Giannopoulos}) 
+    and directly implies the aforementioned thin-shell conjecture. 
+
+    % To achieve Eldan's reduction of the KLS to the thin-shell conjecture, we will utilize the continuous 
+    % linear-tilt localization, 
+    
   \item Finally, inspired by the proof from the third section, we will use stochastic localization methods to 
-    provide a bound for the log-Sobolev constant of log-concave measures.
+    provide a bound for the log-Sobolev constant of log-concave measures. The log-Sobolev constant is 
+    a constant relating to the log-Sobolev inequality -- a concept central to the theory of concentrations. 
+    In a similar vain to the KLS conjecture, motivated by the Gaussian log-Sobolev inequality, we also
+    attempt to show that the log-concave measures behaves similarly to the Gaussian in the setting of 
+    the log-Sobolev inequality. While in general, this turns out not to be the case, by restricting 
+    our view to log-concave measures with bounded support, we are able to obtain a bound for the 
+    log-Sobolev constant. 
+    
 \end{itemize}
 

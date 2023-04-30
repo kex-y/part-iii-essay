@@ -80,6 +80,7 @@ method to the Glauber dynamics on the Boolean hypercube to obtain a mixing time 
 
 We then move on to discuss a proof of Eldan's original 2013 result in \cite{Eldan_2013} which reduced 
 the KLS conjecture to another seemingly weaker conjecture known as the thin-shell conjecture (up to an logarithmic factor). 
+We quickly introduce these conjectures here.
 
 \begin{definition}[log-concave measure]
   A measure \(\mu\) on \(\mathbb{R}^n\) is said to log-concave if it is of the form 
@@ -106,7 +107,7 @@ is independent of the dimension \(n\). Thus, we might make a conjecture of the f
 ``all log-concave probability measures are concentrated by a universal constant''. 
 However, as currently stated, this statement is obviously false as spreading out 
 the measure decreases the concentration. Furthermore, we need to be careful since, unlike the Gaussian, the 
-concentration of general log-concave measures are not invariant under linear functions. Hence, it is clear that the KLS 
+concentration of general log-concave measures are not invariant under linear transformations. Hence, it is clear that the KLS 
 conjecture would not hold without a suitable normalization. This leads us to the following.
 
 \begin{definition}[Isotropic]
@@ -213,9 +214,9 @@ one can obtain the exponential concentration of said measure via the Chernoff bo
   
 It does not come as a surprise that as with the setting of the KLS conjecture, the standard Gaussian measure 
 \(\gamma^n\) in \(\mathbb{R}^n\) satisfies the log-Sobolev inequality with log-Sobolev constant 
-\(\rho_{\gamma^n} = 1\) (c.f. \cite{Gross_1975}). However, in contrast to the Poincaré inequality where 
-the KLS conjecture suggests that the Poincaré constant is bounded below by a universal constant, it is known 
-\cite{Lee_2016} that the log-Sobolev constant cannot be bounded below by a universal constant. Nonetheless, we are 
+\(\rho_{\gamma^n} = 1\) (c.f. \cite{Gross_1975}). However, in contrast to the KLS conjecture which suggests that the concentration of 
+log-concave measures are bounded below by a universal constant, it is known (c.f. \cite{Lee_2016}) that the log-Sobolev constant 
+cannot be bounded below by a universal constant. Nonetheless, we are 
 interested in the log-Sobolev constant of log-concave measure. More specifically, we will study the 
 log-Sobolev constant for log-concave measures supported in a ball of fixed diameter to obtain the 
 following result.

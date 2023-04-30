@@ -1,6 +1,6 @@
 An application of stochastic localizations is used to prove mixing bounds for Markov processes. 
 Focusing on the framework established by Chen and Eldan in \cite{Chen_2022}, we will present their prescribed 
-method to bound the mixing time for a special class of Markov processes: namely the Markov chains 
+method to bound the mixing time for a special class of Markov processes: the Markov chains 
 associated with stochastic localizations. 
 As a specific example, we will in this section also describe Chen and Eldan's \cite{Chen_2022} application 
 of this framework to the Glauber dynamics and as a result, recover a version of the main theorem on spectral independence as 
@@ -28,8 +28,8 @@ gas behavior. While fundamentally, the Ising model is constructed using Bernoull
 random variables interacts with one another, sampling the Ising model directly has exponential computational 
 complexity increasing with the number of particles. Hence, to sample from the Ising model, one often instead 
 applies MCMC to the Glauber dynamics which is a Markov chain with stationary measure being the Ising model.
-We will in this small section introduce these definitions and recall a known result \cite{Anari_2020} 
-bounding the spectral gap and consequently the mixing time of the Glauber dynamics.
+We will in this small section introduce these definitions and recall a known bound from \cite{Anari_2020} 
+for the spectral gap and consequently the mixing time of the Glauber dynamics.
 
 Heuristically, the Ising model measures the probability that a graph is in a specific configuration of 
 up and down spins in which neighboring vertices are more likely to have the same spin. This ``likeliness'' 
@@ -49,11 +49,11 @@ align.
 % construct a Markov chain which has the Ising model as its stationary distribution. One such Markov chain 
 % is known as the Glauber dynamics.
 
-To sample from the Ising model, one naive method is by simply starting from an arbitrary configuration 
+To sample from the Ising model, one method is by starting from an arbitrary configuration 
 \(\sigma_1 \in \{-1, 1\}^n\), and at each time step, update the configuration according to the description 
 of the Ising model. Namely, the configuration at the next time step either remains the 
-same or change at one vertex. Furthermore, the probability of this occurring is weighted according to 
-\(\mu\). This procedure results in a Markov chain which turns out to have the Ising model as its stationary distribution. 
+same or change at one vertex. Furthermore, the probability of this occurring is weighted according to a given 
+measure \(\mu\). This procedure results in a Markov chain which turns out to have the Ising model as its stationary distribution. 
 This Markov chain is known as the Glauber dynamics. Formally, it is defined as the following.
 
 \begin{definition}[Glauber dynamics, \cite{Chen_2022}]
@@ -96,7 +96,7 @@ as spectral independence. We quickly recall their results here.
   \[\mathfrak{gap}(K) \ge \frac{1}{n} \prod_{k = 0}^{n - 2}\left(1 - \frac{\eta_k}{n - k - 1}\right).\]
 \end{theorem}
 
-As an application of stochastic localizations, we will in section~\ref{sec:Glauber_loc} recover an equivalent 
+As an application of stochastic localizations, we will in section~\ref{sec:Glauber_loc} recover a similar 
 bound by using the theories established above. In particular, assuming the same assumptions as theorem~\ref{thm:Anari},
 we will show that 
 \[\mathfrak{gap}(K) \ge \prod_{k = 0}^{n - 2}\left(1 - \frac{\eta_k + 1}{n - k}\right).\]
@@ -109,7 +109,7 @@ these Markov processes and show that the Glauber dynamics can be constructed usi
 
 \begin{definition}[Markov process associated with a stochastic localization, \cite{Chen_2022}]
   Let \((\mu_t)_{t \ge 0}\) be a prelocalization of \(\mu\) such that \(\mu_t\) is absolutely 
-  continuous (almost everywhere) with respect to \(\mu\) for all \(t\). For all \(\tau > 0\), we define the dynamics 
+  continuous with respect to \(\mu\) for all \(t\). Then, for all \(\tau > 0\), we define the dynamics 
   associated with \((\mu_t)_t\) at \(\tau\) to be the Markov process with kernel 
   \[K(x, A) := \mathbb{E}_\mathbb{P}\left[\frac{\dd \mu_\tau}{\dd \mu}(x) \mu_\tau(A)\right]\]
   for all \(x \in \mathcal{X}, A \in \Sigma\).
@@ -173,23 +173,25 @@ for all \(A \in \Sigma\), we have
       \int \phi(x)^2 (K\mu)(\dd x) = \int \phi(x)^2 \mu(\dd x)\]
   as \(\mu\) is the stationary measure of \(K\). Thus, for any integrable \(\phi : \mathcal{X} \to \mathbb{R}\),
   by substituting the above two equations, we have
-  \begin{align*}
-    \hspace{1cm} & \frac{1}{2\text{Var}_\mu[\phi]} \int_{\mathcal{X}^2}(\phi(x) - \phi(y))^2 K(x, \dd y) \mu(\dd x) \\
-    = & \frac{1}{2\text{Var}_\mu[\phi]} \left(\int\phi(x)^2\mu(\dd x) 
-      - 2\int \phi(x)\phi(y) K(x, \dd y) \mu(\dd x) + \int \phi(y)^2 K(x, \dd y) \mu(\dd x)\right) \\
-    = & \frac{1}{\text{Var}_\mu[\phi]}\left(\int\phi^2 \dd \mu 
-      - \mathbb{E}_\mathbb{P}\left[\left(\int_\mathcal{X} \phi \dd\mu_\tau\right)^2\right]\right) \\
-    = & \frac{1}{\text{Var}_\mu[\phi]} 
-        \mathbb{E}_\mathbb{P}\left[\int\phi^2 \dd \mu_\tau - \left(\int_\mathcal{X} \phi \dd\mu_\tau\right)^2\right]
-      = \frac{\mathbb{E}[\text{Var}_{\mu_\tau}[\phi]]}{\text{Var}_\mu[\phi]}.
-  \end{align*}
+  \begin{equation}\label{eq:gap_assoc2}
+    \begin{split}
+      \hspace{1cm} & \frac{1}{2\text{Var}_\mu[\phi]} \int_{\mathcal{X}^2}(\phi(x) - \phi(y))^2 K(x, \dd y) \mu(\dd x)\\
+      = & \frac{1}{2\text{Var}_\mu[\phi]} \left(\int\phi(x)^2\mu(\dd x) 
+        - 2\int \phi(x)\phi(y) K(x, \dd y) \mu(\dd x) + \int \phi(y)^2 K(x, \dd y) \mu(\dd x)\right)\\
+      = & \frac{1}{\text{Var}_\mu[\phi]}\left(\int\phi^2 \dd \mu 
+        - \mathbb{E}_\mathbb{P}\left[\left(\int_\mathcal{X} \phi \dd\mu_\tau\right)^2\right]\right)\\
+      = & \frac{1}{\text{Var}_\mu[\phi]} 
+          \mathbb{E}_\mathbb{P}\left[\int\phi^2 \dd \mu_\tau - \left(\int_\mathcal{X} \phi \dd\mu_\tau\right)^2\right]
+        = \frac{\mathbb{E}[\text{Var}_{\mu_\tau}[\phi]]}{\text{Var}_\mu[\phi]}.
+    \end{split}
+  \end{equation}
   Moreover, by observing that 
   \[\mathfrak{gap}(K) = 
   \inf_{\substack{\phi : \mathcal{X} \to \mathbb{R}\\ \int \phi \dd \mu = 0}} 1 
     - \frac{\int \phi K \phi \dd \mu}{\int \phi^2 \dd \mu}
   = \inf_{\phi : \mathcal{X} \to \mathbb{R}} 
     \frac{1}{2 \text{Var}_\mu[\phi]} \int (\phi(x) - \phi(y))^2 K(x, \dd y) \mu(\dd x),\]
-  the result follows by taking infimum on both sides.
+  the result follows by taking infimum on both sides of \eqref{eq:gap_assoc2}.
 \end{proof}
 
 % This proposition has a nice intuitive interpretation. By recalling that the limit of a stochastic 

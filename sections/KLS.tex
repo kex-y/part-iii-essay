@@ -2,7 +2,7 @@ The stochastic localization scheme has been wildly successful in making progress
 While Eldan introduced stochastic localization to prove theorem~\ref{thm:KLS_to_TS}, 
 modifying the scheme slightly, Lee and Vempala in \cite{Lee_2016} had obtained the bound 
 \(C_{\text{con}}^n \lesssim n^{-1 / 4}\). Further modifying their arguments, a recent breakthrough by 
-Chen in \cite{Chen_2020} improves the bound by showing \(C_{\text{con}}^n = n^{-o(1)}\).
+Chen in \cite{Chen_2020} improves the bound significantly by showing \(C_{\text{con}}^n = n^{-o(1)}\).
 In this section, we present the original context for the construction of stochastic 
 localizations. To this end, we will describe a proof of Eldan's original reduction of the KLS 
 conjecture to the thin-Shell conjecture.
@@ -134,6 +134,8 @@ With this theorem in mind, we establish the following correspondence.
       \le \int_0^\infty e^{-D \sqrt{t}} \dd t = \frac{2}{D^2}\]
   implying \(\mu\) is \(D / \sqrt{2}\)-concentrated.
 \end{proof}
+
+Thusly, for log-concave measures, all three notions of concentration presented above are equivalent.
 
 \subsection{Example: concentration of the Gaussian}\label{sec:gaussian_conc}
 

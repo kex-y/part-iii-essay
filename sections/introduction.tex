@@ -61,13 +61,16 @@ its law is approximately stationary.
 
 A standard method of analyzing the mixing times of Markov chains is through the use of the spectral gap. 
 
+\begin{definition}[Spectral gap]
+  Given a Markov kernel \(K\), we define its spectral gap to be 
+  \[\mathfrak{gap}(K) := 1 - \sup\{\lambda \mid \lambda \text{ is an eigenvalue of } K, \lambda \neq 1\}.\]
+\end{definition}
+
 \begin{theorem}[\cite{Levin_2017}]\label{thm:levin}
   Given a reversible and irreducible Markov chain with kernel \(K\) on the state space \(\mathcal{X}\) 
   with stationary distribution \(\mu\), denoting \(\mu_{\min} = \inf_{x \in \mathcal{X}} \mu(x)\), we have 
   \[t_{\text{mix}}(K, \epsilon) \le \left\lceil\frac{1}{\mathfrak{gap}(K)}
-  \left(\frac{1}{2}\log\left(\frac{1}{\mu_{\min}}\right) + \log\left(\frac{1}{2\epsilon}\right)\right)\right\rceil,\]
-  where \(\mathfrak{gap}(K)\) is the spectral gap of \(K\) and is defined as
-  \[\mathfrak{gap}(K) := 1 - \sup\{\lambda \mid \lambda \text{ is an eigenvalue of } K, \lambda \neq 1\}.\]
+  \left(\frac{1}{2}\log\left(\frac{1}{\mu_{\min}}\right) + \log\left(\frac{1}{2\epsilon}\right)\right)\right\rceil.\]
 \end{theorem}
 
 We will see that the spectral gap of Markov chains which kernels can be described using stochastic localizations 

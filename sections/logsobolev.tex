@@ -3,7 +3,9 @@ to prove a version of the log-Sobolev inequality for the log-concave measures. A
 introduction, the log-Sobolev inequality is central to the concentration of 
 measures as it allows us to directly compute concentrations of specific measures. Using stochastic localization, 
 we will in this section bound the log-Sobolev constant for log-concave measures 
-supported in a ball of fixed diameter. We take heavy inspiration from the proof as presented in section~\ref{sec:KLS}
+supported in a ball of fixed diameter. Namely, we will show Theorem~\ref{thm:Lee_Vempala} which states that 
+\(\rho_\mu \gtrsim D^{-1}\) for any isotropic log-concave measure \(\mu\). 
+We take heavy inspiration from the proof as presented in section~\ref{sec:KLS}
 where we reduced the KLS conjecture to the thin-shell conjecture.
 
 % \subsection{Entropy and log-Sobolev inequalities}
@@ -67,7 +69,7 @@ where we reduced the KLS conjecture to the thin-shell conjecture.
 
 \subsection{Entropy of bounded support}
 
-Before moving directly to proving theorem~\ref{thm:Lee_Vempala}, let us first attempt to gain some intuition 
+Before moving directly to proving Theorem~\ref{thm:Lee_Vempala}, let us first attempt to gain some intuition 
 in how the entropy of a general measure with bounded support behaves. In contrast to the variance, 
 where the variance of a measure with bounded support is trivially bounded by the radius squared of 
 said support, the bound for the entropy is less clear. Nonetheless, a similar result can be established 
@@ -99,9 +101,9 @@ at most \(2D \text{Lip}(\phi)\). Thus, for our measure \(\mu\) on \(\mathbb{R}^n
 and any smooth 1-Lipschitz \(\phi\), we have that the push-forward measure of \(\mu\) along \(\phi^2\), 
 \((\phi^2)_* \mu\) is a measure on \(\mathbb{R}\) with support 
 with diameter at most \(2D^2\). Consequently, Hoeffding's lemma tells us that \((\phi^2)_* \mu \in \mathcal{G}(D^4)\).  
-With this in mind, we can now prove lemma~\ref{lem:entropy_supp2}.
+With this in mind, we can now prove Lemma~\ref{lem:entropy_supp2}.
 
-\begin{proof}[Proof of lemma~\ref{lem:entropy_supp2}]
+\begin{proof}[Proof of Lemma~\ref{lem:entropy_supp2}]
   For ease of notation, let us denote \(f = \phi^2\). Consider 
   \[\exp(\text{Ent}_\mu[f]) = \exp(\mathbb{E}_\mu[f\log f] - \mathbb{E}_\mu[f]\log\mathbb{E}[f]).\]
   By considering that the function \(x \mapsto -x\log x\) has its maximum at \(e^{-1}\), we have
@@ -128,7 +130,7 @@ With this in mind, we can now prove lemma~\ref{lem:entropy_supp2}.
   \[\mathbb{E}_\mu[f^{2n}] = \partial_\lambda^{2n} m_{f_*\mu}(0) \le D^{4n}\]
   and 
   \[\mathbb{E}_\mu[f^{2n + 1}] = \partial_\lambda^{2n + 1} m_{f_*\mu}(0) \le 0.\]
-  Substituting the above into equation~\eqref{eq:Taylor}, we obtain
+  Substituting the above into Equation~\eqref{eq:Taylor}, we obtain
   \[\mathbb{E}_\mu[fe^f] \le \sum_{n = 1}^\infty \frac{1}{(2n - 1)!}D^{4n}
       = D^2 \sum_{n = 1}^\infty \frac{1}{(2n - 1)!}(D^2)^{2n - 1}
       = D^2 \sinh D^2.\]
@@ -141,8 +143,10 @@ With this in mind, we can now prove lemma~\ref{lem:entropy_supp2}.
   as desired.
 \end{proof}
 
-Unfortunately, this approach cannot result in a log-Sobolev inequality as the Lipschitz condition on \(\phi\) is 
-too strong. Nonetheless, by restricting to the class of log-concave measures, Kannan, Lovász and Montenegro 
+Unfortunately, this approach cannot result in a log-Sobolev inequality as we would like to control 
+the entropy of \(\phi\) by \(\mathbb{E}[\|\nabla \phi\|^2]\) rather than just its Lipschitz constant.
+Moreover, if \(\phi\) has a high gradient in a small region, the bound resulting from the above 
+is rather inefficient. Nonetheless, by restricting to the class of log-concave measures, Kannan, Lovász and Montenegro 
 \cite{Lovasz_2007} were able to provide a bound for the log-Sobolev inequality of the same order.
 
 \begin{lemma}[\cite{Lovasz_2007}]\label{lem:entropy_supp}
@@ -156,12 +160,17 @@ too strong. Nonetheless, by restricting to the class of log-concave measures, Ka
 
 % a bound by Lee and Vempala for the log-Sobolev constant for all log-concave measures. 
 % Namely, we consider the following theorem. 
-As promised in the introduction, we will in this section present a modified proof of theorem~\ref{thm:Lee_Vempala}.
+As promised in the introduction, we will in this section present a modified proof of Theorem~\ref{thm:Lee_Vempala}.
 We attempt to analyze the log-Sobolev inequality using the same method as prescribed by section~\ref{sec:KLS_to_TS}. 
 As it turns out, while the initial steps can be followed verbatim, this method runs into issues when trying to 
 bound the entropy of the martingale term resulted from the localization. In particular, applying the Cauchy-Schwarz 
-inequality no longer provides the desired integral as it had done for the variance case. Instead, we will consider 
-a different martingale \(N_t := \int \phi^2 \log \phi^2 \dd \mu_t\) and utilize the Burkholder-Davis-Gundy inequality.
+inequality no longer provides the desired integral as it had done for the variance case. Instead, by 
+utilizing the Burkholder-Davis-Gundy inequality, we are able to express the entropy of the martingale 
+\(M_t := \int \phi^2 \dd \mu_t\) in terms of the quadratic 
+variation of a different martingale defined by \(N_t := \int \phi^2 \log \phi^2 \dd \mu_t\). Moreover, 
+by computing directly, we find that \(N_t\) has quadratic variation bounded the integral of the entropies of the 
+stochastic localization up to time \(t\). Hence, by combining the two, we minimize the bound on the entropy by choosing to 
+stop the stochastic localization at an appropriate time, resulting in the desired bound.
 
 % and by normalizing, we can also assume it has Lipschitz constant 1.  
 % Indeed, if the log-Sobolev inequality holds with constant \(\rho\) for 1-Lipschitz functions, denoting \(\text{Lip}(\phi)\)
@@ -202,7 +211,7 @@ and since \(M_t\) is a martingale, we also have \(\mathbb{E}[M_t] = \mathbb{E}[M
 \[\text{Ent}^\Psi[\Psi(M_t)] = \mathbb{E}[\Psi(M_t)] - \Psi(\mathbb{E}[M_t]) = 
   \mathbb{E}[\Psi(M_t)] - \Psi(\mathbb{E}_\mu[\phi]) = \mathbb{E}[\Psi(M_t)].\]
 Finally, substituting the above two equations into \eqref{eq:entropy_gen_decomp_deriv}, we recover 
-equation~\eqref{eq:entropy_gen_decomp} as required.
+Equation~\eqref{eq:entropy_gen_decomp} as required.
 
 % Indeed, given the smooth function \(\phi : \mathbb{R}^n \to \mathbb{R}\), let us define the martingale 
 % \(M_t := \int \phi^2 \dd \mu_t\) where \((\mu_t)\) is the linear-tilt localization described in section~\ref{sec:construct}. 
@@ -225,23 +234,23 @@ equation~\eqref{eq:entropy_gen_decomp} as required.
 %   & = \mathbb{E}_{\mu_t}[\phi^2 \log \phi^2] - \mathbb{E}_{\mu_t}[\phi^2] \log \mathbb{E}_{\mu_t}[\phi^2] \\
 %   & = \text{Ent}_{\mu_t}[\phi^2].
 % \end{align*}
-% Hence, we recover equation~\eqref{eq:entropy_decomp} by combining the above two equations.
+% Hence, we recover Equation~\eqref{eq:entropy_decomp} by combining the above two equations.
 
 With this in mind, we recall that in the reduction of the KLS conjecture, we proceeded to bound the two terms on the 
-right hand side by using proposition~\ref{prop:linear-tilt_ACV} and the Brascamp-Lieb inequality respectively. 
+right hand side by using Proposition~\ref{prop:linear-tilt_ACV} and the Brascamp-Lieb inequality respectively. 
 We cannot do this for general \(\Psi\). However, in the case that \(\Psi(x) = x\log x\), 
 the term \(\mathbb{E}[\text{Ent}_{\mu_t}[\phi^2]]\) can be bounded using the following lemma.
 
 \begin{lemma}[Equation 2.17, \cite{Ledoux_1999}]\label{lem:entropy_BL}
   Let \(U : \mathbb{R}^n \to \mathbb{R}\) be a twice differentiable function such that
-  there exists some \(c > 0\) so that \(U''(x) \ge c\text{id}_n\) for any \(x \in \mathbb{R}^n\). 
+  there exists some \(\alpha > 0\) so that \(U''(x) \ge \alpha\text{id}_n\) for any \(x \in \mathbb{R}^n\). 
   Then, for all smooth functions
   \(\phi : \mathbb{R}^n \to \mathbb{R}\), we have 
-  \[\text{Ent}_\nu[\phi^2] \le \frac{2}{c}\mathbb{E}_\nu[\|\nabla\phi\|^2]\]
+  \[\text{Ent}_\nu[\phi^2] \le \frac{2}{\alpha}\mathbb{E}_\nu[\|\nabla\phi\|^2]\]
   where \(\dd \nu = e^{-U} \dd \text{Leb}^n\) and \(U''\) denotes the Hessian of \(U\).
 \end{lemma}
 
-Recalling equation~\eqref{eq:stoch_loc_alt}, by substituting \(U(x) = - z_t - \langle v_t, x\rangle + \frac{t}{2}\|x\|^2 + V(x)\)
+Recalling Equation~\eqref{eq:stoch_loc_alt}, by substituting \(U(x) = - z_t - \langle v_t, x\rangle + \frac{t}{2}\|x\|^2 + V(x)\)
 we observe that \(U''(x) \ge \frac{t}{2}\text{Id}_n + V''(x) \ge \frac{t}{2}\text{Id}_n\) as \(V\) is convex.
 Thus, by the above lemma, as \(\dd \mu_t = e^{-U} \dd \text{Leb}^n\), \(\mu_t\) satisfies the log-Sobolev 
 inequality of the form
@@ -249,7 +258,7 @@ inequality of the form
   \text{Ent}_{\mu_t}[\phi^2] \le 4t^{-1} \mathbb{E}_{\mu_t}[\|\nabla \phi\|^2].
 \end{equation} 
 On the other hand, we cannot use the same approach to bound \(\text{Ent}[M_t]\). Indeed, while for 
-proposition~\ref{prop:linear-tilt_ACV}, we were able to invoke a clever application of the Cauchy-Schwarz inequality 
+Proposition~\ref{prop:linear-tilt_ACV}, we were able to invoke a clever application of the Cauchy-Schwarz inequality 
 in order to bound \([M]_t\) by \(\text{Var}_{\mu_t}[M_t]\) and the operator norm of the covariance matrix, the extra logarithmic term causes problem 
 when we attempt to bound the entropy%\footnote{Lemma 2.7 in \cite{Lee_2017} claims to bound \(\dd[] [M]_t\) by 
 %a term involving the entropy via. a similar method invoking Hölder's inequality rather than the Cauchy-Schwarz inequality. However,
@@ -259,7 +268,7 @@ Instead, we shall bound \(\text{Ent}[M_t]\) by an application of the Burkholder-
 \begin{lemma}[Burkholder-Davis-Gundy, \cite{Lowther_2010}]
   For all \(1 \le p < \infty\), there exists some constant \(C_p\) such that for any martingale \((X_t)_{t \ge 0}\),
   we have 
-  \[\mathbb{E}\left[\left(\sup_{s \le t} X_t\right)^p\right] \le C_p \mathbb{E}\left[[X]_t^{p / 2}\right]\]
+  \[\mathbb{E}\left[\left(\sup_{s \le t} X_s\right)^p\right] \le C_p \mathbb{E}\left[[X]_t^{p / 2}\right]\]
   for all \(t \ge 0\).
 \end{lemma}
 
@@ -274,7 +283,7 @@ we have
   \end{split}
 \end{equation}
 where the first inequality follows by Jensen's inequality. Now, similar to the variance case, we focus on 
-bounding \([N]_t\). Similar to the proof of proposition~\ref{prop:linear-tilt_ACV}, introducing the notation  
+bounding \([N]_t\). Similar to the proof of Proposition~\ref{prop:linear-tilt_ACV}, introducing the notation  
 \(U_t := \int \psi(x)(x - a_t)\mu_t(\dd x)\), we obtain
 \begin{align*}
   \dd N_t & = d \int \psi(x) F_t(x) \mu(\dd x) = \int \psi(x) \langle x - a_t, \dd W_t \rangle \mu_t(\dd x)\\
@@ -294,13 +303,13 @@ Thus, \(\|x - a_t\|_{L^\infty(\mu_t)} \le D\) for any \(t \ge 0\). Then, we have
   & = D^2 \left|\mathbb{E}_{\mu_t}[\phi^2 \log \phi^2] - \mathbb{E}_{\mu_t}[\phi^2] \log\mathbb{E}_{\mu_t}[\phi^2]\right|^2 \dd t\\
   & = D^2 \text{Ent}_{\mu_t}[\phi^2]^2 \dd t.
 \end{align*}
-Combining this with equation~\eqref{eq:entropy_bound}, we obtain
+Combining this with Equation~\eqref{eq:entropy_bound}, we obtain
 \begin{equation}\label{eq:entropy_bound2}
   \text{Ent}[M_t] \lesssim \mathbb{E}\left[\int_0^t \dd[] [N]_s^{1 / 2}\right]
     \le \mathbb{E}\left[\int_0^t D \text{Ent}_{\mu_s}[\phi^2] \dd s\right].
 \end{equation}
 At this point, as \(\mu_t\) is only supported in a ball of diameter \(D\), 
-we can utilize lemma~\ref{lem:entropy_supp} for bounding the log-Sobolev constant.
+we can utilize Lemma~\ref{lem:entropy_supp} for bounding the log-Sobolev constant.
 %  which proof will be provided in the subsequent section.
 % \begin{lemma}\label{lem:entropy_supp}
 %   For \(\mu\) a measure on \(\mathbb{R}^n\) supported in a ball of diameter \(D \ge \epsilon\) for some fixed \(\epsilon > 0\), 
@@ -308,9 +317,9 @@ we can utilize lemma~\ref{lem:entropy_supp} for bounding the log-Sobolev constan
 %   \[\text{Ent}_\mu[\phi^2] \le C_\epsilon D^2\]
 %   for all smooth 1-Lipschitz functions \(\phi : \mathbb{R}^n \to \mathbb{R}\).
 % \end{lemma}
-Hence, combining this with lemma~\ref{lem:entropy_BL}, we have that 
+Hence, combining this with Lemma~\ref{lem:entropy_BL}, we have that 
 \(\text{Ent}_{\mu_t}[\phi^2] \lesssim (t^{-1} \wedge D) \mathbb{E}_{\mu_t}[\|\nabla \phi\|^2]\). Thus, 
-by Fubini's theorem, equation~\eqref{eq:entropy_bound2} becomes
+by Fubini's theorem, Equation~\eqref{eq:entropy_bound2} becomes
 \begin{align*}
   \text{Ent}[M_t] & \lesssim \mathbb{E}\left[D \int_0^t (s^{-1} \wedge D^2)\mathbb{E}_{\mu_s}[\|\nabla \phi\|^2] \dd s\right]\\
     & = D \int_0^t (s^{-1} \wedge D^2)\mathbb{E}_\mu[\|\nabla \phi\|^2] \dd s\\
@@ -319,7 +328,7 @@ by Fubini's theorem, equation~\eqref{eq:entropy_bound2} becomes
 \end{align*}
 for all \(t > D^{-2}\).
 
-Combining this with equation~\eqref{eq:entropy_decomp}, we obtain
+Combining this with Equation~\eqref{eq:entropy_decomp}, we obtain
 \begin{align*}
   \text{Ent}_\mu[\phi^2] & \le \text{Ent}[M_t] + \mathbb{E}[\text{Ent}_{\mu_t}[\phi^2]]\\
   & \lesssim \mathbb{E}_\mu[\|\nabla \phi\|^2](D (1 + \log t + \log D) + 4t^{-1})
@@ -328,5 +337,5 @@ for all \(t > D^{-2}\). Minimizing this equation in \(t\), we find that it is mi
 \[\text{Ent}_\mu[\phi^2] \lesssim (2 + \log 4)D\mathbb{E}_\mu[\|\nabla \phi\|^2]\]
 whenever \(4D^{-1} \ge D^{-2}\) which holds if and only if \(D \ge 1 / 4\). Thus, 
 \[\text{Ent}_\mu[\phi^2] \lesssim D \mathbb{E}_\mu[\|\nabla \phi\|^2]\]
-where for \(D \le 1\), \(D^{-2} \ge D^{-1}\) and so the conclusion remains to hold by lemma~\ref{lem:entropy_supp}. 
-Hence, we bounded the log-Sobolev constant with \(\rho_{\mu} \gtrsim D^{-1}\) recovering the result of theorem~\ref{thm:Lee_Vempala}.
+where for \(D \le 1\), \(D^{-2} \ge D^{-1}\) and so the conclusion remains to hold by Lemma~\ref{lem:entropy_supp}. 
+Hence, we bounded the log-Sobolev constant with \(\rho_{\mu} \gtrsim D^{-1}\) recovering the result of Theorem~\ref{thm:Lee_Vempala}.

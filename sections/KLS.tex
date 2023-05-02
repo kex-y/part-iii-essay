@@ -1,5 +1,5 @@
 The stochastic localization scheme has been wildly successful in making progress towards the KLS conjecture. 
-While Eldan introduced stochastic localization to prove theorem~\ref{thm:KLS_to_TS}, 
+While Eldan introduced stochastic localization to prove Theorem~\ref{thm:KLS_to_TS}, 
 modifying the scheme slightly, Lee and Vempala in \cite{Lee_2016} had obtained the bound 
 \(C_{\text{con}}^n \lesssim n^{-1 / 4}\). Further modifying their arguments, a recent breakthrough by 
 Chen in \cite{Chen_2020} improves the bound significantly by showing \(C_{\text{con}}^n = n^{-o(1)}\).
@@ -206,7 +206,7 @@ The immediate consequence of this bound is that there exists some \(z \in \mathb
 then \(\int |\phi(x) - \phi(y)|^2 \gamma^n(\dd x) > \pi^2 / 4\) for all \(y\), implying
 \(\int \int |\phi(x) - \phi(y)|^2 \gamma^n(\dd x) \gamma^n(\dd y) > \pi^2 / 4\) which 
 contradicts the above bound. Hence, choosing such a \(z\), we conclude the proof of 
-theorem~\ref{thm:gaussian_conc} since
+Theorem~\ref{thm:gaussian_conc} since
 \[\text{Var}_{\gamma^n}[\phi] = \min_{w \in \mathbb{R}^n} \int |\phi(x) - w|^2 \gamma^n(\dd x)
   \le \int |\phi(x) - z|^2 \gamma^n(\dd x) \le \left(\frac{\pi}{2}\right)^2\]
 as required.
@@ -251,10 +251,10 @@ Thus,
     & = \sum_{i = 1}^n (\mathbb{E}_{X \sim \mu}[X_i^2] - (\mathbb{E}_{X \sim \mu}X_i)^2)
       = \sum_{i = 1}^n \text{Var}_\mu[\pi_i] \le n.
 \end{align*}
-Thus, by proposition~\ref{prop:concentration}, we have that \(\text{Var}_\mu[\phi] \le n\) for all 
+Thus, by Proposition~\ref{prop:concentration}, we have that \(\text{Var}_\mu[\phi] \le n\) for all 
 1-Lipschitz \(\phi : \mathbb{R}^n \to \mathbb{R}\) implying \(\mu\) is \(n^{-1/2}\)-concentrated\footnote{This is also a consequence of theorem 2 in \cite{Lee_2016}.}.
 
-% We remark that while the constants in theorem~\ref{thm:KLS_to_TS} depends on the dimension \(n\), the 
+% We remark that while the constants in Theorem~\ref{thm:KLS_to_TS} depends on the dimension \(n\), the 
 % KLS conjecture is reduced to the thin-shell conjecture in the sense that it suffices to show 
 % \(\sup_n C^n_{\text{TS}} \log n < \infty\). Then, the universal bound for the KLS conjecture is obtained 
 % by taking the constant \(C = \sup_n C^n_{\text{con}} \le \sup_n C^n_{\text{TS}} \log n < \infty\).
@@ -262,7 +262,7 @@ Thus, by proposition~\ref{prop:concentration}, we have that \(\text{Var}_\mu[\ph
 \subsubsection{Equivalent formulation of the KLS conjecture}
 
 While we have formulated the KLS conjecture using the language of concentration, the conjecture can be  
-instead formulated in several equivalent ways. As demonstrated by proposition~\ref{thm:equiv}, it is clear 
+instead formulated in several equivalent ways. As demonstrated by Proposition~\ref{thm:equiv}, it is clear 
 that the KLS conjecture can be equivalently formulated using the exponential or first moment concentration. 
 Moreover, two other common formulation of the KLS conjecture involves the Cheeger constant and the Poincaré 
 inequality. For completeness of this exposition, we will now also briefly present the latter two equivalent 
@@ -305,19 +305,28 @@ With these definitions, the KLS conjecture can be equivalently reformulated as t
   \(\mu \in \mathscr{M}^n_{\text{iso}}\), \(\mu\) satisfy the Cheeger's inequality with constant \(D\).
 \end{conjecture}
 
-The equivalence of the reformulation follows by completing theorem~\ref{thm:equiv} with two additional 
+The equivalence of the reformulation follows by completing Theorem~\ref{thm:equiv} with two additional 
 equivalences.
 
+\begin{definition}[Poincaré inequality, \cite{Milman_2008}]
+  Given a probability measure \(\mu\) on \(\mathbb{R}^n\), we say \(\mu\) satisfy the Poincaré inequality 
+  if there exists some \(D > 0\) such that for all 
+  smooth \(\phi : \mathbb{R}^n \to \mathbb{R}\) satisfying \(\int \phi \dd\mu = 0\), we have
+  \[D \text{Var}_\mu[\phi] \le \mathbb{E}_\mu[\|\nabla \phi\|^2] = \int \|\nabla \phi\|^2 \dd\mu.\]
+  We denote the largest such \(D\) by \(D^\mu_{\text{P}}\).
+\end{definition}
+
 \begin{theorem}[Milman, \cite{Milman_2008}]\label{thm:milman2}
-  For all log-concave measure \(\mu\) on \(\mathbb{R}^n\), the following are equivalent
+  For all log-concave measure \(\mu\) on \(\mathbb{R}^n\), the following are equivalent.
   \begin{itemize}
-    \item \(\mu\) has exponential concentration with constant \(D^\mu_\text{exp}\).
-    \item \(\mu\) has first-moment concentration with constant \(D^\mu_\text{FM}\).
-    \item \(\mu\) satisfy the Cheeger's inequality with constant \(D^\mu_\text{C}\).
-    \item \(\mu\) satisfy the Poincaré inequality: there exists some \(D > 0\) such that for all 
-      smooth \(\phi : \mathbb{R}^n \to \mathbb{R}\) satisfying \(\int \phi \dd\mu = 0\), we have
-      \[D \text{Var}_\mu[\phi] \le \mathbb{E}_\mu[\|\nabla \phi\|^2] = \int \|\nabla \phi\|^2 \dd\mu.\]
-      We denote the largest such \(D\) by \(D^\mu_{\text{P}}\).
+    \item There exists some \(D < \infty\) such that \(\mu\) has exponential concentration with constant \(D\). 
+      We denote the largest such \(D\) by \(D^\mu_\text{exp}\).
+    \item There exists some \(D < \infty\) such that \(\mu\) has first-moment concentration with constant \(D\). 
+      We denote the largest such \(D\) by \(D^\mu_\text{FM}\).
+    \item There exists some \(D < \infty\) such that \(\mu\) satisfy the Cheeger's inequality with constant \(D\).
+      We denote the largest such \(D\) by \(D^\mu_\text{C}\).
+    \item There exists some \(D < \infty\) such that \(\mu\) satisfy the Poincaré inequality with constant \(D\).
+      We denote the largest such \(D\) by \(D^\mu_\text{P}\).
   \end{itemize}
   Furthermore, \(D^\mu_{\text{exp}} \simeq D^\mu_{\text{FM}} \simeq D^\mu_{\text{P}} \simeq (D^\mu_{\text{C}})^2\).
 \end{theorem}

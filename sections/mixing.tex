@@ -15,8 +15,8 @@ presented by Anari, Liu and Oveis Gharan in \cite{Anari_2020}.
 %       \frac{1}{2 \text{Var}_\mu[\phi]} \int (\phi(x) - \phi(y))^2 K(x, \dd y) \mu(\dd x),
 % \end{equation}
 % where \(\mu\) is the stationary measure of \(K\) and \(K\phi = \int \phi(y) K(\cdot, \dd y)\). We will take 
-% equation~\eqref{eq:gap} to be the defining property of the spectral gap in the case \(K\) is defined on 
-% a general state space. Nonetheless, as the inequality in theorem~\ref{thm:levin} is only meaningful whenever 
+% Equation~\eqref{eq:gap} to be the defining property of the spectral gap in the case \(K\) is defined on 
+% a general state space. Nonetheless, as the inequality in Theorem~\ref{thm:levin} is only meaningful whenever 
 % \(\mu_{\min} > 0\), this theorem is only applicable for Markov chains on finite state space 
 % (and we can replace \(\inf\) with \(\min\)).
 
@@ -45,7 +45,7 @@ align.
   where \(Z > 0\) is the normalizing constant.
 \end{definition}
 
-% As illustrated by theorem~\ref{thm:markov_conv}, in order to sample from the Ising model, we can 
+% As illustrated by Theorem~\ref{thm:markov_conv}, in order to sample from the Ising model, we can 
 % construct a Markov chain which has the Ising model as its stationary distribution. One such Markov chain 
 % is known as the Glauber dynamics.
 
@@ -84,20 +84,20 @@ as spectral independence. We quickly recall their results here.
   A measure \(\mu\) on \(\{-1, 1\}^n\) is said to be \(\eta\)-spectrally independent if 
   the maximum eigenvalue of \(\Psi(\mu)\) is bounded above by \(\eta\).
 
-  In addition, we say \(\mu\) is \((\eta_0, \cdots, \eta_{n - 2})\)-spectrally independent if defining 
-  \(\mu_k\) to be the law of \(X\) conditioned on \(X_{i_1}, \cdots, X_{i_k}\) for some \(X \sim \mu\) and 
-  any \(\{i_1, \cdots, i_k\} \subseteq \{1, \cdots, n\}\), \(\mu_k\) is \(\eta_k\)-spectrally independent 
-  for each \(k = 0, \cdots, n - 2\).
+  In addition, we say \(\mu\) is \((\eta_0, \ldots, \eta_{n - 2})\)-spectrally independent if defining 
+  \(\mu_k\) to be the law of \(X\) conditioned on \(X_{i_1}, \ldots, X_{i_k}\) for some \(X \sim \mu\) and 
+  any \(\{i_1, \ldots, i_k\} \subseteq \{1, \ldots, n\}\), \(\mu_k\) is \(\eta_k\)-spectrally independent 
+  for each \(k = 0, \ldots, n - 2\).
 \end{definition}
 
 \begin{theorem}[\cite{Anari_2020}]\label{thm:Anari}
-  If \(\mu\) is a measure on \(\{-1, 1\}^n\) which is \((\eta_0, \cdots, \eta_{n - 2})\)-spectrally 
+  If \(\mu\) is a measure on \(\{-1, 1\}^n\) which is \((\eta_0, \ldots, \eta_{n - 2})\)-spectrally 
   independent, then the Glauber dynamics of \(\mu\) has spectral gap bound 
   \[\mathfrak{gap}(K) \ge \frac{1}{n} \prod_{k = 0}^{n - 2}\left(1 - \frac{\eta_k}{n - k - 1}\right).\]
 \end{theorem}
 
 As an application of stochastic localizations, we will in section~\ref{sec:Glauber_loc} recover a similar 
-bound by using the theories established above. In particular, assuming the same assumptions as theorem~\ref{thm:Anari},
+bound by using the theories established above. In particular, assuming the same assumptions as Theorem~\ref{thm:Anari},
 we will show that 
 \[\mathfrak{gap}(K) \ge \prod_{k = 0}^{n - 2}\left(1 - \frac{\eta_k + 1}{n - k}\right).\]
 
@@ -164,7 +164,7 @@ for all \(A \in \Sigma\), we have
   \[\mathfrak{gap}(K) = \inf_{\phi : \mathcal{X} \to \mathbb{R}} \frac{\mathbb{E}[\text{Var}_{\mu_\tau}[\phi]]}{\text{Var}_\mu[\phi]}.\]
 \end{proposition}
 \begin{proof}
-  By equation~\eqref{eq:markov_assoc} (taking \(\phi(x, y) = \phi(x)\phi(y)\)), we have 
+  By Equation~\eqref{eq:markov_assoc} (taking \(\phi(x, y) = \phi(x)\phi(y)\)), we have 
   \begin{equation}
     \int_{\mathcal{X}^2} \phi(x)\phi(y) K(x, \dd y) \mu(\dd x) = \mathbb{E}_\mathbb{P}\left[\left(\int_\mathcal{X} \phi \dd\mu_\tau\right)^2\right],
   \end{equation}
@@ -201,19 +201,19 @@ for all \(A \in \Sigma\), we have
 % zoomed in region at time \(\tau\) to that of the global variation. This is achieved by a test function 
 % with minimal variation within this region and maximal variation outside of it.
 
-With regards to theorem~\ref{thm:levin}, in the case \(\mu\) has full support on the finite state space 
+With regards to Theorem~\ref{thm:levin}, in the case \(\mu\) has full support on the finite state space 
 \(\mathcal{X}\) (e.g. in the setting of Glauber dynamics) the above proposition provides a method for 
 computing an upper bound for the mixing time. In particular, should the prelocalization \((\mu_k)_k\)
 satisfy 
 \[\mathbb{E}[\text{Var}_{\mu_{k + 1}}[\phi] \mid \mu_k] \ge (1 - \epsilon)\text{Var}_{\mu_k}[\phi]\]
-for given \(\epsilon > 0, k = 0, \cdots, m - 1\) and any integrable function \(\phi : \mathcal{X} \to \mathbb{R}\), we have the 
+for given \(\epsilon > 0, k = 0, \ldots, m - 1\) and any integrable function \(\phi : \mathcal{X} \to \mathbb{R}\), we have the 
 telescoping product
 \[\frac{\mathbb{E}[\text{Var}_{\mu_m}[\phi]]}{\text{Var}_\mu[\phi]} 
   = \mathbb{E}\left[\prod_{k = 0}^{m - 1}\frac{\mathbb{E}[\text{Var}_{\mu_{k + 1}}[\phi] \mid \mu_k]}{\text{Var}_{\mu_k}[\phi]}\right]
   \ge (1 - \epsilon)^m.\]
 Hence, we have the bound 
 \[\mathfrak{gap}(K)^{-1} \le (1 - \epsilon)^{-m}\]
-which immediately provides an upper bound for the mixing time of \(K\) in light of theorem~\ref{thm:levin}.
+which immediately provides an upper bound for the mixing time of \(K\) in light of Theorem~\ref{thm:levin}.
 This motivates the following definition.
 
 \begin{definition}[Discrete time approximate conservation of variance (ACV), \cite{Chen_2022}]
@@ -244,7 +244,7 @@ given integrable \(\phi : \mathcal{X} \to \mathbb{R}\), we have
 \end{equation}
 where the third and last equality follows as \(\mathbb{E}[Z_k \mid \mu_k] = 0\). Then, denoting 
 \[C_k := \text{Cov}[Z_k \mid \mu_k] \text{ and } U_k := \int \phi(x)(x - \bar{\mu}_k) \mu_k(\dd x),\]
-equation~\eqref{eq:var_bound} becomes
+Equation~\eqref{eq:var_bound} becomes
 \[\mathbb{E}[\text{Var}_{\mu_{k + 1}}[\phi] \mid \mu_k] = \text{Var}_{\mu_k}[\phi] - \|C_k^{1 / 2}U_k\|^2.\]
 With this reduction, our goal is reduced to bounding \(\|C_k^{1 / 2}U_k\|^2\) by an expression of 
 the form \(\eta_k \text{Var}_{\mu_k}[\phi]\) where \(\eta_k\) is independent of \(\phi\). Indeed, 
@@ -345,7 +345,7 @@ Glauber dynamics can be constructed as an associated Markov
 chain of the coordinate by coordinate localization. Namely, taking \(\mu \in \mathcal{M}(\{-1, 1\}^n)\)
 and \(\tau = n - 1\), we will show the associate Markov kernel 
 \[\mathbb{E}\left[\frac{\mu_{n - 1}(\sigma^1)\mu_{n - 1}(\sigma^2)}{\mu(\sigma^1)}\right] = K(\sigma^1, \sigma^2)\]
-for all \(\sigma^1, \sigma^2 \in \{-1, 1\}^n\) where \(K(\sigma^1, \sigma^2)\) as defined by equation~\eqref{eq:glauber_ker}.
+for all \(\sigma^1, \sigma^2 \in \{-1, 1\}^n\) where \(K(\sigma^1, \sigma^2)\) as defined by Equation~\eqref{eq:glauber_ker}.
 
 First, taking \(\sigma^1, \sigma^2 \in \{-1, 1\}^n\) such that \(\|\sigma^1 - \sigma^2\| = 1\), say \(\sigma^1\) 
 and \(\sigma^2\) differs at the \(m\)-th coordinate, we have 
@@ -384,12 +384,12 @@ is precisely the Glauber dynamics (we don't need to check the case \(\sigma^1 = 
 kernels and so \(K(\sigma, \sigma) = 1 - \sum_{\tilde \sigma \neq \sigma}K(\sigma, \tilde \sigma)\)).
 
 Now, as the coordinate by coordinate localization is a discrete linear-tilt localization as presented 
-by section~\ref{sec:discrete_tilt}, we have by equation~\eqref{eq:linear-tilt_ACV} that the spectral gap of 
+by section~\ref{sec:discrete_tilt}, we have by Equation~\eqref{eq:linear-tilt_ACV} that the spectral gap of 
 the Glauber dynamics is bounded below by
 \begin{equation}\label{eq:gap_glauber}
   \mathfrak{gap}(K) \ge \prod_{k = 0}^{n - 2} (1 - \|C_k^{1 / 2} \text{Cov}(\mu_k) C_k^{1 / 2}\|_{\text{op}}),
 \end{equation}
-where \(C_k := \text{Cov}[Z_k \mid \mu_k]\) with \(Z_k\) defined by equation~\eqref{eq:def_Z}. Furthermore, 
+where \(C_k := \text{Cov}[Z_k \mid \mu_k]\) with \(Z_k\) defined by Equation~\eqref{eq:def_Z}. Furthermore, 
 by observing from definition of \(Z_k\) that \((Z_k)_i (Z_k)_j = 0\) for all \(i \neq j\), 
 \(C_k\) has only non-zero entries on its diagonal for which 
 \begin{align*}
@@ -402,7 +402,7 @@ by observing from definition of \(Z_k\) that \((Z_k)_i (Z_k)_j = 0\) for all \(i
 Thus, by introducing the correlation matrix \(\text{Cor}(\mu)\) with entries 
 \[\text{Cor}(\mu)_{i, j} = \frac{\text{Cov}(\mu)_{i, j}}{\sqrt{\text{Cov}(\mu)_{i, i}}\sqrt{\text{Cov}(\mu)_{j, j}}},\]
 we have \(C_k^{1 / 2} \text{Cov}(\mu_k) C_k^{1 / 2} = \frac{1}{n - k}\text{Cor}(\mu_k)\) and 
-equation~\eqref{eq:gap_glauber} becomes
+Equation~\eqref{eq:gap_glauber} becomes
 \begin{equation}
   \mathfrak{gap}(K) \ge \prod_{k = 0}^{n - 2} \left(1 - \frac{\|\text{Cor}(\mu_k)\|_{\text{op}}}{n - k}\right).
 \end{equation}
@@ -416,13 +416,13 @@ Furthermore, by observing
 we have 
 \[\|\text{Cor}(\mu_k)\|_{\text{op}} = \rho(\text{Cov}(\mu_k) \text{diag}(\text{Cov}(\mu_k))^{-1})
   = \rho(\Psi(\mu_k) + \text{Id}_n) = \rho(\Psi(\mu_k)) + 1.\]
-Thus, if \(\mu\) is a measure on \(\{-1, 1\}^n\) which is \((\eta_0, \cdots, \eta_{n - 2})\)-spectrally 
-independent, we have \(\rho(\Psi(\mu_k)) \le \eta_k\) for all \(k = 0, \cdots, n - 2\) and so, by 
-equation~\eqref{eq:gap_glauber}, we have
+Thus, if \(\mu\) is a measure on \(\{-1, 1\}^n\) which is \((\eta_0, \ldots, \eta_{n - 2})\)-spectrally 
+independent, we have \(\rho(\Psi(\mu_k)) \le \eta_k\) for all \(k = 0, \ldots, n - 2\) and so, by 
+Equation~\eqref{eq:gap_glauber}, we have
 \begin{equation}\label{eq:gap_glauber_final}
   \mathfrak{gap}(K) \ge \prod_{k = 0}^{n - 2}\left(1 - \frac{\eta_k + 1}{n - k}\right).
 \end{equation}
-This bound and theorem~\ref{thm:Anari} are said to be equivalent as both equations provide polynomial 
+This bound and Theorem~\ref{thm:Anari} are said to be equivalent as both equations provide polynomial 
 lower bounds for the spectral gap in terms of the spectral independence coefficients.
 
 % \subsection{Analysis of the MLSI coefficient}
@@ -449,4 +449,4 @@ lower bounds for the spectral gap in terms of the spectral independence coeffici
 
 % By noting the similarity of this definition with that of the equivalent form of the spectral gap~\eqref{eq:gap}, 
 % it is not surprising that the MLSI coefficient for linear-tilt localizations can rewritten in a similar 
-% form to that of proposition~\ref{prop:gap_assoc}
+% form to that of Proposition~\ref{prop:gap_assoc}

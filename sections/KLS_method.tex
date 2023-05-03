@@ -13,14 +13,29 @@ a logarithmic factor of \(\text{Var}_\mu[\|\cdot\|]\). We will assume \(\mu\) is
 \(B_n(0) \subseteq \mathbb{R}^n\) with 
 \(B_n(0)\) the ball at the origin of radius \(n\). The reason for this is due to a concentration 
 bound for log-concave measures where one may show most of their densities lie within a compact support.
-As a result, the region outside said compact set only contributes a bounded amount (in fact, it decreases 
-in \(n\)) to the variance, and does not affect our computation (c.f. \cite{Klartag_2006}). 
-Thus, we also have 
+\begin{lemma}[\cite{Klartag_2006}, Equation 10]
+  There exists a universal constant \(C\) such that for all 
+  \(f : \mathbb{R}^n \to \mathbb{R}\) the density of a log-concave isotropic measure, we have 
+  \[f(x) \le f(0)e^{- |x| / C},\]
+  for all \(x \in \mathbb{R}^n\) with \(\|x\| \ge Cn\).
+\end{lemma}
+As a result, the region outside of said ball contributes to the exponential concentration by 
+at most
+\begin{align*}
+  \mu(|\phi - \mathbb{E}_\mu[\phi]| \ge t \cap C B_n(0)) 
+  & \le \int_{\{|\phi(x)| \ge t\} \cap CB_n(0)} e^{-|x| / c} \dd \\ 
+  & \simeq \int_{t \vee n} r^{n - 1} e^{-r} \dd r = O(e^{-t}).
+\end{align*}
+Namely, the exponential concentration constant of \(\mu\) outside of the ball is universally bounded.
+Hence, it follows by Theorem~\ref{thm:milman2} that it is sufficient to bound the concentration of 
+\(\mu\) within \(B_n(0)\).
+
+Consequently, we also have 
 \[\text{supp}\ \mu_t = \text{supp}\ F_t\mu \subseteq \text{supp}\ \mu \subseteq B_n(0)\] 
 for all \(t > 0\).
  
 Let us fix \(\phi : \mathbb{R}^n \to \mathbb{R}\) some 1-Lipschitz function and let \((M_t)\) be the 
-martingale as described in corollary~\ref{cor:lim_mart}, we have \(\text{Var}_\mu[\phi] = \text{Var}[\phi(a_\infty)]\) 
+martingale as described in Corollary~\ref{cor:lim_mart}, we have \(\text{Var}_\mu[\phi] = \text{Var}[\phi(a_\infty)]\) 
 where \(a_\infty \sim \mu\).
 Then, for all \(t > 0\), by the law of total variance and the martingale property we have
 \begin{equation}\label{eq:variance}
@@ -31,7 +46,7 @@ Then, for all \(t > 0\), by the law of total variance and the martingale propert
 \end{equation}
 where we introduce the notation \(\text{Var}[X \mid \mathcal{G}] := \mathbb{E}[(X - \mathbb{E}[X \mid \mathcal{G}])^2 \mid \mathcal{G}]\)
 for some random variable \(X\) and sub-\(\sigma\)-algebra \(\mathcal{G}\). Furthermore, by replacing 
-\(\phi\) in corollary~\ref{cor:lim_mart} with \(\phi^2\) and denoting the resulting martingale 
+\(\phi\) in Corollary~\ref{cor:lim_mart} with \(\phi^2\) and denoting the resulting martingale 
 \(N_t := \int \phi^2 \dd \mu_t\), we obtain \(N_t \to \phi(a_\infty)^2\) and hence,
 \begin{align*}
   \text{Var}[M_\infty \mid \mu_t] & = \mathbb{E}[\phi(a_\infty)^2 \mid \mu_t] - M_t^2 = N_t - M_t^2\\ 
@@ -45,13 +60,12 @@ for any \(t \ge 0\). Furthermore, by applying the optional stopping theorem, the
 when we take \(t\) to be a stopping time. 
 
 At this point, by recalling Proposition~\ref{prop:linear-tilt_ACV}, we recognize that the first term 
-\(\text{Var}[M_t] = \mathbb{E}[M]_t\) is controlled by the operator norm of \(A_t\) with \(A_t\) being the covariance matrix of \(\mu_t\).
-Thus, to bound the first term, the idea is to choose an appropriate stopping time \(\tau\) to 
+\(\text{Var}[M_t]\) is controlled by the operator norm of \(A_t\) with \(A_t\) being the covariance matrix of \(\mu_t\).
+Thus, to bound \(\text{Var}[M_t]\), the idea is to choose an appropriate stopping time \(\tau\) to 
 stop the process before \(\|A_t\|_\text{op}\) grows too large. On the other hand, for the given \(\tau\), by plugging in 
 Equation~\eqref{eq:stoch_loc_alt} into Lemma~\ref{lem:brascamp-lieb},
 the second term \(\text{Var}_{\mu_\tau}[\phi]\) is then bounded by \(\tau^{-1}\) for which the
 expectation can be bounded explicitly.
-
 We dedicate the remainder of this section to describe said procedure in detail.
 
 % by recalling Proposition~\ref{prop:linear-tilt_ACV} and Lemma~\ref{lem:brascamp-lieb}, 
@@ -102,7 +116,7 @@ We dedicate the remainder of this section to describe said procedure in detail.
 
 \subsubsection{Analysis of the covariance matrix}
 
-As demonstrated in section~\ref{sec:construct}, we know the limiting behavior of the covariance matrices, namely 
+As demonstrated in Section~\ref{sec:construct}, we know the limiting behavior of the covariance matrices, namely 
 \(A_t \to 0\) entry-wise as \(t \to \infty\). This was important for us to establish the existence of the limit 
 of \((a_t)\) and \((M_t)\). However, as shown above, we now require some quantitative bounds for the operator 
 norm of \(A_t\). For this purpose, we first compute some useful properties of \(A_t\).
@@ -293,11 +307,11 @@ Then, taking \(\alpha = 10K\log n\), it is easy to check that
 \[\frac{1}{10K \log n} \le \frac{\alpha \log 2 - \log n}{2\alpha^2 K}\]
 implying \(\mathbb{E}[\tau^{-1}] \le 10K \log n\). 
 
-While this deduction only holds when ignoring the stochastic term \(\langle v_t, \dd W_t\rangle\), it is possible to 
+Whilst this deduction only holds when ignoring the stochastic term \(\langle v_t, \dd W_t\rangle\), one can 
 show that the stochastic term grows much slower than the drift term and hence can be safely ignored. 
-Indeed, it is possible to show that (c.f. second part of lemma 34 in \cite{Lee_2018})
+Indeed, it is possible to show that (c.f. second part of Lemma 34 in \cite{Lee_2018})
 \[\langle v_t, \dd W_t\rangle \lesssim \alpha \Phi^\alpha(t) \dd W_t.\]
-Namely, the martingale term grows at a rate of at most \(\alpha \Phi^\alpha(t)\sqrt{t}\) which is much less 
+Namely, the martingale term grows at a rate of at most \(\alpha \Phi^\alpha(t)\sqrt{t}\) which is much slower 
 than that of the drift term.
 
 Finally, to find a bound for \((K_t)\), we employ the following lemma.

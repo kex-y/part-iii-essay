@@ -206,13 +206,14 @@ The log-Sobolev inequality is then formulated as the following.
 The log-Sobolev inequality is an incredibly useful inequality while studying the concentration of measures. In 
 particular, should a measure satisfy a log-Sobolev equality, by using a well-known method commonly known as Herbst's argument,
 one can obtain the exponential concentration of said measure via the Chernoff bound. 
-\begin{theorem}[Herbst's argument]
+\begin{theorem}[Herbst's argument]\label{thm:herbst}
   If \(\mu\) satisfy the log-Sobolev inequality with log-Sobolev constant \(\rho_\mu\), then for all \(\phi\) with 
   uniformly bounded gradient \(\|\nabla \phi\| \le K\), we have 
-  \[\psi_{\phi - \mathbb{E}_\mu[\phi]}^\mu(\lambda) \le \frac{\rho_\mu K^2 \lambda^2}{2}\]
+  \[\psi_{\phi - \mathbb{E}_\mu[\phi]}^\mu(\lambda) \le \frac{K^2 \lambda^2}{2\rho_\mu}\]
   where \(\psi_{\phi - \mathbb{E}_\mu \phi}^\mu\) is the logarithmic moment generating function of 
   \(\phi - \mathbb{E}_\mu[\phi]\) with respect to \(\mu\).
 \end{theorem}
+A proof of this theorem is included in Appendix~\ref{sec:herbst}.
 % https://faculty.math.illinois.edu/~psdey/math595fa19/lec14.pdf
   
 It does not come as a surprise that as with the setting of the KLS conjecture, the standard Gaussian measure 

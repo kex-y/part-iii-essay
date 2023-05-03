@@ -96,7 +96,7 @@ as spectral independence. We quickly recall their results here.
   \[\mathfrak{gap}(K) \ge \frac{1}{n} \prod_{k = 0}^{n - 2}\left(1 - \frac{\eta_k}{n - k - 1}\right).\]
 \end{theorem}
 
-As an application of stochastic localizations, we will in section~\ref{sec:Glauber_loc} recover a similar 
+As an application of stochastic localizations, we will in Section~\ref{sec:Glauber_loc} recover a similar 
 bound by using the theories established above. In particular, assuming the same assumptions as Theorem~\ref{thm:Anari},
 we will show that 
 \[\mathfrak{gap}(K) \ge \prod_{k = 0}^{n - 2}\left(1 - \frac{\eta_k + 1}{n - k}\right).\]
@@ -272,16 +272,16 @@ where we define \(\eta_k := \|C_k^{1 / 2}\text{Cov}(\mu_k)C_k^{1 / 2}\|_{\text{o
 In the setting of the linear-tilt localization driven by a Wiener process, a similar computation 
 leveraging on the Cauchy-Schwarz inequality yields a useful inequality which turns out to be very 
 useful with regards to the KLS conjecture. We will present the computation now while leaving its application to 
-the KLS conjecture to section~\ref{sec:KLS}.
+the KLS conjecture to Section~\ref{sec:KLS}.
 
 In the continuous time setting, it no longer made sense to analyze the difference of the variance 
 between subsequent time steps. Instead, we will analyze its time derivative. In particular, recalling 
-the definition of the martingale \((M_t)\) from corollary~\ref{cor:lim_mart}, we may use the same 
+the definition of the martingale \((M_t)\) from Corollary~\ref{cor:lim_mart}, we may use the same 
 method as the discrete time analysis to compute a bound for \(\dd[] [M_t]\).
 
 \begin{proposition}\label{prop:linear-tilt_ACV}
   Given the linear-tilt localization \((\mu_t)_{t \ge 0}\) of \(\mu\) driven by a Wiener process as defined 
-  in section~\ref{sec:construct}, for all isotropic \(\phi : \mathbb{R}^n \to \mathbb{R}\), we have 
+  in Section~\ref{sec:construct}, for all isotropic \(\phi : \mathbb{R}^n \to \mathbb{R}\), we have 
   \[\dd[] [M]_t \le \text{Var}_{\mu_t}[\phi] \|A_t\|_\text{op} \dd t,\]
   where \(A_t := \int (x - a_t)^{\otimes 2} \dd \mu_t\) is the covariance matrix of \(\mu_t\) and \(M_t := \int \phi \dd \mu_t\).
 \end{proposition}
@@ -310,7 +310,7 @@ of the above equation with that of the discrete time ACV inequality.
 % is an Itô process with no drift term, taking \(f(x) := x^2\), we have  
 % \[\dd f(X_t) = 2 X_t \dd X_t + \dd[] [X]_t.\]
 % Hence, taking expectation on both sides, we obtain \(\text{Var}[X_t] = [X]_t\). With this 
-% in mind, by defining the martingale \((M_t)\) as in corollary~\ref{cor:lim_mart} for the given 
+% in mind, by defining the martingale \((M_t)\) as in Corollary~\ref{cor:lim_mart} for the given 
 % \(\phi\), we have 
 
 \begin{proof}
@@ -384,7 +384,7 @@ is precisely the Glauber dynamics (we don't need to check the case \(\sigma^1 = 
 kernels and so \(K(\sigma, \sigma) = 1 - \sum_{\tilde \sigma \neq \sigma}K(\sigma, \tilde \sigma)\)).
 
 Now, as the coordinate by coordinate localization is a discrete linear-tilt localization as presented 
-by section~\ref{sec:discrete_tilt}, we have by Equation~\eqref{eq:linear-tilt_ACV} that the spectral gap of 
+by Section~\ref{sec:discrete_tilt}, we have by Equation~\eqref{eq:linear-tilt_ACV} that the spectral gap of 
 the Glauber dynamics is bounded below by
 \begin{equation}\label{eq:gap_glauber}
   \mathfrak{gap}(K) \ge \prod_{k = 0}^{n - 2} (1 - \|C_k^{1 / 2} \text{Cov}(\mu_k) C_k^{1 / 2}\|_{\text{op}}),

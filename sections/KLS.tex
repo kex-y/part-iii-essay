@@ -143,7 +143,7 @@ As the main motivator for the KLS conjecture, the standard Gaussian measures on 
 a special property where its concentration is dimension invariant.
 This fact motivates the KLS conjecture which hypothesized that 
 this invariance holds for all isotropic log-concave measures. We will 
-for completeness give a brief proof (based on theorem 1.7.1 in \cite{Bogachev_1998}) of the following 
+for completeness give a brief proof (based on Theorem 1.7.1 in \cite{Bogachev_1998}) of the following 
 theorem taking \(C = 2 / \pi\) (although one can in addition show that the standard Gaussian measures are 1-concentrated).
 
 \begin{theorem}[Concentration of Gaussian measures]\label{thm:gaussian_conc}
@@ -196,7 +196,7 @@ has determinant 1), we have
   & \le \frac{\pi}{2} \int_0^{\pi / 2} \dd \theta \int \int |\langle \nabla \phi(u), v \rangle|^2 \gamma^n(\dd u) \gamma^n(\dd v)\\
   & \le \frac{\pi}{2}\int_0^{\pi / 2} \dd \theta \int \|\nabla \phi(u)\|^2 \gamma^n(\dd u)
 \end{align*}
-where the second inequality is due to lemma \ref{lem:gaussian_inner}. Hence, as \(\phi\) is 1-Lipschitz, 
+where the second inequality is due to Lemma~\ref{lem:gaussian_inner}. Hence, as \(\phi\) is 1-Lipschitz, 
 \(\|\nabla \phi(u)\| \le 1\) for all \(u\) and thus, 
 \[\int \int |\phi(x) - \phi(y)|^2 \gamma^n(\dd x) \gamma^n(\dd y) 
   \le \frac{\pi}{2}\int_0^{\pi / 2} \dd \theta \int \dd \gamma^n
@@ -252,7 +252,7 @@ Thus,
       = \sum_{i = 1}^n \text{Var}_\mu[\pi_i] \le n.
 \end{align*}
 Thus, by Proposition~\ref{prop:concentration}, we have that \(\text{Var}_\mu[\phi] \le n\) for all 
-1-Lipschitz \(\phi : \mathbb{R}^n \to \mathbb{R}\) implying \(\mu\) is \(n^{-1/2}\)-concentrated\footnote{This is also a consequence of theorem 2 in \cite{Lee_2016}.}.
+1-Lipschitz \(\phi : \mathbb{R}^n \to \mathbb{R}\) implying \(\mu\) is \(n^{-1/2}\)-concentrated\footnote{This is also a consequence of Theorem 2 in \cite{Lee_2016}.}.
 
 % We remark that while the constants in Theorem~\ref{thm:KLS_to_TS} depends on the dimension \(n\), the 
 % KLS conjecture is reduced to the thin-shell conjecture in the sense that it suffices to show 
@@ -331,7 +331,7 @@ equivalences.
   Furthermore, \(D^\mu_{\text{exp}} \simeq D^\mu_{\text{FM}} \simeq D^\mu_{\text{P}} \simeq (D^\mu_{\text{C}})^2\).
 \end{theorem}
 
-With this theorem and proposition \ref{thm:equiv} in mind, it is clear that the KLS conjecture can be 
+With Theorem~\ref{thm:milman2} and Proposition~\ref{thm:equiv} in mind, it is clear that the KLS conjecture can be 
 instead formulated with any of these inequalities instead. It is also worthwhile to pay attention to the 
 formulation using the Poincaré inequality as it is relevant to the subsequent section on the log-Sobolev 
 inequality.

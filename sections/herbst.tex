@@ -1,0 +1,67 @@
+We will in this appendix provide a short proof adapted from \cite{Herbst} of Herbst's argument.
+\begin{theorem}[Herbst's argument]  
+  If \(\mu\) satisfy the log-Sobolev inequality with log-Sobolev constant \(\rho_\mu\), then for all \(\phi\) with 
+  uniformly bounded gradient \(\|\nabla \phi\| \le K\), we have 
+  \[\psi_{\phi - \mathbb{E}_\mu[\phi]}^\mu(\lambda) \le \frac{K^2 \lambda^2}{2\rho_\mu}\]
+  where \(\psi_{\phi - \mathbb{E}_\mu \phi}^\mu\) is the logarithmic moment generating function of 
+  \(\phi - \mathbb{E}_\mu[\phi]\) with respect to \(\mu\).
+\end{theorem}
+
+To prove Herbst's argument, we will first need the following lemma which allows us to ignore the 
+normalization condition that \(\int\phi^2 \dd\mu = 1\).
+
+\begin{lemma}
+  If \(\mu\) satisfy the log-Sobolev inequality with log-Sobolev constant \(\rho_\mu\), then for all 
+  smooth \(\phi : \mathbb{R}^n \to \mathbb{R}\) (in particular, we do not require \(\int\phi^2 = 1\)),
+  we have 
+  \[\frac{\rho_\mu}{2}\text{Ent}_\mu[\phi^2] \le \mathbb{E}[\|\nabla \phi\|^2].\] 
+\end{lemma}
+\begin{proof}
+  Denoting \(\psi = \phi / \sqrt{\mathbb{E}_\mu[\phi^2]}\), (noting that \(\mathbb{E}_\mu[\phi^2] > 0\) except for \(\phi = 0\) almost everywhere for 
+  which the inequality is trivial) we have by the log-Sobolev inequality that 
+  \begin{equation}\label{eq:logsobolev_normalization}
+    \frac{\rho_\mu}{2}\text{Ent}_\mu[\psi^2] \le \mathbb{E}_\mu[\|\nabla \psi\|^2].
+  \end{equation}
+  On the other hand, by definition
+  \[\text{Ent}_\mu[\psi^2] = \mathbb{E}_\mu\left[\frac{\phi^2}{\mathbb{E}_\mu[\phi^2]}\log\left(\frac{\phi^2}{\mathbb{E}_\mu[\phi^2]}\right)\right]
+    = \frac{1}{\mathbb{E}_\mu[\phi^2]}\text{Ent}_\mu[\phi^2].\]
+  Hence, by substituting the above into Equation~\ref{eq:logsobolev_normalization}, it follows that
+  \[\frac{\rho_\mu}{2}\text{Ent}_\mu[\phi^2] 
+    \le \mathbb{E}_\mu[\phi^2]\mathbb{E}_\mu\left[\left\|\nabla \frac{\phi}{\sqrt{\mathbb{E}_\mu[\phi^2]}}\right\|^2\right]
+    = \mathbb{E}_\mu[\|\nabla \phi\|^2]\]
+  as required.
+\end{proof}
+
+\begin{proof}[Proof of Herbst's argument]
+  Let \(\phi : \mathbb{R}^n \to \mathbb{R}\) be a smooth function with \(\|\nabla \phi\| \le K\). Moreover,
+  without loss of generality we will assume \(\phi\) satisfies \(\mathbb{E}_\mu[\phi] = 0\). 
+  
+  For all \(\theta \in \mathbb{R}\), let us denote \(\xi_\theta = \exp\left(\frac{\theta}{2}\phi\right)\). 
+  Then, applying the log-Sobolev inequality to \(\xi_\theta\) we have, 
+  \[\frac{\rho_\mu}{2} \text{Ent}_\mu[\xi_\theta^2]
+    \le \mathbb{E}_\mu[\|\nabla\xi_\theta\|^2].\]
+  Then, denoting the moment generating function \(m(\theta) = \mathbb{E}_\mu[\exp(\theta \phi)] = 
+  \mathbb{E}_\mu[\xi_\theta^2]\), we observe 
+  \[\theta m'(\theta) = \mathbb{E}_\mu[\theta \phi \exp(\theta \phi)]\]
+  and so, the entropy of \(\xi_\theta^2\) can be equivalently be written as
+  \begin{align*}
+    \text{Ent}_\mu[\xi_\theta^2] 
+    & = \mathbb{E}_\mu[\xi_\theta^2 \log \xi_\theta^2] - \mathbb{E}_{\mu}[\xi_\theta^2]\log(\mathbb{E}_\mu[\xi_\theta^2])\\
+    & = \theta m'(\theta) - m(\theta)\log m(\theta).
+  \end{align*}
+  On the other hand, we observe 
+  \[\mathbb{E}_\mu[\|\nabla\xi_\theta\|^2] 
+    = \mathbb{E}_\mu\left[\sum_{i = 1}^n \left(\frac{\theta}{2}\xi_\theta \partial_i \phi\right)^2\right]
+    = \left(\frac{\theta}{2}\right)^2 \mathbb{E}_\mu[\xi_\theta^2 \|\nabla \phi\|^2]
+    \le \left(\frac{K\theta}{2}\right)^2 m(\theta)\]
+  where the last inequality follows as \(\|\nabla \phi\| \le K\). Hence, combining the above two equations 
+  into the log-Sobolev inequality provides 
+  \[\frac{\rho_\mu}{2}(\theta m'(\theta) - m(\theta) \log m(\theta)) \le \left(\frac{K\theta}{2}\right)^2 m(\theta).\]
+  Rearranging, we obtain 
+  \[\left(\frac{1}{\theta}\log m(\theta)\right)' \le \frac{K^2}{2 \rho_\mu}\]
+  where the derivative is taken with respect to \(\theta\). Thus, since as a consequence of l'Hôpital's rule,
+  \[\lim_{\theta \to 0} \frac{1}{\theta}\log m(\theta) = \frac{m'(0)}{m(0)} = \mathbb{E}_\mu[\phi] = 0,\]
+  it follows by integrating both sides of the above inequality from 0 to \(\lambda\) that 
+  \[\log m(\lambda) \le \frac{K^2 \lambda^2}{2\rho_\mu}\]
+  as claimed.
+\end{proof}
